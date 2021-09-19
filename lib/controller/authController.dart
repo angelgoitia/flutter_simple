@@ -1,9 +1,10 @@
+import 'package:flutter_simple/controller/dataTableController.dart';
 import 'package:flutter_simple/controller/globalController.dart';
 import 'package:flutter_simple/model/user.dart';
 import 'package:flutter_simple/views/homePage.dart';
+import 'package:flutter_simple/views/intro_screen.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_simple/views/intro_screen.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,9 +15,10 @@ class AuthController extends GetxController {
   final user = MyUser().obs;
   final stateAuth = false.obs;
 
-  GlobalController globalController = Get.put(GlobalController());  
+  GlobalController globalController = Get.put(GlobalController()); 
+  DataTableController dataTableController = Get.put(DataTableController()); 
 
-  void _userFromFirebase(dataUser, type) async{
+  _userFromFirebase(dataUser, type) async{
     print("user $user");
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -28,9 +30,11 @@ class AuthController extends GetxController {
 
     prefs.setString('uid', dataUser.uid);
     prefs.setInt('type', type);
-    await Future.delayed(Duration(seconds: 1));
+    
     Get.back();
     Get.off(() => HomePage(), transition: Transition.zoom);
+    await Future.delayed(Duration(seconds: 1));
+    dataTableController.getData();
   }
 
   Future<MyUser?> getMyUser(type) async {
@@ -46,8 +50,10 @@ class AuthController extends GetxController {
     }
     else if(type == 1 || type == 2)
       _userFromFirebase(_auth.currentUser, type);
-    else
+    else{
+      Get.back();
       signOut();
+    }
   }
 
   signInWithGoogle() async{
@@ -69,6 +75,7 @@ class AuthController extends GetxController {
         }
       }
     }catch(error) {
+      Get.back();
       showError(error);
     }
   }
@@ -119,7 +126,7 @@ class AuthController extends GetxController {
     });
   }
 
-  showError(error){
+  showError(error) async {
     var errorMessage;
     print(error.code);
     switch (error.code) {
@@ -159,6 +166,8 @@ class AuthController extends GetxController {
 
     if (errorMessage != null) {    
       globalController.showMessage(errorMessage, false);
+      await Future.delayed(Duration(seconds: 1));
+      Get.back();
     }
   }
 

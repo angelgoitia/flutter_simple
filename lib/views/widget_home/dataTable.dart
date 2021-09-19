@@ -1,12 +1,15 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_simple/views/widget_table/showList.dart';
+import 'package:flutter_simple/views/widget_home/showList.dart';
 
 class DataTableWidget extends StatelessWidget {
   const DataTableWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    var size = MediaQuery.of(context).size;
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Column(
@@ -118,7 +121,7 @@ class DataTableWidget extends StatelessWidget {
           ),
           Container(
             width: 1332,
-            height: 120,
+            height: size.height - 244,
             child: ShowList()
           )
         ],

@@ -1,7 +1,65 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
 class GlobalController extends GetxController { 
+  String? url, urlApi;
+
+  List listTable = [
+    {
+      "title" : "Abdominales Masculino - Femenino",
+      "url" : "assets/table/ABDOMINALES - MILITAR MASCULINO Y FEMENINO.png",
+    },
+    {
+      "title" : "Barras - Planchas Masculino",
+      "url" : "assets/table/BARRAS O PLANCHAS - MILITAR MASCULINO.png",
+    },
+    {
+      "title" : "Caminata Masculino",
+      "url" : "assets/table/CAMINATA - PERSONAL MASCULINO.png",
+    },
+    {
+      "title" : "Carrera Femenino",
+      "url" : "assets/table/CARRERA - MILITAR FEMENINO.png",
+    },
+    {
+      "title" : "Carrera Masculino",
+      "url" : "assets/table/CARRERA - MILITAR MASCULINO.png",
+    },
+    {
+      "title" : "Natación Femenino",
+      "url" : "assets/table/NATACION ESTILO CROL - MILITAR FEMENINO.png",
+    },
+    {
+      "title" : "Natación Masculino",
+      "url" : "assets/table/NATACION ESTILO CROL - MILITAR MASCULINO.png",
+    },
+    {
+      "title" : "Pista de Combate Femenino",
+      "url" : "assets/table/PISTA DE COMBATE - MILITAR FEMENINO.png",
+    },
+    {
+      "title" : "Pista de Combate Masculino",
+      "url" : "assets/table/PISTA DE COMBATE - MILITAR MASCULINO.png",
+    },
+    {
+      "title" : "Suspensión o Seminplanchas Femenino",
+      "url" : "assets/table/SUSPENSION O SEMI PLANCHAS - MILITAR FEMENINO.png",
+    },
+  ];
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    if (kReleaseMode)
+      url = "flutter-simple-api.test"; //aws
+    else
+      url = "192.168.1.110:8000"; //localgost
+
+    urlApi = "http://$url/api/auth/";
+  }
+
   loading(){
     Get.defaultDialog(
       title: "",

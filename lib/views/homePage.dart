@@ -1,8 +1,11 @@
-import 'package:flutter/services.dart';
+import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter_simple/controller/authController.dart';
-import 'package:flutter_simple/views/widget_table/dataTable.dart';
+import 'package:flutter_simple/controller/dataTableController.dart';
+import 'package:flutter_simple/controller/globalController.dart';
+import 'package:flutter_simple/views/widget_home/dataTable.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_simple/views/widget_home/show_picture.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 
@@ -17,33 +20,40 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState(){
     super.initState();
-      SystemChrome.setPreferredOrientations([
+    /* SystemChrome.setPreferredOrientations([
         DeviceOrientation.landscapeRight,
         DeviceOrientation.landscapeLeft,
-    ]);
+    ]); */
   }
 
   @override
   dispose(){
-    SystemChrome.setPreferredOrientations([
+    /* SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
-    ]);
+    ]); */
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    
+    GlobalController globalController = Get.put(GlobalController());
     AuthController authController = Get.put(AuthController());   
+    DataTableController dataTableController = Get.put(DataTableController());
 
     return WillPopScope(
       onWillPop: () async =>false,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Welcome'),
-          automaticallyImplyLeading: false,
+          title: const Text('Bienvenido'),
           actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.refresh,
+                color: Colors.white,
+              ),
+              onPressed: () => dataTableController.getData(),
+            ),
             IconButton(
               icon: Icon(
                 Icons.logout,
@@ -54,7 +64,46 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         backgroundColor: Colors.white,
-        body: DataTableWidget(),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              Container(
+                height: 100,
+                child: const DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                  ),
+                  child: AutoSizeText(
+                    'Tabla de Calificaciones',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white
+                    ),
+                    maxFontSize: 15,
+                    minFontSize: 15,
+                  ),
+                )
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: globalController.listTable.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    title: Text(globalController.listTable[index]['title']),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Get.to(() => ShowPicture(globalController.listTable[index]['title'], globalController.listTable[index]['url']), transition: Transition.zoom);
+                    },
+                  );
+                }
+              ) 
+            ],
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: DataTableWidget(),
+        ),
         floatingActionButton: SpeedDial(
           animatedIcon: AnimatedIcons.menu_close,
           foregroundColor: Colors.white,
@@ -64,19 +113,19 @@ class _HomePageState extends State<HomePage> {
                 child: Icon(Icons.add, color: Colors.white,),
                 label: "Agregar nuevo registro",
                 backgroundColor: Colors.purple,
-                onTap: () => null,
+                onTap: () => dataTableController.addData(),
             ),
             SpeedDialChild(
                 child: Icon(Icons.delete, color: Colors.white,),
                 label: "Eliminar registro",
                 backgroundColor: Colors.red,
-                onTap: () => null,
+                onTap: () => dataTableController.removeData(),
             ),
             SpeedDialChild(
                 child: Icon(Icons.save, color: Colors.white,),
-                label: "Guardar Registro",
+                label: "Guardar Registros",
                 backgroundColor: Colors.green,
-                onTap: () => null,
+                onTap: () => dataTableController.saveData(),
             ),
           ],
         ),
