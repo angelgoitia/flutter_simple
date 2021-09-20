@@ -14,7 +14,7 @@ class IntroScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Welcome'),
+        title: const Text('Bienvenido'),
       ),
       body: SafeArea(
         child: PageIndicatorContainer(

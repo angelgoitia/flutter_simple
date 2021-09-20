@@ -16,7 +16,7 @@ class SplashScreen extends StatelessWidget {
         onWillPop: () async =>false,
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Welcome'),
+            title: const Text('Bienvenido'),
           ),
           backgroundColor: Colors.white,
           body: Center(
