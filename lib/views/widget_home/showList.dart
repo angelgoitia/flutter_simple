@@ -151,9 +151,14 @@ class _ShowListState extends State<ShowList> {
     }
 
     if(indexColumn == 12 || indexColumn == 15){
-      var arr = text.split("'");
-      controllerModalMin.text = arr[0];
-      controllerModalSec.text = arr[1];
+      if(text == null){
+        controllerModalMin.text = 0.toString();
+        controllerModalSec.text = 0.toString();
+      }else{
+        var arr = text.split("'");
+        controllerModalMin.text = arr[0];
+        controllerModalSec.text = arr[1];
+      }
     }
     
     return Get.defaultDialog(
