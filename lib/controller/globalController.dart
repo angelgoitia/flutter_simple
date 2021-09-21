@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -51,11 +50,8 @@ class GlobalController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
-    if (kReleaseMode)
-      url = "flutter-simple-api.test"; //aws
-    else
-      url = "192.168.1.110:8000"; //localgost
+    url = "flutter-simple-api.herokuapp.com"; //heroku
+    //url = "192.168.1.110:8000"; //localhost
 
     urlApi = "http://$url/api/auth/";
   }

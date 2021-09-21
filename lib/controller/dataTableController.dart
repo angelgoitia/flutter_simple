@@ -21,7 +21,7 @@ class DataTableController extends GetxController {
       result = await InternetAddress.lookup('google.com'); //verify network
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         response = await http.post(
-          Uri.parse(globalController.urlApi!+"getData/"),
+          Uri.parse(globalController.urlApi!+"getData"),
           headers:{
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -147,7 +147,7 @@ class DataTableController extends GetxController {
         result = await InternetAddress.lookup('google.com'); //verify network
         if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
           response = await http.post(
-            Uri.parse(globalController.urlApi!+"saveData/"),
+            Uri.parse(globalController.urlApi!+"saveData"),
             headers:{
               'Accept': 'application/json',
               'Content-Type': 'application/json',
