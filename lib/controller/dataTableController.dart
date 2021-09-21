@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_simple/controller/globalController.dart';
 import 'package:flutter_simple/model/data.dart';
 
@@ -8,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class DataTableController extends GetxController {
+  TextEditingController controllerModalRemove = TextEditingController();
   final datas = <Data>[].obs;
   final statusError = false.obs;
 
@@ -166,6 +168,7 @@ class DataTableController extends GetxController {
             globalController.showMessage("Ha sido Guardado correctamente!", true);
             await Future.delayed(Duration(seconds: 1));
             Get.back();
+            getData();
 
           } else if(jsonResponse['statusCode'] == 400){
 
@@ -265,27 +268,34 @@ class DataTableController extends GetxController {
   }
 
   showMessage(length) async {
-    
+    controllerModalRemove.text = length.toString();
     return Get.defaultDialog(
-      title: '',
-      titlePadding: EdgeInsets.zero,
+      title: 'Ingrese el N° de registro que desea eliminar',
+      titlePadding: EdgeInsets.all(20),
       barrierDismissible: true,
       backgroundColor: Colors.white,
-      content: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
+      content: new Row(
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(5),
-            child: Text(
-              "¿Estás seguro de que quiere eliminar el registro N° $length ?",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize:14
-              ),
-            ),
-          ),
+          new Expanded(
+            child: Column(
+              children: [
+                new TextFormField(
+                  controller: controllerModalRemove,
+                  autofocus: true,
+                  textCapitalization: TextCapitalization.words, 
+                  keyboardType: TextInputType.number,
+                    inputFormatters: [  
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (value) => removeDataIndex(value),
+                )
+              ],
+            )
+          )
         ],
       ),
       actions: <Widget>[
@@ -294,11 +304,8 @@ class DataTableController extends GetxController {
             foregroundColor: MaterialStateProperty.all(Colors.white),
             backgroundColor: MaterialStateProperty.all(Colors.blue)
           ),
-          child: const Text('Aceptar'),
-          onPressed: () {
-            datas.removeAt(length-1);
-            Get.back();
-          },
+          child: const Text('Eliminar'),
+          onPressed: () => removeDataIndex(controllerModalRemove.text),
         ),
         TextButton(
           style: ButtonStyle(
@@ -306,14 +313,24 @@ class DataTableController extends GetxController {
             backgroundColor: MaterialStateProperty.all(Colors.red)
           ),
           child: const Text('Cancelar'),
-          onPressed: () {
-            Get.back();
-          },
+          onPressed: () => Get.back(),
         ),
       ],
     );
+    
   }
 
+  removeDataIndex(index) async {
+    index = int.parse(index);
+    if(index > datas.length || index == 0){
+      globalController.showMessage("Ingrese el N° de registro correctamente",false);
+      await Future.delayed(Duration(seconds: 1));
+      Get.back();
+    }else{
+      datas.removeAt(index-1);
+      Get.back();
+    }
+  }
 
   validateModal(value, indexColumn){
     if(indexColumn >= 1 && indexColumn <= 2 || indexColumn == 20)

@@ -51,7 +51,7 @@ class GlobalController extends GetxController {
   void onInit() {
     super.onInit();
     url = "flutter-simple-api.herokuapp.com"; //heroku
-    //url = "192.168.1.110:8000"; //localhost
+    //url = "192.168.1.121:8000"; //localhost
 
     urlApi = "http://$url/api/auth/";
   }
