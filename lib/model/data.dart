@@ -16,12 +16,12 @@ class Data {
       specialty : json['specialty'],
       name : json['name'],
       age : json['age'],
-      size : json['size'].toDouble(),
-      weight : json['weight'].toDouble(),
+      size : json['size'] == null? null : double.parse(json['size']),
+      weight : json['weight'] == null? null : double.parse(json['weight']),
       listEvaluate : json['evaluates'] == null ? null : (json['evaluates']as List).map((val) => Evaluate.fromJson(val)).toList(),
-      total : json['total'].toDouble(),
-      average : json['average'].toDouble(),
-      result : json['result'],
+      total : json['total'] == null? null : double.parse(json['total']),
+      average : json['average'] == null? null : double.parse(json['average']),
+      result : json['result'] == null? null : json['result'],
     );
   }
 

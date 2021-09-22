@@ -5,6 +5,7 @@ import 'package:flutter_simple/model/data.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_simple/model/evaluate.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -65,69 +66,92 @@ class DataTableController extends GetxController {
   }
 
   verifyDatas(){
-    /* var listEvaluate = <Evaluate>[];
+    var listEvaluate = <Evaluate>[];
 
     listEvaluate.add(
       Evaluate(
         id: 1,
-        repTiemp: "32",
-        note: 13.8,
-        pts: 13.8,
+        repTiemp: null,
+        note: null,
+        pts: null,
       )
     );
     listEvaluate.add(
       Evaluate(
         id: 2,
-        repTiemp: "17",
-        note: 15,
-        pts: 30,
+        repTiemp: null,
+        note: null,
+        pts: null,
       )
     );
     listEvaluate.add(
       Evaluate(
         id: 3,
-        repTiemp: "12'32''",
-        note: 18.4,
-        pts: 36.8,
+        repTiemp: null,
+        note: null,
+        pts: null,
       )
     );
 
     listEvaluate.add(
       Evaluate(
         id: 4,
-        repTiemp: "0'34''",
-        note: 16,
-        pts: 32,
+        repTiemp: null,
+        note: null,
+        pts: null,
       )
     );
-
-    datas.add(
-      Data(
-        id: 1,
-        specialty: "Tco JS MM",
-        name: "Goitia Guardia, Angel",
-        age: 25,
-        size: 1.76,
-        weight: 71,
-        listEvaluate: listEvaluate,
-        total: 112.6,
-        average: 16.8,
-        result: "Aprobado"
-      )
-    );  */
 
     if(datas.length == 0)
       datas.add(
         Data(
           id: datas.length+1,
+          listEvaluate: listEvaluate,
         )
       );
   }
 
   addData(){
+    var listEvaluate = <Evaluate>[];
+
+    listEvaluate.add(
+      Evaluate(
+        id: 1,
+        repTiemp: null,
+        note: null,
+        pts: null,
+      )
+    );
+    listEvaluate.add(
+      Evaluate(
+        id: 2,
+        repTiemp: null,
+        note: null,
+        pts: null,
+      )
+    );
+    listEvaluate.add(
+      Evaluate(
+        id: 3,
+        repTiemp: null,
+        note: null,
+        pts: null,
+      )
+    );
+
+    listEvaluate.add(
+      Evaluate(
+        id: 4,
+        repTiemp: null,
+        note: null,
+        pts: null,
+      )
+    );
+
     datas.add(
       Data(
         id: datas.length+1,
+        listEvaluate: listEvaluate,
       )
     );
   }
@@ -228,7 +252,6 @@ class DataTableController extends GetxController {
       case 12:
       case 15:
         datas[indexList].listEvaluate![showIndex(indexColumn)].repTiemp = text == null? null : text;
-        print(datas[indexList].listEvaluate![showIndex(indexColumn)].repTiemp);
         break;
       case 7:
       case 10:
@@ -254,6 +277,18 @@ class DataTableController extends GetxController {
       default:
         break;
     }
+    double? pt1 = datas[indexList].listEvaluate![0].pts == null? 0 : datas[indexList].listEvaluate![0].pts ;
+    double? pt2 = datas[indexList].listEvaluate![1].pts == null? 0 : datas[indexList].listEvaluate![1].pts ;
+    double? pt3 = datas[indexList].listEvaluate![2].pts == null? 0 : datas[indexList].listEvaluate![2].pts ;
+    double? pt4 = datas[indexList].listEvaluate![3].pts == null? 0 : datas[indexList].listEvaluate![3].pts ;
+
+    double? nt1 = datas[indexList].listEvaluate![0].note == null? 0 : datas[indexList].listEvaluate![0].note ;
+    double? nt2 = datas[indexList].listEvaluate![1].note == null? 0 : datas[indexList].listEvaluate![1].note ;
+    double? nt3 = datas[indexList].listEvaluate![2].note == null? 0 : datas[indexList].listEvaluate![2].note ;
+    double? nt4 = datas[indexList].listEvaluate![3].note == null? 0 : datas[indexList].listEvaluate![3].note ;
+
+    datas[indexList].total = (pt1!+pt2!+pt3!+pt4!);
+    datas[indexList].average = ((nt1!+nt2!+nt3!+nt4!)/4);
   }
 
   int showIndex(indexColumn){

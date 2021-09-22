@@ -8,9 +8,9 @@ class Evaluate {
   factory  Evaluate.fromJson(Map<String, dynamic> json) {
     return new Evaluate(
       id : json['type'],
-      repTiemp : json['repTiemp'],
-      note : json['note'].toDouble(),
-      pts : json['pts'].toDouble(),
+      repTiemp : json['repTiemp'] == null? null : json['repTiemp'],
+      note : json['note'] == null? null : double.parse(json['note']),
+      pts : json['pts'] == null? null :  double.parse(json['pts']),
     );
   }
 

@@ -63,7 +63,7 @@ class _ShowListState extends State<ShowList> {
   Widget row(indexColumn, indexList, text, index){
     return GestureDetector(
       onTap: () {
-        if(indexColumn > 0)
+        if(indexColumn > 0 && indexColumn != 18 && indexColumn != 19)
           passVariable(indexColumn, indexList, text);
       },
       child: Container(
