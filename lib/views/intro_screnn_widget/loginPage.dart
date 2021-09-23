@@ -17,75 +17,86 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
 
-    return ListView(
-      shrinkWrap: true,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Image.asset(
-                'assets/intro_1.png',
-                width: 200,
-                height: 200,
-              ),
-              Container(
-                alignment: Alignment.center,
-                child: Text(
-                  'Sign in or create an account',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/Fondo_Militar.jpeg"),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: ListView(
+        shrinkWrap: true,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Image.asset(
+                  'assets/Logo.jpg',
+                  width: 200,
+                  height: 200,
                 ),
-              ),
-              //if (isSigningIn) CircularProgressIndicator(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                child: Column(
-                  children: [
-                    SizedBox(height: 8),
-                    LoginButton(
-                      text: 'Sign in with Google',
-                      imagePath: 'assets/icon_google.png',
-                      color: Colors.white,
-                      textColor: Colors.grey,
-                      onTap: () => authController.signInWithGoogle(),
-                    ),
-                    SizedBox(height: 8),
-                    /* LoginButton(
-                      text: 'Sign in with Facebook',
-                      imagePath: 'assets/icon_facebook.png',
-                      color: Colors.blueAccent,
-                      onTap: () => null,//authCubit.signInWithFacebook(),
-                    ), */
-                    SizedBox(height: 8),
-                    LoginButton(
-                      text: 'Sign in with Email',
-                      imagePath: 'assets/icon_email.png',
-                      color: Colors.red,
-                      textColor: Colors.white,
-                      onTap: () => Get.to(() => EmailSignIn(), transition: Transition.rightToLeft),
-                    ),
-                    SizedBox(height: 8),
-                    LoginButton(
-                      text: 'Sign in Anonymously',
-                      imagePath: 'assets/icon_question.png',
-                      color: Colors.deepPurpleAccent,
-                      textColor: Colors.white,
-                      onTap: () => authController.signInAnonymously(),
-                    ),
-                    SizedBox(height: 48),
-                    OutlinedButton(
-                      child: Text('Create account'),
-                      onPressed: () => Get.to(() => EmailCreate(), transition: Transition.rightToLeft),
-                    ),
-                  ],
+                Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Inicio de Sesion',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                  ),
                 ),
-              )
-            ],
+                //if (isSigningIn) CircularProgressIndicator(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 8),
+                      /* LoginButton(
+                        text: 'Inicio con Google',
+                        imagePath: 'assets/icon_google.png',
+                        color: Colors.white,
+                        textColor: Colors.grey,
+                        onTap: () => authController.signInWithGoogle(),
+                      ), */
+                      SizedBox(height: 8),
+                      /* LoginButton(
+                        text: 'Sign in with Facebook',
+                        imagePath: 'assets/icon_facebook.png',
+                        color: Colors.blueAccent,
+                        onTap: () => null,//authCubit.signInWithFacebook(),
+                      ), */
+                      SizedBox(height: 8),
+                      LoginButton(
+                        text: 'Inicio con Email',
+                        imagePath: 'assets/icon_email.png',
+                        color: Colors.red,
+                        textColor: Colors.white,
+                        onTap: () => Get.to(() => EmailSignIn(), transition: Transition.rightToLeft),
+                      ),
+                      SizedBox(height: 8),
+                      LoginButton(
+                        text: 'Inicio con Anonimo',
+                        imagePath: 'assets/icon_question.png',
+                        color: Colors.deepPurpleAccent,
+                        textColor: Colors.white,
+                        onTap: () => authController.signInAnonymously(),
+                      ),
+                      SizedBox(height: 48),
+                      OutlinedButton(
+                        child: Text('Crear Cuenta'),
+                        onPressed: () => Get.to(() => EmailCreate(), transition: Transition.rightToLeft),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            )
           )
-        )
-      ],
+        ],
+      )
     );
   }
 }

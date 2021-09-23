@@ -122,6 +122,12 @@ class _HomePageState extends State<HomePage> {
                 onTap: () => dataTableController.removeData(),
             ),
             SpeedDialChild(
+                child: Icon(Icons.delete, color: Colors.white,),
+                label: "Eliminar todos los registros",
+                backgroundColor: Colors.black,
+                onTap: () => dataTableController.removeAllData(),
+            ),
+            SpeedDialChild(
                 child: Icon(Icons.save, color: Colors.white,),
                 label: "Guardar Registros",
                 backgroundColor: Colors.green,

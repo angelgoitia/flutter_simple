@@ -9,8 +9,8 @@ class Evaluate {
     return new Evaluate(
       id : json['type'],
       repTiemp : json['repTiemp'] == null? null : json['repTiemp'],
-      note : json['note'] == null? null : double.parse(json['note']),
-      pts : json['pts'] == null? null :  double.parse(json['pts']),
+      note : json['note'] == null? null : double.parse(json['note'].toString()),
+      pts : json['pts'] == null? null : double.parse(json['pts'].toString()),
     );
   }
 

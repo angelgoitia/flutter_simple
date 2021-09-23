@@ -21,7 +21,7 @@ class DataTableController extends GetxController {
     var result, response, jsonResponse;
     globalController.loading();
     try {
-      result = await InternetAddress.lookup('google.com'); //verify network
+      result = await InternetAddress.lookup('google.com'); //Verificar Internet
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         response = await http.post(
           Uri.parse(globalController.urlApi!+"getData"),
@@ -30,7 +30,7 @@ class DataTableController extends GetxController {
             'Content-Type': 'application/json',
             'X-Requested-With': 'XMLHttpRequest',
           },
-        ); // petición api
+        ); // Petición api  ---  Respuestas que recibe
         print(response.body);
         jsonResponse = jsonDecode(response.body);
 
@@ -55,7 +55,7 @@ class DataTableController extends GetxController {
         } 
       }
     } on SocketException catch (_) {
-
+/*Mensaje de falta de Internet */
       print("Sin conexión a internet"); 
       Get.back();
       globalController.showMessage("Sin conexión a internet", false); 
@@ -64,7 +64,7 @@ class DataTableController extends GetxController {
 
     }
   }
-
+/* Verificar si existe un registro */
   verifyDatas(){
     var listEvaluate = <Evaluate>[];
 
@@ -160,7 +160,7 @@ class DataTableController extends GetxController {
     var length = datas.length;
     showMessage(length);
   }
-
+/*Para guardar El Api en el Servidor */
   saveData()async{
     GlobalController globalController = Get.put(GlobalController());
     var result, response, jsonResponse;
@@ -229,7 +229,7 @@ class DataTableController extends GetxController {
     }
     return statusArray;
   }
-
+/*Para guardar datos segun su respectivo modelo o arreglo */
   updateData(indexList, indexColumn, text){
     switch (indexColumn) {
       case 1:
@@ -276,7 +276,7 @@ class DataTableController extends GetxController {
         break;
       default:
         break;
-    }
+    } /* Tipos de Evaluaciones, para poner nulo = 0 o si se jala una cantidad*/
     double? pt1 = datas[indexList].listEvaluate![0].pts == null? 0 : datas[indexList].listEvaluate![0].pts ;
     double? pt2 = datas[indexList].listEvaluate![1].pts == null? 0 : datas[indexList].listEvaluate![1].pts ;
     double? pt3 = datas[indexList].listEvaluate![2].pts == null? 0 : datas[indexList].listEvaluate![2].pts ;
@@ -287,10 +287,10 @@ class DataTableController extends GetxController {
     double? nt3 = datas[indexList].listEvaluate![2].note == null? 0 : datas[indexList].listEvaluate![2].note ;
     double? nt4 = datas[indexList].listEvaluate![3].note == null? 0 : datas[indexList].listEvaluate![3].note ;
 
-    datas[indexList].total = (pt1!+pt2!+pt3!+pt4!);
-    datas[indexList].average = ((nt1!+nt2!+nt3!+nt4!)/4);
+    datas[indexList].total = (pt1!+pt2!+pt3!+pt4!); /* Sumatoria de Pts */
+    datas[indexList].average = ((nt1!+nt2!+nt3!+nt4!)/4); /*Sumatoria de Notas = Promedio */
   }
-
+/*Identificar las columnas , segun el tipo de Evaluacion */
   int showIndex(indexColumn){
     if(indexColumn >= 6 && indexColumn <= 8)
       return 0;
@@ -301,7 +301,7 @@ class DataTableController extends GetxController {
     else
       return 3;
   }
-
+/*Para mostrar el mensaje de Eliminar */
   showMessage(length) async {
     controllerModalRemove.text = length.toString();
     return Get.defaultDialog(
@@ -354,7 +354,7 @@ class DataTableController extends GetxController {
     );
     
   }
-
+/* Mensaje de Error de Registro */
   removeDataIndex(index) async {
     index = int.parse(index);
     if(index > datas.length || index == 0){
@@ -367,17 +367,68 @@ class DataTableController extends GetxController {
     }
   }
 
-  validateModal(value, indexColumn){
-    if(indexColumn >= 1 && indexColumn <= 2 || indexColumn == 20)
-      validateText(value);
-    else if (indexColumn == 3 )
-      validateAge(value);
-    else if (indexColumn >= 4 && indexColumn <= 11 || indexColumn >= 13 && indexColumn <= 14 || indexColumn >= 16 && indexColumn <= 19)
-      validateNum(value);
-    else if(indexColumn == 12 || indexColumn == 15)
-      validateTime(value);
+/* Mensaje de confirmacion de eliminacion de todos los registros */
+  removeAllData() {
+    return Get.defaultDialog(
+      title: '',
+      barrierDismissible: true,
+      backgroundColor: Colors.white,
+      content: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.all(5),
+            child: Text(
+              '¿Está seguro que desea eliminar todos los registros?',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize:14
+              ),
+            ),
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        TextButton(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all(Colors.white),
+            backgroundColor: MaterialStateProperty.all(Colors.blue)
+          ),
+          child: const Text('Aceptar'),
+          onPressed: () {
+            /* Limiapos la lista*/
+            datas.value = <Data>[];
+            addData(); /* Agregamos primer registro por defecto */
+            Get.back();
+          },
+        ),
+        TextButton(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all(Colors.white),
+            backgroundColor: MaterialStateProperty.all(Colors.red)
+          ),
+          child: const Text('Cancelar'),
+          onPressed: () => Get.back(),
+        ),
+      ],
+    );
+
   }
 
+/* Validaciones */
+  validateModal(value, indexColumn){
+    if(indexColumn >= 1 && indexColumn <= 2 || indexColumn == 20)
+      validateText(value); /* Validacion de Texto columna 1, 2 y 20 */
+    else if (indexColumn == 3 )
+      validateAge(value); /*Validacion de Años o Edad */
+    else if (indexColumn >= 4 && indexColumn <= 11 || indexColumn >= 13 && indexColumn <= 14 || indexColumn >= 16 && indexColumn <= 19)
+      validateNum(value); /*Validacion de Numeros */
+    else if(indexColumn == 12 || indexColumn == 15)
+      validateTime(value);/*Validacion de Tiempo */
+  }
+//Validacion de Texto
   validateText(value){
     statusError.value = false;
     value = value.trim();
@@ -389,7 +440,7 @@ class DataTableController extends GetxController {
       statusError.value = true;
     }
   }
-
+// Validacion de Edad
   validateAge(value){
     statusError.value = false;
     String p = '[0-9]';
@@ -400,7 +451,7 @@ class DataTableController extends GetxController {
       statusError.value = true;
     }
   }
-
+// Validacion de Numeros
   validateNum(value){
     statusError.value = false;
     value = value.replaceAll(",", ".");
@@ -411,7 +462,7 @@ class DataTableController extends GetxController {
         statusError.value = true;
       }
   }
-
+// Validacion de Tiempo
   validateTime(value){
     statusError.value = false;
     var arr = value.split("'");
