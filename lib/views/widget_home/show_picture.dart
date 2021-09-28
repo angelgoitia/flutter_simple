@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // ignore: must_be_immutable
+//Clase de Visualizacion de Imagen de la Tabla de Calificaciones
 class ShowPicture extends StatefulWidget {
   ShowPicture(this.name, this.url);
   final String name, url;
@@ -17,6 +18,7 @@ class _ShowPictureState extends State<ShowPicture> {
   _ShowPictureState(this.name, this.url);
   final String name,url;
 
+//Interfaz de Tabla de Calificaciones
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

@@ -1,13 +1,10 @@
+//Clase Usuario
+//Creacion de Atributos
 class MyUser {
-  final String? uid, email, image;
-  final int? type;
+  String? uid, email, name;
+  int? type;
+  DateTime? dateSelect;
+//Contructor
+  MyUser({this.uid, this.email, this.name, this.type, this.dateSelect});
 
-  MyUser({this.uid, this.email, this.image, this.type});
-
-  Map<String, Object?> toFirebaseMap({String? newImage}) {
-    return <String, Object?>{
-      'uid': uid,
-      'email': email,
-    };
-  }
 }

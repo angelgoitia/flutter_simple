@@ -1,6 +1,7 @@
 import 'package:flutter_simple/views/splash_screen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +19,16 @@ class MyApp extends StatelessWidget {
       title: '',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        hoverColor: Colors.blue,
+        primaryColor: Colors.blue,
+        accentColor: Colors.blue,
       ),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate
+      ],
+      supportedLocales: [
+        const Locale('es'),
+      ],
       home: SplashScreen(),
     );
   }

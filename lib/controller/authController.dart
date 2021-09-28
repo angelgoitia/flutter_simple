@@ -9,8 +9,11 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
+//Sincronizacion con Firebase 
+//
 class AuthController extends GetxController {
-  final googleSignIn = GoogleSignIn();
+  final googleSignIn = GoogleSignIn(); 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final user = MyUser().obs;
   final stateAuth = false.obs;
@@ -18,14 +21,17 @@ class AuthController extends GetxController {
   GlobalController globalController = Get.put(GlobalController()); 
   DataTableController dataTableController = Get.put(DataTableController()); 
 
+// Usuario obtenido de Firebase
   _userFromFirebase(dataUser, type) async{
-    print("user $user");
+    print("user $dataUser");
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     user.value = MyUser(
       uid:dataUser.uid,
       email: dataUser.email,
+      name: dataUser.isAnonymous? "Anónimo": dataUser.displayName,
       type: type,
+      dateSelect: DateTime.now(),
     );
 
     prefs.setString('uid', dataUser.uid);
@@ -55,7 +61,7 @@ class AuthController extends GetxController {
       signOut();
     }
   }
-
+//Permisos para poder concectarnos con cuenta de Google
   signInWithGoogle() async{
     globalController.loading();
     try{
@@ -80,6 +86,7 @@ class AuthController extends GetxController {
     }
   }
 
+// Creacion de Usuario con Email y Contraseña
   createUserWithEmailAndPassword(String email, String password) async {
     globalController.loading();
     try{
@@ -91,6 +98,7 @@ class AuthController extends GetxController {
     }
   }
 
+// Ingresar con Email y Contraseña
   signInWithEmailAndPassword(String email, String password) async{
     globalController.loading();
     try{
@@ -102,6 +110,7 @@ class AuthController extends GetxController {
     }
   }
 
+// Ingresar Anonimamente 
   signInAnonymously() async {
     globalController.loading();
     try{
@@ -112,7 +121,7 @@ class AuthController extends GetxController {
       showError(error);
     }
   }
-
+// Para cerrar sesion del aplicativo
   Future<void> signOut() async {
     globalController.loading();
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -126,6 +135,7 @@ class AuthController extends GetxController {
     });
   }
 
+// Mensajes de Errores generales del Logeo
   showError(error) async {
     var errorMessage;
     print(error.code);
@@ -137,34 +147,35 @@ class AuthController extends GetxController {
         break;
       case "ERROR_WRONG_PASSWORD":
       case "wrong-password":
-        errorMessage = "Wrong email or password combination.";
+        errorMessage = "Contraseña Invalida.";
         break;
       case "ERROR_USER_NOT_FOUND":
       case "user-not-found":
-        errorMessage = "No user found with this email.";
+        errorMessage = "Usuario con Encontrado con este Email.";
         break;
       case "ERROR_USER_DISABLED":
       case "user-disabled":
-        errorMessage = "User disabled.";
+        errorMessage = "Usuario deshabilitado.";
         break;
       case "ERROR_TOO_MANY_REQUESTS":
       case "operation-not-allowed":
-        errorMessage = "Too many requests to log into this account.";
+        errorMessage = "Demasiadas solicitudes para ingresar a esta cuenta.";
         break;
       case "ERROR_OPERATION_NOT_ALLOWED":
       case "operation-not-allowed":
-        errorMessage = "Server error, please try again later.";
+        errorMessage = "Error de servidor, porfavor intentelo mas tarde.";
         break;
       case "ERROR_INVALID_EMAIL":
       case "invalid-email":
-        errorMessage = "Email address is invalid.";
+        errorMessage = "Email Invalido.";
         break;
       default:
-        errorMessage = "Login failed. Please try again.";
+        errorMessage = "Error de Inicio de Sesion.";
         break;
     }
 
     if (errorMessage != null) {    
+      Get.back();
       globalController.showMessage(errorMessage, false);
       await Future.delayed(Duration(seconds: 1));
       Get.back();

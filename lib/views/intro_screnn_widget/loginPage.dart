@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/Fondo_Militar.jpeg"),
+          image: AssetImage("assets/Fondo_Militar.jpg"),
           fit: BoxFit.cover,
         ),
       ),
@@ -46,6 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                     'Inicio de Sesion',
                     textAlign: TextAlign.center,
                     style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                    
                   ),
                 ),
                 //if (isSigningIn) CircularProgressIndicator(),

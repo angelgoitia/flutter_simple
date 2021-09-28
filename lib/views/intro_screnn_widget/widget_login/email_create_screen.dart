@@ -17,13 +17,13 @@ class _EmailCreateState extends State<EmailCreate> {
   final _repeatPasswordController = TextEditingController();
 
   String? emailValidator(String? value) {
-    return (value == null || value.isEmpty) ? 'This is a required field' : null;
+    return (value == null || value.isEmpty) ? 'Este es un campo obligatorio' : null;
   }
 
   String? passwordValidator(String? value) {
-    if (value == null || value.isEmpty) return 'This is a required field';
-    if (value.length < 6) return 'Password should be at least 6 letters';
-    if (_passwordController.text != _repeatPasswordController.text) return 'Password do not match';
+    if (value == null || value.isEmpty) return 'Este es un campo obligatorio';
+    if (value.length < 6) return 'La contraseña debe tener minimo 6 letras';
+    if (_passwordController.text != _repeatPasswordController.text) return 'La contraseña no coincide';
     return null;
   }
 
@@ -32,7 +32,7 @@ class _EmailCreateState extends State<EmailCreate> {
     AuthController authController = Get.put(AuthController());
 
     return Scaffold(
-      appBar: AppBar(title: Text('Create account')),
+      appBar: AppBar(title: Text('Crear Cuenta')),
       body: Form(
         key: _formKey,
         child: Padding(
@@ -49,18 +49,18 @@ class _EmailCreateState extends State<EmailCreate> {
               SizedBox(height: 8),
               TextFormField(
                 controller: _passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
+                decoration: InputDecoration(labelText: 'Contraseña'),
                 validator: passwordValidator,
               ),
               SizedBox(height: 8),
               TextFormField(
                 controller: _repeatPasswordController,
-                decoration: InputDecoration(labelText: 'Repeat Password'),
+                decoration: InputDecoration(labelText: 'Repetir Contraseña'),
                 validator: passwordValidator,
               ),
               Center(
                 child: ElevatedButton(
-                  child: const Text('Create'),
+                  child: const Text('Crear Cuenta'),
                   onPressed: () {
                     if (_formKey.currentState?.validate() == true) {
                       authController.createUserWithEmailAndPassword(

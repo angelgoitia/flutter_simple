@@ -36,7 +36,20 @@ class DataTableWidget extends StatelessWidget {
                             children: [
                               Column(
                                 children: [
-                                  tableRow("Adominales", "Exercise"),
+                                  tableRow("Barras (M) o \n Suspensión (F)", "Exercise"),
+                                  tableRow("COEF2", "Code"),
+                                  Row(
+                                    children: [
+                                      tableRow("Rep", "typeEvaluate"),
+                                      tableRow("Nota", "typeEvaluate"),
+                                      tableRow("Ptos", "typeEvaluate"),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  tableRow("Abdominales", "Exercise"),
                                   tableRow("COEF1", "Code"),
                                   Row(
                                     children: [
@@ -84,6 +97,19 @@ class DataTableWidget extends StatelessWidget {
                             children: [
                               Column(
                                 children: [
+                                  tableRow("Pista de Combate", "Exercise"),
+                                  tableRow("COEF3", "Code"),
+                                  Row(
+                                    children: [
+                                      tableRow("Tiemp", "typeEvaluate"),
+                                      tableRow("Nota", "typeEvaluate"),
+                                      tableRow("Ptos", "typeEvaluate"),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              Column(
+                                children: [
                                   tableRow("Natacion: 25 mts", "Exercise"),
                                   tableRow("COEF2", "Code"),
                                   Row(
@@ -120,7 +146,7 @@ class DataTableWidget extends StatelessWidget {
             )
           ),
           Container(
-            width: 1332,
+            width: 1800,
             height: size.height - 244,
             child: ShowList()
           )
@@ -173,9 +199,10 @@ class DataTableWidget extends StatelessWidget {
     );
   }
 
+// dibujar header de la tabla
   Widget tableRow(String text, String type){
     return Container(
-      width: type == 'Evaluate'? 546 : type == 'Evaluate 2'? 182 : type== "Score"? 152 : type == "typeEvaluate"? 60.7 : type == "typeEvaluate 2"? 76 : 182,
+      width: type == 'Evaluate'? 729.18 : type == 'Evaluate 2'? 365.15 : type== "Score"? 152 : type == "typeEvaluate"? 60.8 : type == "typeEvaluate 2"? 76 : 182.3,
       height: type == 'Exercise' || type == 'Evaluate' || type == 'Evaluate 2' ? 40 : type != 'Code'? 40 : 20,
       alignment: Alignment.center,
       decoration: BoxDecoration(

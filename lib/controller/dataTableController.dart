@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:flutter_simple/controller/authController.dart';
 import 'package:flutter_simple/controller/globalController.dart';
 import 'package:flutter_simple/model/data.dart';
 
@@ -7,17 +8,22 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_simple/model/evaluate.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
 class DataTableController extends GetxController {
   TextEditingController controllerModalRemove = TextEditingController();
   final datas = <Data>[].obs;
   final statusError = false.obs;
+  final indexActivity = 6;
+  final statusVerify = true.obs;
 
   GlobalController globalController = Get.put(GlobalController()); 
 
   getData() async{
-    
+    statusVerify.value = true;
+    AuthController authController = Get.put(AuthController());  
+    DateFormat formatter = DateFormat('yyyy-MM-dd');
     var result, response, jsonResponse;
     globalController.loading();
     try {
@@ -30,6 +36,9 @@ class DataTableController extends GetxController {
             'Content-Type': 'application/json',
             'X-Requested-With': 'XMLHttpRequest',
           },
+          body: jsonEncode({
+            'date': formatter.format(authController.user.value.dateSelect!),
+          }),
         ); // Petición api  ---  Respuestas que recibe
         print(response.body);
         jsonResponse = jsonDecode(response.body);
@@ -66,87 +75,57 @@ class DataTableController extends GetxController {
   }
 /* Verificar si existe un registro */
   verifyDatas(){
-    var listEvaluate = <Evaluate>[];
 
-    listEvaluate.add(
-      Evaluate(
-        id: 1,
-        repTiemp: null,
-        note: null,
-        pts: null,
-      )
-    );
-    listEvaluate.add(
-      Evaluate(
-        id: 2,
-        repTiemp: null,
-        note: null,
-        pts: null,
-      )
-    );
-    listEvaluate.add(
-      Evaluate(
-        id: 3,
-        repTiemp: null,
-        note: null,
-        pts: null,
-      )
-    );
+    for (var data in datas) {
+      for( var i = data.listEvaluate!.length ; i <= indexActivity; i++ ) { 
+        data.listEvaluate!.add(
+          Evaluate(
+            id: i,
+            repTiemp: null,
+            note: null,
+            pts: null,
+          )
+        );
+      }
+    }
 
-    listEvaluate.add(
-      Evaluate(
-        id: 4,
-        repTiemp: null,
-        note: null,
-        pts: null,
-      )
-    );
+    if(datas.length == 0){
+      var listEvaluate = <Evaluate>[];
 
-    if(datas.length == 0)
+      for( var i = 1 ; i <= indexActivity; i++ ) { 
+        listEvaluate.add(
+          Evaluate(
+            id: i,
+            repTiemp: null,
+            note: null,
+            pts: null,
+          )
+        );
+      }
       datas.add(
         Data(
           id: datas.length+1,
           listEvaluate: listEvaluate,
         )
       );
+    }
+    statusVerify.value = false;
+
   }
 
   addData(){
     var listEvaluate = <Evaluate>[];
 
-    listEvaluate.add(
-      Evaluate(
-        id: 1,
-        repTiemp: null,
-        note: null,
-        pts: null,
-      )
-    );
-    listEvaluate.add(
-      Evaluate(
-        id: 2,
-        repTiemp: null,
-        note: null,
-        pts: null,
-      )
-    );
-    listEvaluate.add(
-      Evaluate(
-        id: 3,
-        repTiemp: null,
-        note: null,
-        pts: null,
-      )
-    );
-
-    listEvaluate.add(
-      Evaluate(
-        id: 4,
-        repTiemp: null,
-        note: null,
-        pts: null,
-      )
-    );
+    for( var i = 1 ; i <= indexActivity; i++ ) { 
+      listEvaluate.add(
+        Evaluate(
+          id: i,
+          repTiemp: null,
+          note: null,
+          pts: null,
+        )
+      );
+    }
 
     datas.add(
       Data(
@@ -251,44 +230,58 @@ class DataTableController extends GetxController {
       case 9:
       case 12:
       case 15:
+      case 18:
+      case 21:
         datas[indexList].listEvaluate![showIndex(indexColumn)].repTiemp = text == null? null : text;
         break;
       case 7:
       case 10:
       case 13:
       case 16:
+      case 19:
+      case 22:
         datas[indexList].listEvaluate![showIndex(indexColumn)].note = text == null? null : double.parse(text.replaceAll(",", "."));
         break;
       case 8:
       case 11:
       case 14:
       case 17:
+      case 20:
+      case 23:
         datas[indexList].listEvaluate![showIndex(indexColumn)].pts = text == null? null : double.parse(text.replaceAll(",", "."));
         break;
-      case 18:
+      case 24:
         datas[indexList].total = text == null? null : double.parse(text.replaceAll(",", "."));
         break;
-      case 19:
+      case 25:
         datas[indexList].average = text == null? null : double.parse(text.replaceAll(",", "."));
         break;
-      case 20:
+      case 26:
         datas[indexList].result = text;
         break;
       default:
         break;
-    } /* Tipos de Evaluaciones, para poner nulo = 0 o si se jala una cantidad*/
-    double? pt1 = datas[indexList].listEvaluate![0].pts == null? 0 : datas[indexList].listEvaluate![0].pts ;
-    double? pt2 = datas[indexList].listEvaluate![1].pts == null? 0 : datas[indexList].listEvaluate![1].pts ;
-    double? pt3 = datas[indexList].listEvaluate![2].pts == null? 0 : datas[indexList].listEvaluate![2].pts ;
-    double? pt4 = datas[indexList].listEvaluate![3].pts == null? 0 : datas[indexList].listEvaluate![3].pts ;
+    } 
+    
+    /* Tipos de Evaluaciones, para poner nulo = 0 o si se jala una cantidad*/
+    double? totalPts = 0, totalNts;
+    bool? statusNts = false;
+    int count = 0;
+    for( var i = 0 ; i < indexActivity; i++ ) {
+      totalPts = datas[indexList].listEvaluate![i].pts == null? 0 : datas[indexList].listEvaluate![i].pts;
+      totalNts = datas[indexList].listEvaluate![i].note == null? 0 : datas[indexList].listEvaluate![i].note;
 
-    double? nt1 = datas[indexList].listEvaluate![0].note == null? 0 : datas[indexList].listEvaluate![0].note ;
-    double? nt2 = datas[indexList].listEvaluate![1].note == null? 0 : datas[indexList].listEvaluate![1].note ;
-    double? nt3 = datas[indexList].listEvaluate![2].note == null? 0 : datas[indexList].listEvaluate![2].note ;
-    double? nt4 = datas[indexList].listEvaluate![3].note == null? 0 : datas[indexList].listEvaluate![3].note ;
+      if(datas[indexList].listEvaluate![i].note != null && datas[indexList].listEvaluate![i].note! > 0){
+        count++;
+      }
+      
+      if(datas[indexList].listEvaluate![i].note! == 0){
+        statusNts = true;
+      }
+    }
 
-    datas[indexList].total = (pt1!+pt2!+pt3!+pt4!); /* Sumatoria de Pts */
-    datas[indexList].average = ((nt1!+nt2!+nt3!+nt4!)/4); /*Sumatoria de Notas = Promedio */
+    datas[indexList].total = totalPts; /* Sumatoria de Pts */
+    datas[indexList].average = statusNts!? 0 : (totalNts! / count); /*Sumatoria de Notas y saca el Promedio */
   }
 /*Identificar las columnas , segun el tipo de Evaluacion */
   int showIndex(indexColumn){
@@ -298,8 +291,12 @@ class DataTableController extends GetxController {
       return 1;
     else if(indexColumn >= 12 && indexColumn <= 14)
       return 2;
-    else
+    else if(indexColumn >= 15 && indexColumn <= 17)
       return 3;
+    else if(indexColumn >= 18 && indexColumn <= 20)
+      return 4;
+    else
+      return 5;
   }
 /*Para mostrar el mensaje de Eliminar */
   showMessage(length) async {
@@ -419,13 +416,13 @@ class DataTableController extends GetxController {
 
 /* Validaciones */
   validateModal(value, indexColumn){
-    if(indexColumn >= 1 && indexColumn <= 2 || indexColumn == 20)
-      validateText(value); /* Validacion de Texto columna 1, 2 y 20 */
+    if(indexColumn >= 1 && indexColumn <= 2 || indexColumn == 26)
+      validateText(value); /* Validacion de Texto columna 1, 2 y 26 */
     else if (indexColumn == 3 )
       validateAge(value); /*Validacion de Años o Edad */
-    else if (indexColumn >= 4 && indexColumn <= 11 || indexColumn >= 13 && indexColumn <= 14 || indexColumn >= 16 && indexColumn <= 19)
+    else if (indexColumn >= 4 && indexColumn <= 14 || indexColumn >= 16 && indexColumn <= 17 || indexColumn >= 19 && indexColumn <= 20 || indexColumn >= 22 && indexColumn <= 25 )
       validateNum(value); /*Validacion de Numeros */
-    else if(indexColumn == 12 || indexColumn == 15)
+    else if(indexColumn == 15 || indexColumn == 18 || indexColumn == 21)
       validateTime(value);/*Validacion de Tiempo */
   }
 //Validacion de Texto
