@@ -105,7 +105,7 @@ class DataTableController extends GetxController {
       }
       datas.add(
         Data(
-          id: datas.length+1,
+          id: lastId,
           listEvaluate: listEvaluate,
         )
       );
