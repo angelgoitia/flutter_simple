@@ -1,10 +1,13 @@
 
 import 'package:flutter_simple/controller/dataTableController.dart';
+import 'package:flutter_simple/controller/globalController.dart';
 
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class ShowList extends StatefulWidget {
   const ShowList({Key? key}) : super(key: key);
@@ -18,8 +21,18 @@ class _ShowListState extends State<ShowList> {
   TextEditingController controllerModal = TextEditingController();
   TextEditingController controllerModalMin = TextEditingController();
   TextEditingController controllerModalSec = TextEditingController();
+  GlobalController globalController = Get.put(GlobalController());
   DataTableController dataTableController = Get.put(DataTableController());
   var min = 0, sec =0;
+  late stt.SpeechToText _speech;
+
+  @override
+  void initState(){
+    super.initState();
+    _speech = stt.SpeechToText();
+    dataTableController.isListening.value = false;
+  }
+
   // Verificacion de Filas de la Tabla de Registro
   @override
   Widget build(BuildContext context) {
@@ -194,7 +207,7 @@ class _ShowListState extends State<ShowList> {
                   padding: EdgeInsets.all(5),
                   child: new TextFormField(
                     controller: controllerModalMin,
-                    autofocus: true,
+                    autofocus: false,
                     keyboardType: TextInputType.number,
                     inputFormatters: [  
                       FilteringTextInputFormatter.digitsOnly,
@@ -207,7 +220,10 @@ class _ShowListState extends State<ShowList> {
                           Icons.delete,
                           color: Colors.red,
                           ),
-                        onPressed: () =>controllerModalMin.clear(),
+                        onPressed: () {
+                          stopSpeech();
+                          controllerModal.clear();
+                        },
                       ),
                     ),
                     textInputAction: TextInputAction.next,
@@ -231,13 +247,30 @@ class _ShowListState extends State<ShowList> {
                           Icons.delete,
                           color: Colors.red,
                           ),
-                        onPressed: () =>controllerModalSec.clear(),
+                        onPressed: () {
+                          stopSpeech();
+                          controllerModal.clear();
+                        },
                       ),
                     ),
                     textInputAction: TextInputAction.done,
                     onFieldSubmitted: (value) => validateForm(indexList, indexColumn, statusOrientation),
                   )
-                )
+                ),
+                Obx(
+                  () => AvatarGlow(
+                    animate: dataTableController.isListening.value,
+                    glowColor: Colors.blueAccent,
+                    endRadius: 75.0,
+                    duration: const Duration(milliseconds: 2000),
+                    repeatPauseDuration: const Duration(milliseconds: 100),
+                    repeat: true,
+                    child: FloatingActionButton(
+                      onPressed: () =>_listen(indexList, indexColumn),
+                      child: Icon(dataTableController.isListening.value? Icons.mic : Icons.mic_none),
+                    )
+                  ),
+                ),
               ],
             )
             : 
@@ -245,7 +278,7 @@ class _ShowListState extends State<ShowList> {
               children: [
                 new TextFormField(
                   controller: controllerModal,
-                  autofocus: true,
+                  autofocus: false,
                   textCapitalization: TextCapitalization.words, 
                   keyboardType: indexColumn >= 1 && indexColumn <= 2 || indexColumn == 26? TextInputType.text : TextInputType.number,
                   decoration: InputDecoration(
@@ -256,12 +289,29 @@ class _ShowListState extends State<ShowList> {
                         Icons.delete,
                         color: Colors.red,
                         ),
-                      onPressed: () =>controllerModal.clear(),
+                      onPressed: () {
+                        stopSpeech();
+                        controllerModal.clear();
+                      },
                     ),
                   ),
                   textInputAction: TextInputAction.done,
                   onFieldSubmitted: (value) => validateForm(indexList, indexColumn, statusOrientation),
-                )
+                ),
+                Obx(
+                  () => AvatarGlow(
+                    animate: dataTableController.isListening.value,
+                    glowColor: Colors.blueAccent,
+                    endRadius: 75.0,
+                    duration: const Duration(milliseconds: 2000),
+                    repeatPauseDuration: const Duration(milliseconds: 100),
+                    repeat: true,
+                    child: FloatingActionButton(
+                      onPressed: () =>_listen(indexList, indexColumn,),
+                      child: Icon(dataTableController.isListening.value? Icons.mic : Icons.mic_none),
+                    )
+                  ),
+                ),
               ],
             )
           )
@@ -274,7 +324,10 @@ class _ShowListState extends State<ShowList> {
             backgroundColor: MaterialStateProperty.all(Colors.blue)
           ),
           child: const Text('Guardar'),
-          onPressed: () async =>validateForm(indexList, indexColumn, statusOrientation),
+          onPressed: () async {
+            stopSpeech();
+            validateForm(indexList, indexColumn, statusOrientation);
+          },
         ),
         TextButton(
           style: ButtonStyle(
@@ -282,7 +335,10 @@ class _ShowListState extends State<ShowList> {
             backgroundColor: MaterialStateProperty.all(Colors.red)
           ),
           child: const Text('Cancelar'),
-          onPressed: () => closeModal(statusOrientation),
+          onPressed: () {
+            stopSpeech();
+            closeModal(statusOrientation);
+          },
         ),
       ],
     );
@@ -326,4 +382,78 @@ class _ShowListState extends State<ShowList> {
     Get.back();
   }
 
+  void _listen(indexList, indexColumn) async {
+    
+    if (!dataTableController.isListening.value) {
+      bool available = await _speech.initialize(
+        onStatus: (val) {
+          if(val == "done")
+            stopSpeech();
+        },
+        onError: (val) => stopSpeech(),
+      );
+      if (available) {
+        dataTableController.isListening.value = true;
+        _speech.listen(
+          onResult: (val) async {
+            
+            if(indexColumn >= 1 && indexColumn <= 2 || indexColumn == 26) //text nombre y especialidad
+              controllerModal.text = val.recognizedWords.capitalizeFirstofEach;
+            else if(indexColumn == 26)
+              controllerModal.text = val.recognizedWords.inCaps;
+            else if(indexColumn >= 3 && indexColumn <= 14 || indexColumn >= 16 && indexColumn <= 17 || indexColumn >= 19 && indexColumn <= 20 || indexColumn >= 22 && indexColumn <= 25 ){ //numero
+              if(isNumeric(val.recognizedWords.toLowerCase()))
+                controllerModal.text = val.recognizedWords;
+              else
+                controllerModal.text = globalController.getValueList(val.recognizedWords.toLowerCase());
+            }
+            else if(indexColumn == 15 || indexColumn == 18 || indexColumn == 21){// tiempo
+              var textVoice = val.recognizedWords.toLowerCase();
+              if(textVoice.contains('minutos') || textVoice.contains('minuto') || textVoice.contains('segundos') || textVoice.contains('segundo')){
+                
+                var arr = textVoice.split(' ');
+                var dataTime = await globalController.getNumberTime(arr);
+
+                if(isNumeric(dataTime.min))
+                  controllerModalMin.text = dataTime.min;
+                else
+                  controllerModalMin.text = globalController.getValueList(dataTime.min);
+
+                if(isNumeric(dataTime.sec))
+                  controllerModalSec.text = dataTime.sec;
+                else
+                  controllerModalSec.text = globalController.getValueList(dataTime.sec);
+              }
+            }
+          },
+        );
+      }
+    } else {
+      stopSpeech();
+    }
+  }
+
+  bool isNumeric(String? text) {
+    text = text!.replaceAll(',', '.');
+    // ignore: unnecessary_null_comparison
+    if(text == null) {
+      return false;
+    }
+    return double.tryParse(text) != null;
+  }
+  
+  stopSpeech(){
+    dataTableController.isListening.value = false;
+    _speech.stop();
+  }
 }
+
+extension CapExtension on String {
+  String get inCaps => this.length > 0 ?'${this[0].toUpperCase()}${this.substring(1)}':'';
+  String get allInCaps => this.toUpperCase();
+  String get capitalizeFirstofEach => this.replaceAll(RegExp(' +'), ' ').split(" ").map((str) => str.inCaps).join(" ");
+}
+
+// final helloWorld = 'hello world'.inCaps; // 'Hello world'
+// final helloWorld = 'hello world'.allInCaps; // 'HELLO WORLD'
+// final helloWorldCap = 'hello world'.capitalizeFirstofEach; // 'Hello World'

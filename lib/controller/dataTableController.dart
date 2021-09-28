@@ -17,6 +17,7 @@ class DataTableController extends GetxController {
   final statusError = false.obs;
   final indexActivity = 6;
   final statusVerify = true.obs;
+  final isListening = false.obs;
 
   GlobalController globalController = Get.put(GlobalController()); 
 
@@ -275,7 +276,7 @@ class DataTableController extends GetxController {
         count++;
       }
       
-      if(datas[indexList].listEvaluate![i].note! == 0){
+      if(datas[indexList].listEvaluate![i].note != null && datas[indexList].listEvaluate![i].note! == 0){
         statusNts = true;
       }
     }
