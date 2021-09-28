@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter_simple/model/evaluate.dart';
 // Clase Datos 
 // Creacion de Atributos
@@ -35,7 +33,7 @@ class Data {
     'age': age,
     'size': size,
     'weight': weight,
-    'listEvaluate': jsonEncode(listEvaluate!.map((i) => i.toJson()).toList()).toString(),
+    'listEvaluate': listEvaluate!.map((i) => i.toJson()).toList(),
     'total': total,
     'average': average,
     'result': result,

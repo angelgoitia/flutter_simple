@@ -51,7 +51,7 @@ class DataTableController extends GetxController {
             datas.value = (jsonResponse['datas'] as List).map((val) => Data.fromJson(val)).toList();
 
           await Future.delayed(Duration(seconds: 1));
-          verifyDatas();
+          verifyDatas(jsonResponse['lastId']);
           await Future.delayed(Duration(seconds: 1));
           Get.back();
 
@@ -75,7 +75,7 @@ class DataTableController extends GetxController {
     }
   }
 /* Verificar si existe un registro */
-  verifyDatas(){
+  verifyDatas(lastId){
 
     for (var data in datas) {
       for( var i = data.listEvaluate!.length ; i <= indexActivity; i++ ) { 
@@ -130,7 +130,7 @@ class DataTableController extends GetxController {
 
     datas.add(
       Data(
-        id: datas.length+1,
+        id: datas[datas.length-1].id!+1,
         listEvaluate: listEvaluate,
       )
     );
@@ -142,7 +142,8 @@ class DataTableController extends GetxController {
   }
 /*Para guardar El Api en el Servidor */
   saveData()async{
-    GlobalController globalController = Get.put(GlobalController());
+    AuthController authController = Get.put(AuthController()); 
+    DateFormat formatter = DateFormat('yyyy-MM-dd');
     var result, response, jsonResponse;
     globalController.loading();
 
@@ -160,7 +161,8 @@ class DataTableController extends GetxController {
               'X-Requested-With': 'XMLHttpRequest',
             },
             body: jsonEncode({
-              'datas': jsonEncode(datas.map((i) => i.toJson()).toList()).toString(),
+              'datas': datas,
+              'date' : formatter.format(authController.user.value.dateSelect!),
             }),
           ); // petición api
           print(response.body);
@@ -265,12 +267,15 @@ class DataTableController extends GetxController {
     } 
     
     /* Tipos de Evaluaciones, para poner nulo = 0 o si se jala una cantidad*/
-    double? totalPts = 0, totalNts;
+    double? totalPts = 0, totalNts = 0;
     bool? statusNts = false;
     int count = 0;
     for( var i = 0 ; i < indexActivity; i++ ) {
-      totalPts = datas[indexList].listEvaluate![i].pts == null? 0 : datas[indexList].listEvaluate![i].pts;
-      totalNts = datas[indexList].listEvaluate![i].note == null? 0 : datas[indexList].listEvaluate![i].note;
+      double? pts = datas[indexList].listEvaluate![i].pts == null? 0 : datas[indexList].listEvaluate![i].pts;
+      double? note = datas[indexList].listEvaluate![i].note == null? 0 : datas[indexList].listEvaluate![i].note;
+
+      totalPts = totalPts! + pts!; 
+      totalNts = totalNts! + note!;
 
       if(datas[indexList].listEvaluate![i].note != null && datas[indexList].listEvaluate![i].note! > 0){
         count++;
@@ -282,7 +287,7 @@ class DataTableController extends GetxController {
     }
 
     datas[indexList].total = totalPts; /* Sumatoria de Pts */
-    datas[indexList].average = statusNts!? 0 : (totalNts! / count); /*Sumatoria de Notas y saca el Promedio */
+    datas[indexList].average = statusNts! || count == 0? 0 : double.parse((totalNts! / count).toStringAsExponential(2)); /*Sumatoria de Notas y saca el Promedio */
   }
 /*Identificar las columnas , segun el tipo de Evaluacion */
   int showIndex(indexColumn){
