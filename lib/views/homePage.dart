@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                 child: Icon(Icons.add, color: Colors.white,),
                 label: "Agregar nuevo registro",
                 backgroundColor: Colors.purple,
-                onTap: () => dataTableController.addData(),
+                onTap: () => dataTableController.addData(true),
             ),
             SpeedDialChild(
                 child: Icon(Icons.delete, color: Colors.white,),
@@ -150,7 +150,7 @@ class _HomePageState extends State<HomePage> {
                 child: Icon(Icons.download, color: Colors.white,),
                 label: "Descargar Registros",
                 backgroundColor: Colors.cyan,
-                onTap: () async => await launch("http:://${globalController.url}/getPDF?name=${authController.user.value.name}&date=${authController.user.value.dateSelect}"),
+                onTap: () async => await launch("http://${globalController.url}/getPDF?name=${authController.user.value.email}&date=${authController.user.value.dateSelect}"),
             ),
           ],
         ),

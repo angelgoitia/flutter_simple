@@ -28,8 +28,8 @@ class AuthController extends GetxController {
 
     user.value = MyUser(
       uid:dataUser.uid,
-      email: dataUser.email,
-      name: dataUser.isAnonymous? "Anónimo": dataUser.displayName,
+      email: dataUser.isAnonymous? "anonimo":dataUser.email,
+      name: dataUser.isAnonymous? "anonimo": dataUser.displayName,
       type: type,
       dateSelect: DateTime.now(),
     );

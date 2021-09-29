@@ -18,6 +18,7 @@ class DataTableController extends GetxController {
   final indexActivity = 6;
   final statusVerify = true.obs;
   final isListening = false.obs;
+  final lastId = 0.obs;
 
   GlobalController globalController = Get.put(GlobalController()); 
 
@@ -51,7 +52,8 @@ class DataTableController extends GetxController {
             datas.value = (jsonResponse['datas'] as List).map((val) => Data.fromJson(val)).toList();
 
           await Future.delayed(Duration(seconds: 1));
-          verifyDatas(jsonResponse['lastId']);
+          lastId.value = jsonResponse['lastId'];
+          verifyDatas();
           await Future.delayed(Duration(seconds: 1));
           Get.back();
 
@@ -75,7 +77,7 @@ class DataTableController extends GetxController {
     }
   }
 /* Verificar si existe un registro */
-  verifyDatas(lastId){
+  verifyDatas(){
 
     for (var data in datas) {
       for( var i = data.listEvaluate!.length ; i <= indexActivity; i++ ) { 
@@ -105,7 +107,7 @@ class DataTableController extends GetxController {
       }
       datas.add(
         Data(
-          id: lastId,
+          id: lastId.value,
           listEvaluate: listEvaluate,
         )
       );
@@ -114,7 +116,7 @@ class DataTableController extends GetxController {
 
   }
 
-  addData(){
+  addData(status){
     var listEvaluate = <Evaluate>[];
 
     for( var i = 1 ; i <= indexActivity; i++ ) { 
@@ -130,10 +132,13 @@ class DataTableController extends GetxController {
 
     datas.add(
       Data(
-        id: datas[datas.length-1].id!+1,
+        id: status? datas[datas.length-1].id!+1 : lastId.value,
         listEvaluate: listEvaluate,
       )
     );
+
+    print("add data");
+    print("data: ${datas[datas.length-1].id}");
   }
 
   removeData(){
@@ -403,7 +408,7 @@ class DataTableController extends GetxController {
           onPressed: () {
             /* Limiapos la lista*/
             datas.value = <Data>[];
-            addData(); /* Agregamos primer registro por defecto */
+            addData(false); /* Agregamos primer registro por defecto */
             Get.back();
           },
         ),
