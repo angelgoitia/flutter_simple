@@ -39,6 +39,7 @@ class DataTableController extends GetxController {
             'X-Requested-With': 'XMLHttpRequest',
           },
           body: jsonEncode({
+            'username' : authController.user.value.email,
             'date': formatter.format(authController.user.value.dateSelect!),
           }),
         ); // Petición api  ---  Respuestas que recibe
@@ -115,7 +116,7 @@ class DataTableController extends GetxController {
     statusVerify.value = false;
 
   }
-
+  /* Verificar nuevo registro vacio */
   addData(status){
     var listEvaluate = <Evaluate>[];
 
@@ -137,8 +138,6 @@ class DataTableController extends GetxController {
       )
     );
 
-    print("add data");
-    print("data: ${datas[datas.length-1].id}");
   }
 
   removeData(){
@@ -166,6 +165,7 @@ class DataTableController extends GetxController {
               'X-Requested-With': 'XMLHttpRequest',
             },
             body: jsonEncode({
+              'username' : authController.user.value.email,
               'datas': datas,
               'date' : formatter.format(authController.user.value.dateSelect!),
             }),
