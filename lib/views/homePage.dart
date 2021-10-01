@@ -2,6 +2,7 @@ import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter_simple/controller/authController.dart';
 import 'package:flutter_simple/controller/dataTableController.dart';
 import 'package:flutter_simple/controller/globalController.dart';
+import 'package:flutter_simple/views/chat.dart';
 import 'package:flutter_simple/views/widget_home/dataTable.dart';
 
 import 'package:flutter/material.dart';
@@ -151,6 +152,12 @@ class _HomePageState extends State<HomePage> {
                 label: "Descargar Registros",
                 backgroundColor: Colors.cyan,
                 onTap: () async => await launch("http://${globalController.url}/getPDF?name=${authController.user.value.email}&date=${authController.user.value.dateSelect}"),
+            ),
+            SpeedDialChild(
+                child: Icon(Icons.question_answer, color: Colors.white,),
+                label: "Preguntas y respuestas",
+                backgroundColor: Colors.blue,
+                onTap: () => Get.to(() => Chat(), transition: Transition.zoom),
             ),
           ],
         ),
