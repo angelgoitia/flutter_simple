@@ -17,6 +17,7 @@ class AuthController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final user = MyUser().obs;
   final stateAuth = false.obs;
+  final passwordVisible = true.obs, passwordVisibleCreate = true.obs, passwordVisibleCreateConfirm = true.obs ;
 
   GlobalController globalController = Get.put(GlobalController()); 
   DataTableController dataTableController = Get.put(DataTableController()); 

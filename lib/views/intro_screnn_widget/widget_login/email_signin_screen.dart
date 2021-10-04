@@ -25,42 +25,86 @@ class _EmailSignInState extends State<EmailSignIn> {
 
     return Scaffold(
         appBar: AppBar(title: Text('Login with Email')),
-        body: Form(
-          key: _formKey,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 8),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: InputDecoration(labelText: 'Email'),
-                  validator: emptyValidator,
-                ),
-                SizedBox(height: 8),
-                TextFormField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(labelText: 'Password'),
-                  validator: emptyValidator,
-                ),
-                SizedBox(height: 8),
-                Center(
-                  child: ElevatedButton(
-                    child: const Text('Login'),
-                    onPressed: () {
-                      if (_formKey.currentState?.validate() == true) {
-                        authController.signInWithEmailAndPassword(
-                              _emailController.text,
-                              _passwordController.text,
-                            );
-                      }
-                    },
-                  ),
-                ),
-              ],
+        body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/Fondo_Militar.jpg"),
+              fit: BoxFit.cover,
             ),
           ),
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 8),
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      labelStyle: TextStyle(
+                        color: Colors.black,
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                    ),
+                    validator: emptyValidator,
+                    cursorColor: Colors.black,
+                  ),
+                  SizedBox(height: 8),
+                  Obx(
+                    () => new TextFormField(
+                      controller: _passwordController,
+                      maxLines: 1,
+                      autofocus: false,
+                      keyboardType: TextInputType.text,
+                      obscureText: authController.passwordVisible.value,
+                      decoration: new InputDecoration(
+                        labelText: "Contraseña",
+                        labelStyle: TextStyle(
+                          color: Colors.black,
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            authController.passwordVisible.value
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                            color: Colors.black,
+                            ),
+                          onPressed: () =>authController.passwordVisible.value = !authController.passwordVisible.value,
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                      ),
+                      cursorColor: Colors.black,
+                      validator: emptyValidator,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Center(
+                    child: ElevatedButton(
+                      child: const Text('Login'),
+                      onPressed: () {
+                        if (_formKey.currentState?.validate() == true) {
+                          authController.signInWithEmailAndPassword(
+                                _emailController.text,
+                                _passwordController.text,
+                              );
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
         )
     );
   }

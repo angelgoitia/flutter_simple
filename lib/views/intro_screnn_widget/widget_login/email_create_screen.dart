@@ -33,47 +33,115 @@ class _EmailCreateState extends State<EmailCreate> {
 
     return Scaffold(
       appBar: AppBar(title: Text('Crear Cuenta')),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 8),
-              TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(labelText: 'Email'),
-                validator: emailValidator,
-              ),
-              SizedBox(height: 8),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(labelText: 'Contraseña'),
-                validator: passwordValidator,
-              ),
-              SizedBox(height: 8),
-              TextFormField(
-                controller: _repeatPasswordController,
-                decoration: InputDecoration(labelText: 'Repetir Contraseña'),
-                validator: passwordValidator,
-              ),
-              Center(
-                child: ElevatedButton(
-                  child: const Text('Crear Cuenta'),
-                  onPressed: () {
-                    if (_formKey.currentState?.validate() == true) {
-                      authController.createUserWithEmailAndPassword(
-                            _emailController.text,
-                            _passwordController.text,
-                          );
-                    }
-                  },
-                ),
-              ),
-            ],
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/Fondo_Militar.jpg"),
+            fit: BoxFit.cover,
           ),
         ),
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 8),
+                TextFormField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                  ),
+                  cursorColor: Colors.black,
+                  validator: emailValidator,
+                ),
+                SizedBox(height: 8),
+                Obx(
+                  () => new TextFormField(
+                    controller: _passwordController,
+                    maxLines: 1,
+                    autofocus: false,
+                    keyboardType: TextInputType.text,
+                    obscureText: authController.passwordVisibleCreate.value,
+                    decoration: new InputDecoration(
+                      labelText: "Contraseña",
+                      labelStyle: TextStyle(
+                        color: Colors.black,
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          authController.passwordVisibleCreate.value
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                          color: Colors.black,
+                          ),
+                        onPressed: () =>authController.passwordVisibleCreate.value = !authController.passwordVisibleCreate.value,
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                    ),
+                    cursorColor: Colors.black,
+                    validator: passwordValidator,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Obx(
+                  () => new TextFormField(
+                    controller: _repeatPasswordController,
+                    maxLines: 1,
+                    autofocus: false,
+                    keyboardType: TextInputType.text,
+                    obscureText: authController.passwordVisibleCreateConfirm.value,
+                    decoration: new InputDecoration(
+                      labelText: "Repetir Contraseña",
+                      labelStyle: TextStyle(
+                        color: Colors.black,
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          authController.passwordVisibleCreateConfirm.value
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                          color: Colors.black,
+                          ),
+                        onPressed: () =>authController.passwordVisibleCreateConfirm.value = !authController.passwordVisibleCreateConfirm.value,
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                    ),
+                    cursorColor: Colors.black,
+                    validator: passwordValidator,
+                  ),
+                ),
+                Center(
+                  child: ElevatedButton(
+                    child: const Text('Crear Cuenta'),
+                    onPressed: () {
+                      if (_formKey.currentState?.validate() == true) {
+                        authController.createUserWithEmailAndPassword(
+                              _emailController.text,
+                              _passwordController.text,
+                            );
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
       ),
     ); 
   }
