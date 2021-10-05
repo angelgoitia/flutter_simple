@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Text(
                     'Inicio de Sesion',
                     textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, color: Colors.white),
                     
                   ),
                 ),
@@ -87,7 +87,15 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       SizedBox(height: 48),
                       OutlinedButton(
-                        child: Text('Crear Cuenta'),
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(width: 1.0, color: Colors.white),
+                        ),
+                        child: Text(
+                          'Crear Cuenta',
+                          style: TextStyle(
+                            color: Colors.white
+                          ),
+                        ),
                         onPressed: () => Get.to(() => EmailCreate(), transition: Transition.rightToLeft),
                       ),
                     ],

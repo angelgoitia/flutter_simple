@@ -32,13 +32,16 @@ class _EmailCreateState extends State<EmailCreate> {
     AuthController authController = Get.put(AuthController());
 
     return Scaffold(
-      appBar: AppBar(title: Text('Crear Cuenta')),
+      appBar: AppBar(
+        title: Text('Crear Cuenta')),
       body: Container(
         width: double.infinity,
         height: double.infinity,
         alignment: Alignment.center,
         decoration: BoxDecoration(
+          color: const Color(0xFFC2EBAC),
           image: DecorationImage(
+            colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.2), BlendMode.dstATop),
             image: AssetImage("assets/Fondo_Militar.jpg"),
             fit: BoxFit.cover,
           ),

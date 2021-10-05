@@ -18,10 +18,10 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: '',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        hoverColor: Colors.blue,
-        primaryColor: Colors.blue,
-        accentColor: Colors.blue,
+        primarySwatch: Colors.green,
+        hoverColor: Colors.green,
+        primaryColor: Colors.green,
+        accentColor: Colors.green,
       ),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate

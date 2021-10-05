@@ -8,8 +8,8 @@
         </intent>
     </queries>
    <application
-        android:label="flutter_simple"
-        android:icon="@mipmap/ic_launcher">
+        android:label="SICEF"
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

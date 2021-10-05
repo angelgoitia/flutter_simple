@@ -30,7 +30,9 @@ class _EmailSignInState extends State<EmailSignIn> {
           height: double.infinity,
           alignment: Alignment.center,
           decoration: BoxDecoration(
+            color: const Color(0xFFC2EBAC),
             image: DecorationImage(
+              colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.2), BlendMode.dstATop),
               image: AssetImage("assets/Fondo_Militar.jpg"),
               fit: BoxFit.cover,
             ),
