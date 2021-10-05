@@ -3,18 +3,17 @@ import 'package:flutter_simple/controller/authController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class EmailSignIn extends StatefulWidget {
-  static Widget create(BuildContext context) => EmailSignIn();
+class ForgotPassword extends StatefulWidget {
+  static Widget create(BuildContext context) => ForgotPassword();
 
   @override
-  _EmailSignInState createState() => _EmailSignInState();
+  _ForgotPasswordState createState() => _ForgotPasswordState();
 }
 
-class _EmailSignInState extends State<EmailSignIn> {
+class _ForgotPasswordState extends State<ForgotPassword> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-
+  
   String? emptyValidator(String? value) {
     return (value == null || value.isEmpty) ? 'Este es un campo obligatorio' : null;
   }
@@ -24,7 +23,7 @@ class _EmailSignInState extends State<EmailSignIn> {
     AuthController authController = Get.put(AuthController());
 
     return Scaffold(
-        appBar: AppBar(title: Text('Iniciar sesión')),
+        appBar: AppBar(title: Text('Olvido de contraseña')),
         body: Container(
           width: double.infinity,
           height: double.infinity,
@@ -60,44 +59,13 @@ class _EmailSignInState extends State<EmailSignIn> {
                     cursorColor: Colors.black,
                   ),
                   SizedBox(height: 8),
-                  Obx(
-                    () => new TextFormField(
-                      controller: _passwordController,
-                      maxLines: 1,
-                      autofocus: false,
-                      keyboardType: TextInputType.text,
-                      obscureText: authController.passwordVisible.value,
-                      decoration: new InputDecoration(
-                        labelText: "Contraseña",
-                        labelStyle: TextStyle(
-                          color: Colors.black,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            authController.passwordVisible.value
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                            color: Colors.black,
-                            ),
-                          onPressed: () =>authController.passwordVisible.value = !authController.passwordVisible.value,
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                        ),
-                      ),
-                      cursorColor: Colors.black,
-                      validator: emptyValidator,
-                    ),
-                  ),
-                  SizedBox(height: 8),
                   Center(
                     child: ElevatedButton(
-                      child: const Text('iniciar sesión'),
+                      child: const Text('Recuperar cuenta'),
                       onPressed: () {
                         if (_formKey.currentState?.validate() == true) {
-                          authController.signInWithEmailAndPassword(
+                          authController.forgotPassword(
                                 _emailController.text,
-                                _passwordController.text,
                               );
                         }
                       },

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_simple/controller/dataTableController.dart';
 import 'package:flutter_simple/controller/globalController.dart';
 import 'package:flutter_simple/model/user.dart';
@@ -178,6 +180,29 @@ class AuthController extends GetxController {
     if (errorMessage != null) {    
       Get.back();
       globalController.showMessage(errorMessage, false);
+      await Future.delayed(Duration(seconds: 1));
+      Get.back();
+    }
+  }
+
+  forgotPassword(String email) async
+  {
+    var result;
+    globalController.loading();
+    try{
+      result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        await _auth.sendPasswordResetEmail(email: email);
+        Get.back();
+        Get.back();
+        globalController.showMessage("Te hemos enviado un correo electrónico, Por favor revisar!", true); 
+        await Future.delayed(Duration(seconds: 1));
+        Get.back();
+
+      }
+    }on SocketException catch (_) {
+      Get.back();
+      globalController.showMessage("Sin conexión a internet", false); 
       await Future.delayed(Duration(seconds: 1));
       Get.back();
     }

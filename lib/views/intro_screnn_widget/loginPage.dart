@@ -4,6 +4,7 @@ import 'package:flutter_simple/views/intro_screnn_widget/loginButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_simple/views/intro_screnn_widget/widget_login/email_create_screen.dart';
 import 'package:flutter_simple/views/intro_screnn_widget/widget_login/email_signin_screen.dart';
+import 'package:flutter_simple/views/intro_screnn_widget/widget_login/forgot_password_screen.dart';
 import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
@@ -85,7 +86,17 @@ class _LoginPageState extends State<LoginPage> {
                         textColor: Colors.white,
                         onTap: () => authController.signInAnonymously(),
                       ),
-                      SizedBox(height: 48),
+                      SizedBox(height: 10),
+                      TextButton(
+                        child: Text(
+                          '¿Olvidaste tu contraseña?',
+                          style: TextStyle(
+                            color: Colors.white
+                          ),
+                        ),
+                        onPressed: () => Get.to(() => ForgotPassword(), transition: Transition.rightToLeft),
+                      ),
+                      SizedBox(height: 38),
                       OutlinedButton(
                         style: OutlinedButton.styleFrom(
                           side: BorderSide(width: 1.0, color: Colors.white),
