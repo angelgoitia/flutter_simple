@@ -15,7 +15,7 @@ class DataTableController extends GetxController {
   TextEditingController controllerModalRemove = TextEditingController();
   final datas = <Data>[].obs;
   final statusError = false.obs;
-  final indexActivity = 6;
+  final indexActivity = 5;
   final statusVerify = true.obs;
   final isListening = false.obs;
   final lastId = 0.obs;
@@ -235,41 +235,29 @@ class DataTableController extends GetxController {
         datas[indexList].weight = text == null? null : double.parse(text.replaceAll(",", "."));
         break;
       case 6:
+        datas[indexList].listEvaluate![showIndex(indexColumn)].repTiemp = text == null? null : text;
+
+        break;
       case 9:
       case 12:
       case 15:
       case 18:
-      case 21:
         datas[indexList].listEvaluate![showIndex(indexColumn)].repTiemp = text == null? null : text;
         break;
-      case 7:
-      case 10:
-      case 13:
-      case 16:
-      case 19:
-      case 22:
-        datas[indexList].listEvaluate![showIndex(indexColumn)].note = text == null? null : double.parse(text.replaceAll(",", "."));
-        break;
-      case 8:
-      case 11:
-      case 14:
-      case 17:
-      case 20:
-      case 23:
-        datas[indexList].listEvaluate![showIndex(indexColumn)].pts = text == null? null : double.parse(text.replaceAll(",", "."));
-        break;
-      case 24:
+      case 21:
         datas[indexList].total = text == null? null : double.parse(text.replaceAll(",", "."));
         break;
-      case 25:
+      case 22:
         datas[indexList].average = text == null? null : double.parse(text.replaceAll(",", "."));
         break;
-      case 26:
+      case 23:
         datas[indexList].result = text;
         break;
       default:
         break;
     } 
+
+    
     
     /* Tipos de Evaluaciones, para poner nulo = 0 o si se jala una cantidad*/
     double? totalPts = 0, totalNts = 0;

@@ -3,18 +3,19 @@ import 'package:flutter_simple/model/evaluate.dart';
 // Creacion de Atributos
 class Data {
   String? specialty, name, result;
-  int? id, age;
+  int? id, gender, age;
   double? size, weight, total, average;
   List<Evaluate>? listEvaluate;
 
 //Constructor
-  Data({this.id, this.specialty, this.name, this.age, this.size, this.weight, this.listEvaluate, this.total, this.average, this.result});
+  Data({this.id, this.specialty, this.name, this.gender, this.age, this.size, this.weight, this.listEvaluate, this.total, this.average, this.result});
 
   factory  Data.fromJson(Map<String, dynamic> json) {
     return new Data(
       id : json['id'],
       specialty : json['specialty'],
       name : json['name'],
+      gender : json['gender'],
       age : json['age'],
       size : json['size'] == null? null : double.parse(json['size']),
       weight : json['weight'] == null? null : double.parse(json['weight']),
@@ -30,6 +31,7 @@ class Data {
     'id': id,
     'specialty': specialty,
     'name': name,
+    'gender': gender,
     'age': age,
     'size': size,
     'weight': weight,

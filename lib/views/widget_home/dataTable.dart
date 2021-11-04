@@ -27,6 +27,7 @@ class DataTableWidget extends StatelessWidget {
                       table("Grado \n Especialidad", false),
                       table("Apellido y Nombre", false),
                       table("EDAD", true),
+                      table("GENERO", true),
                       table("TALLA Mts", true),
                       table("PESO Kg", true),
                       Column(
@@ -51,19 +52,6 @@ class DataTableWidget extends StatelessWidget {
                                 children: [
                                   tableRow("Abdominales", "Exercise"),
                                   tableRow("COEF1", "Code"),
-                                  Row(
-                                    children: [
-                                      tableRow("Rep", "typeEvaluate"),
-                                      tableRow("Nota", "typeEvaluate"),
-                                      tableRow("Ptos", "typeEvaluate"),
-                                    ],
-                                  )
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  tableRow("Planchas (M) o \n Semiplanchas (F)", "Exercise"),
-                                  tableRow("COEF2", "Code"),
                                   Row(
                                     children: [
                                       tableRow("Rep", "typeEvaluate"),
@@ -202,7 +190,7 @@ class DataTableWidget extends StatelessWidget {
 // dibujar header de la tabla
   Widget tableRow(String text, String type){
     return Container(
-      width: type == 'Evaluate'? 729.18 : type == 'Evaluate 2'? 365.15 : type== "Score"? 152 : type == "typeEvaluate"? 60.8 : type == "typeEvaluate 2"? 76 : 182.3,
+      width: type == 'Evaluate'? 546 : type == 'Evaluate 2'? 365.15 : type== "Score"? 152 : type == "typeEvaluate"? 60.8 : type == "typeEvaluate 2"? 76 : 182.3,
       height: type == 'Exercise' || type == 'Evaluate' || type == 'Evaluate 2' ? 40 : type != 'Code'? 40 : 20,
       alignment: Alignment.center,
       decoration: BoxDecoration(

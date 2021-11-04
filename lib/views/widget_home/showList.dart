@@ -6,6 +6,8 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gender_picker/gender_picker.dart';
+import 'package:gender_picker/source/enums.dart';
 import 'package:get/get.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
@@ -23,7 +25,7 @@ class _ShowListState extends State<ShowList> {
   TextEditingController controllerModalSec = TextEditingController();
   GlobalController globalController = Get.put(GlobalController());
   DataTableController dataTableController = Get.put(DataTableController());
-  var min = 0, sec =0;
+  var min = 0, sec =0, gender = 0;
   late stt.SpeechToText _speech;
 
   @override
@@ -53,29 +55,27 @@ class _ShowListState extends State<ShowList> {
               row(1, index, dataTableController.datas[index].specialty == null? null :  dataTableController.datas[index].specialty.toString(), 2),
               row(2, index, dataTableController.datas[index].name == null? null : dataTableController.datas[index].name.toString(), 3),
               row(3, index, dataTableController.datas[index].age == null? null : dataTableController.datas[index].age.toString(), 4),
-              row(4, index, dataTableController.datas[index].size == null? null : dataTableController.datas[index].size.toString(), 5),
-              row(5, index, dataTableController.datas[index].weight == null? null : dataTableController.datas[index].weight.toString(), 6),
-              row(6, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![0].repTiemp == null? null : dataTableController.datas[index].listEvaluate![0].repTiemp.toString(), 7),
-              row(7, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![0].note == null? null : dataTableController.datas[index].listEvaluate![0].note.toString(), 7),
-              row(8, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![0].pts == null? null :  dataTableController.datas[index].listEvaluate![0].pts.toString(), 7),
-              row(9, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![1].repTiemp == null? null : dataTableController.datas[index].listEvaluate![1].repTiemp.toString(), 7),
-              row(10, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![1].note == null? null : dataTableController.datas[index].listEvaluate![1].note.toString(), 7),
-              row(11, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![1].pts == null? null : dataTableController.datas[index].listEvaluate![1].pts.toString(), 7),
-              row(12, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![2].repTiemp == null? null : dataTableController.datas[index].listEvaluate![2].repTiemp.toString(), 7),
-              row(13, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![2].note == null? null : dataTableController.datas[index].listEvaluate![2].note.toString(), 7),
-              row(14, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![2].pts == null? null : dataTableController.datas[index].listEvaluate![2].pts.toString(), 7),
-              row(15, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![3].repTiemp == null? null : dataTableController.datas[index].listEvaluate![3].repTiemp.toString(), 7),
-              row(16, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![3].note == null? null : dataTableController.datas[index].listEvaluate![3].note.toString(), 7),
-              row(17, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![3].pts == null? null : dataTableController.datas[index].listEvaluate![3].pts.toString(), 7),
-              row(18, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![4].repTiemp == null? null : dataTableController.datas[index].listEvaluate![4].repTiemp.toString(), 7),
-              row(19, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![4].note == null? null : dataTableController.datas[index].listEvaluate![4].note.toString(), 7),
-              row(20, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![4].pts == null? null : dataTableController.datas[index].listEvaluate![4].pts.toString(), 7),
-              row(21, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![5].repTiemp == null? null : dataTableController.datas[index].listEvaluate![5].repTiemp.toString(), 7),
-              row(22, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![5].note == null? null : dataTableController.datas[index].listEvaluate![5].note.toString(), 7),
-              row(23, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![5].pts == null? null : dataTableController.datas[index].listEvaluate![5].pts.toString(), 7),
-              row(24, index, dataTableController.datas[index].total == null? null : dataTableController.datas[index].total.toString(), 8),
-              row(25, index, dataTableController.datas[index].average == null? null : dataTableController.datas[index].average.toString(), 8),
-              row(26, index, dataTableController.datas[index].result == null? null : dataTableController.datas[index].result.toString(), 9),
+              row(4, index, dataTableController.datas[index].gender == null? null : dataTableController.datas[index].gender.toString(), 4),
+              row(5, index, dataTableController.datas[index].size == null? null : dataTableController.datas[index].size.toString(), 5),
+              row(6, index, dataTableController.datas[index].weight == null? null : dataTableController.datas[index].weight.toString(), 6),
+              row(7, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![0].repTiemp == null? null : dataTableController.datas[index].listEvaluate![0].repTiemp.toString(), 7),
+              row(8, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![0].note == null? null : dataTableController.datas[index].listEvaluate![0].note.toString(), 7),
+              row(9, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![0].pts == null? null :  dataTableController.datas[index].listEvaluate![0].pts.toString(), 7),
+              row(10, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![1].repTiemp == null? null : dataTableController.datas[index].listEvaluate![1].repTiemp.toString(), 7),
+              row(11, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![1].note == null? null : dataTableController.datas[index].listEvaluate![1].note.toString(), 7),
+              row(12, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![1].pts == null? null : dataTableController.datas[index].listEvaluate![1].pts.toString(), 7),
+              row(13, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![2].repTiemp == null? null : dataTableController.datas[index].listEvaluate![2].repTiemp.toString(), 7),
+              row(14, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![2].note == null? null : dataTableController.datas[index].listEvaluate![2].note.toString(), 7),
+              row(15, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![2].pts == null? null : dataTableController.datas[index].listEvaluate![2].pts.toString(), 7),
+              row(16, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![3].repTiemp == null? null : dataTableController.datas[index].listEvaluate![3].repTiemp.toString(), 7),
+              row(17, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![3].note == null? null : dataTableController.datas[index].listEvaluate![3].note.toString(), 7),
+              row(18, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![3].pts == null? null : dataTableController.datas[index].listEvaluate![3].pts.toString(), 7),
+              row(19, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![4].repTiemp == null? null : dataTableController.datas[index].listEvaluate![4].repTiemp.toString(), 7),
+              row(20, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![4].note == null? null : dataTableController.datas[index].listEvaluate![4].note.toString(), 7),
+              row(21, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![4].pts == null? null : dataTableController.datas[index].listEvaluate![4].pts.toString(), 7),
+              row(22, index, dataTableController.datas[index].total == null? null : dataTableController.datas[index].total.toString(), 8),
+              row(23, index, dataTableController.datas[index].average == null? null : dataTableController.datas[index].average.toString(), 8),
+              row(24, index, dataTableController.datas[index].result == null? null : dataTableController.datas[index].result.toString(), 9),
             ],
           );
         }
@@ -123,44 +123,24 @@ class _ShowListState extends State<ShowList> {
         showModal(text, indexList, indexColumn, 'Edad');
         break;
       case 4:
-        showModal(text, indexList, indexColumn, 'Talla Mts');
+        showModal(text, indexList, indexColumn, 'Genero');
         break;
       case 5:
-        showModal(text, indexList, indexColumn, 'Peso Kg');
+        showModal(text, indexList, indexColumn, 'Talla Mts');
         break;
       case 6:
-      case 9:
-      case 12:
-        showModal(text, indexList, indexColumn, 'Rep');
+        showModal(text, indexList, indexColumn, 'Peso Kg');
         break;
       case 7:
       case 10:
       case 13:
+        showModal(text, indexList, indexColumn, 'Rep');
+        break;
       case 16:
       case 19:
-      case 22:
-        showModal(text, indexList, indexColumn, 'Nota');
-        break;
-      case 8:
-      case 11:
-      case 14:
-      case 17:
-      case 20:
-      case 23:
-        showModal(text, indexList, indexColumn, 'Ptos');
-        break;
-      case 15:
-      case 18:
-      case 21:
         showModal(text, indexList, indexColumn, 'Tiemp');
         break;
       case 24:
-        showModal(text, indexList, indexColumn, 'Total');
-        break;
-      case 25:
-        showModal(text, indexList, indexColumn, 'Prom (#)');
-        break;
-      case 26:
         showModal(text, indexList, indexColumn, 'Resultado de Control');
         break;
       default:
@@ -180,8 +160,8 @@ class _ShowListState extends State<ShowList> {
       DeviceOrientation.portraitDown,
     ]);
     
-// Verficacion del Tiempo en las filas 15, 18 y 21 , del Tipo Evaluacion(Pista de compate, Carrea y Natacion)
-    if(indexColumn == 15 || indexColumn == 18 || indexColumn == 21 ){
+// Verficacion del Tiempo en las filas 13, 16 y 19 , del Tipo Evaluacion(Pista de compate, Carrea y Natacion)
+    if(indexColumn == 13 || indexColumn == 16 || indexColumn == 19){
       if(text == null){
         controllerModalMin.clear();
         controllerModalSec.clear();
@@ -200,7 +180,37 @@ class _ShowListState extends State<ShowList> {
       content: new Row(
         children: <Widget>[
           new Expanded(
-            child: indexColumn == 15 || indexColumn == 18 || indexColumn == 21? 
+            child: indexColumn ==4?
+            Column(
+              children: [
+                GenderPickerWithImage(
+                  showOtherGender: false,
+                  verticalAlignedText: false,
+                  selectedGender: Gender.Male,
+                  maleText: "Masculino ",
+                  femaleText: "Femenino",
+                  selectedGenderTextStyle: TextStyle(
+                      color: Colors.green, fontWeight: FontWeight.bold),
+                  unSelectedGenderTextStyle: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.normal),
+                  onChanged: (Gender? result) {
+                    print(result);
+                    if(result == Gender.Male )
+                      gender = 0;
+                    else 
+                      gender = 1;
+                  },
+                  equallyAligned: true,
+                  animationDuration: Duration(milliseconds: 300),
+                  isCircular: true,
+                  // default : true,
+                  opacityOfGradient: 0.4,
+                  padding: const EdgeInsets.all(3),
+                  size: 100, //default : 40
+                )
+              ],
+            )
+            : indexColumn == 13 || indexColumn == 16 || indexColumn == 19? 
             Column(
               children: [
                 Container(
@@ -280,9 +290,9 @@ class _ShowListState extends State<ShowList> {
                   controller: controllerModal,
                   autofocus: false,
                   textCapitalization: TextCapitalization.words, 
-                  keyboardType: indexColumn >= 1 && indexColumn <= 2 || indexColumn == 26? TextInputType.text : TextInputType.number,
+                  keyboardType: indexColumn >= 1 && indexColumn <= 2? TextInputType.text : TextInputType.number,
                   decoration: InputDecoration(
-                    hintText: (indexColumn >= 1 && indexColumn <= 2 || indexColumn == 26)? '' : '10.5 ó 10',
+                    hintText: (indexColumn >= 1 && indexColumn <= 2)? '' : '10.5 ó 10',
                     border: OutlineInputBorder(),
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -346,7 +356,7 @@ class _ShowListState extends State<ShowList> {
 
   validateForm(indexList, indexColumn, statusOrientation)async{
     int min = 0, sec = 0;
-    if(indexColumn == 15 || indexColumn == 18 || indexColumn == 21 ){
+    if(indexColumn == 13 || indexColumn == 16 || indexColumn == 19 ){
       min = controllerModalMin.text.isEmpty? 0 : int.parse(controllerModalMin.text);
       sec = controllerModalSec.text.isEmpty? 0 : int.parse(controllerModalSec.text);
       await dataTableController.validateModal("$min'$sec''", indexColumn);
@@ -355,7 +365,7 @@ class _ShowListState extends State<ShowList> {
       await dataTableController.validateModal(controllerModal.text, indexColumn);
 
     if(!dataTableController.statusError.value){
-      if(indexColumn == 15 || indexColumn == 18 || indexColumn == 21 ){
+      if(indexColumn == 13 || indexColumn == 16 || indexColumn == 19 ){
         if(min == 0 && sec == 0)
           dataTableController.updateData(indexList, indexColumn, null);
         else
