@@ -55,7 +55,7 @@ class _ShowListState extends State<ShowList> {
               row(1, index, dataTableController.datas[index].specialty == null? null :  dataTableController.datas[index].specialty.toString(), 2),
               row(2, index, dataTableController.datas[index].name == null? null : dataTableController.datas[index].name.toString(), 3),
               row(3, index, dataTableController.datas[index].age == null? null : dataTableController.datas[index].age.toString(), 4),
-              row(4, index, dataTableController.datas[index].gender == null? null : dataTableController.datas[index].gender.toString(), 4),
+              row(4, index, dataTableController.datas[index].gender == null? null : dataTableController.datas[index].gender == 0? 'M' : 'F', 4),
               row(5, index, dataTableController.datas[index].size == null? null : dataTableController.datas[index].size.toString(), 5),
               row(6, index, dataTableController.datas[index].weight == null? null : dataTableController.datas[index].weight.toString(), 6),
               row(7, index, dataTableController.datas[index].listEvaluate == null || dataTableController.datas[index].listEvaluate!.length == 0 ? null : dataTableController.datas[index].listEvaluate![0].repTiemp == null? null : dataTableController.datas[index].listEvaluate![0].repTiemp.toString(), 7),
@@ -160,8 +160,8 @@ class _ShowListState extends State<ShowList> {
       DeviceOrientation.portraitDown,
     ]);
     
-// Verficacion del Tiempo en las filas 13, 16 y 19 , del Tipo Evaluacion(Pista de compate, Carrea y Natacion)
-    if(indexColumn == 13 || indexColumn == 16 || indexColumn == 19){
+// Verficacion del Tiempo en las filas 7, 13, 16 y 19 , del Tipo Evaluacion(Pista de compate, Carrea y Natacion)
+    if((indexColumn == 4 && dataTableController.datas[indexList].gender == 1) || indexColumn == 13 || indexColumn == 16 || indexColumn == 19){
       if(text == null){
         controllerModalMin.clear();
         controllerModalSec.clear();
@@ -180,7 +180,7 @@ class _ShowListState extends State<ShowList> {
       content: new Row(
         children: <Widget>[
           new Expanded(
-            child: indexColumn ==4?
+            child: indexColumn == 4?
             Column(
               children: [
                 GenderPickerWithImage(
@@ -210,7 +210,7 @@ class _ShowListState extends State<ShowList> {
                 )
               ],
             )
-            : indexColumn == 13 || indexColumn == 16 || indexColumn == 19? 
+            : (indexColumn == 4 && dataTableController.datas[indexList].gender == 1) || indexColumn == 13 || indexColumn == 16 || indexColumn == 19? 
             Column(
               children: [
                 Container(
@@ -370,8 +370,11 @@ class _ShowListState extends State<ShowList> {
           dataTableController.updateData(indexList, indexColumn, null);
         else
           dataTableController.updateData(indexList, indexColumn, "$min'$sec''");
-      }else
+      }else if(indexColumn == 4)
+        dataTableController.updateData(indexList, indexColumn, gender);
+      else
         dataTableController.updateData(indexList, indexColumn, controllerModal.text.trim().isEmpty? null : controllerModal.text);
+      
       closeModal(statusOrientation); 
     }
   }
