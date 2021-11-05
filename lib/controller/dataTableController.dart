@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_simple/controller/authController.dart';
+import 'package:flutter_simple/controller/calculateController.dart';
 import 'package:flutter_simple/controller/globalController.dart';
 import 'package:flutter_simple/model/data.dart';
 
@@ -218,6 +219,7 @@ class DataTableController extends GetxController {
   }
 /*Para guardar datos segun su respectivo modelo o arreglo */
   updateData(indexList, indexColumn, text){
+    CalculateController calculateController = Get.put(CalculateController()); 
     switch (indexColumn) {
       case 1:
         datas[indexList].specialty = text;
@@ -239,10 +241,16 @@ class DataTableController extends GetxController {
         break;
       case 7:
         datas[indexList].listEvaluate![showIndex(indexColumn)].repTiemp = text == null? null : text;
-        bars(indexList, indexColumn);
+        calculateController.barsSuspension(indexList, indexColumn);
         break;
       case 10:
+        datas[indexList].listEvaluate![showIndex(indexColumn)].repTiemp = text == null? null : text;
+        calculateController.abs(indexList, indexColumn);
+        break;
       case 13:
+        datas[indexList].listEvaluate![showIndex(indexColumn)].repTiemp = text == null? null : text;
+        calculateController.career(indexList, indexColumn);
+        break;
       case 16:
       case 19:
         datas[indexList].listEvaluate![showIndex(indexColumn)].repTiemp = text == null? null : text;
@@ -284,96 +292,6 @@ class DataTableController extends GetxController {
 
     datas[indexList].total = totalPts; /* Sumatoria de Pts */
     datas[indexList].average = statusNts! || count == 0? 0 : double.parse((totalNts! / count).toStringAsExponential(2)); /*Sumatoria de Notas y saca el Promedio */
-  }
-
-  /* Barras */
-  bars(indexList, indexColumn){
-    var gender = datas[indexList].gender;
-    var age = datas[indexList].age;
-    var varRepTiemp;
-    int min = 0, sec = 0;
-    double note = 0, ptos = 0;
-
-    if(gender == 0)
-      varRepTiemp = double.parse(datas[indexList].listEvaluate![showIndex(indexColumn)].repTiemp!);
-    else{
-      varRepTiemp = datas[indexList].listEvaluate![showIndex(indexColumn)].repTiemp;
-      var arr = varRepTiemp.split("'");
-      min = arr[0];
-      sec = arr[1];
-    }
-
-    if (gender == 0){
-
-      if((age! < 25 && varRepTiemp >= 14) || (age >= 25 && age < 30 && varRepTiemp >= 13) || (age >= 30 && age < 35 && varRepTiemp >= 12) || (age >= 35 && age < 40 && varRepTiemp >= 11)){
-        note = 20;
-      }else if((age < 25 && varRepTiemp == 13) || (age >= 25 && age < 30 && varRepTiemp == 12) || (age >= 30 && age < 35 && varRepTiemp == 11) || (age >= 35 && age < 40 && varRepTiemp == 10)){
-        note = 19.5;
-      }else if((age < 25 && varRepTiemp == 12) || (age >= 25 && age < 30 && varRepTiemp == 11) || (age >= 30 && age < 35 && varRepTiemp == 10) || (age >= 35 && age < 40 && varRepTiemp == 9)){
-        note = 19;
-      }else if((age < 25 && varRepTiemp == 11) || (age >= 25 && age < 30 && varRepTiemp == 10) || (age >= 30 && age < 35 && varRepTiemp == 9) || (age >= 35 && age < 40 && varRepTiemp == 8)){
-        note = 18;
-      }else if((age < 25 && varRepTiemp == 10) || (age >= 25 && age < 30 && varRepTiemp == 09) || (age >= 30 && age < 35 && varRepTiemp == 8) || (age >= 35 && age < 40 && varRepTiemp == 7)){
-        note = 17;
-      }else if((age < 25 && varRepTiemp == 9) || (age >= 25 && age < 30 && varRepTiemp == 8) || (age >= 30 && age < 35 && varRepTiemp == 7) || (age >= 35 && age < 40 && varRepTiemp == 6)){
-        note = 16;
-      }else if((age < 25 && varRepTiemp == 8) || (age >= 25 && age < 30 && varRepTiemp == 7) || (age >= 30 && age < 35 && varRepTiemp == 6) || (age >= 35 && age < 40 && varRepTiemp == 5)){
-        note = 15;
-      }else if((age < 25 && varRepTiemp == 7) || (age >= 25 && age < 30 && varRepTiemp == 6) || (age >= 30 && age < 35 && varRepTiemp == 5) || (age >= 35 && age < 40 && varRepTiemp == 4)){
-        note = 14;
-      }else if((age < 25 && varRepTiemp == 6) || (age >= 25 && age < 30 && varRepTiemp == 5) || (age >= 30 && age < 35 && varRepTiemp == 4) || (age >= 35 && age < 40 && varRepTiemp == 3)){
-        note = 13;
-      }else{
-        note = 0;
-      }
-      
-    }else{
-
-      if((age! < 25 && min >= 57) || (age >= 25 && age < 30 && min >= 52) || (age >= 30 && age < 35 && min >= 47) || (age >= 35 && age < 40 && min >= 32)){
-        note = 20;
-      }else if((age < 25 && min == 56) || (age >= 25 && age < 30 && min == 51) || (age >= 30 && age < 35 && min == 46) || (age >= 35 && age < 40 && min == 31)){
-        note = 19.8;
-      }else if((age < 25 && min == 55) || (age >= 25 && age < 30 && min == 50) || (age >= 30 && age < 35 && min == 45) || (age >= 35 && age < 40 && min == 30)){
-        note = 19.5;
-      }else if((age < 25 && min == 54) || (age >= 25 && age < 30 && min == 49) || (age >= 30 && age < 35 && min == 44) || (age >= 35 && age < 40 && min == 29)){
-        note = 19.2;
-      }else if((age < 25 && min == 53) || (age >= 25 && age < 30 && min == 48) || (age >= 30 && age < 35 && min == 43) || (age >= 35 && age < 40 && min == 28)){
-        note = 18.9;
-      }else if((age < 25 && min == 52) || (age >= 25 && age < 30 && min == 47) || (age >= 30 && age < 35 && min == 42) || (age >= 35 && age < 40 && min == 27)){
-        note = 18.6;
-      }else if((age < 25 && min == 51) || (age >= 25 && age < 30 && min == 46) || (age >= 30 && age < 35 && min == 41) || (age >= 35 && age < 40 && min == 26)){
-        note = 18.3;
-      }else if((age < 25 && min == 50) || (age >= 25 && age < 30 && min == 45) || (age >= 30 && age < 35 && min == 40) || (age >= 35 && age < 40 && min == 25)){
-        note = 18;
-      }else if((age < 25 && min == 49) || (age >= 25 && age < 30 && min == 44) || (age >= 30 && age < 35 && min == 39) || (age >= 35 && age < 40 && min == 24)){
-        note = 17.5;
-      }else if((age < 25 && min == 48) || (age >= 25 && age < 30 && min == 43) || (age >= 30 && age < 35 && min == 38) || (age >= 35 && age < 40 && min == 23)){
-        note = 17;
-      }else if((age < 25 && min == 47) || (age >= 25 && age < 30 && min == 44) || (age >= 30 && age < 35 && min == 37) || (age >= 35 && age < 40 && min == 22)){
-        note = 16.5;
-      }else if((age < 25 && min == 46) || (age >= 25 && age < 30 && min == 42) || (age >= 30 && age < 35 && min == 36) || (age >= 35 && age < 40 && min == 21)){
-        note = 16;
-      }else if((age < 25 && min == 45) || (age >= 25 && age < 30 && min == 41) || (age >= 30 && age < 35 && min == 35) || (age >= 35 && age < 40 && min == 20)){
-        note = 15.5;
-      }else if((age < 25 && min == 44) || (age >= 25 && age < 30 && min == 40) || (age >= 30 && age < 35 && min == 34) || (age >= 35 && age < 40 && min == 19)){
-        note = 15;
-      }else if((age < 25 && min == 43) || (age >= 25 && age < 30 && min == 39) || (age >= 30 && age < 35 && min == 33) || (age >= 35 && age < 40 && min == 18)){
-        note = 14.5;
-      }else if((age < 25 && min == 42) || (age >= 25 && age < 30 && min == 38) || (age >= 30 && age < 35 && min == 32) || (age >= 35 && age < 40 && min == 17)){
-        note = 14;
-      }else if((age < 25 && min == 41) || (age >= 25 && age < 30 && min == 37) || (age >= 30 && age < 35 && min == 31) || (age >= 35 && age < 40 && min == 16)){
-        note = 13.5;
-      }else if((age < 25 && min == 40) || (age >= 25 && age < 30 && min == 36) || (age >= 30 && age < 35 && min == 30) || (age >= 35 && age < 40 && min == 15)){
-        note = 13;
-      }else{
-        note = 0;
-      }
-
-    }
-
-    ptos = note *2;
-    datas[indexList].listEvaluate![showIndex(indexColumn)].note = note;
-    datas[indexList].listEvaluate![showIndex(indexColumn)].pts = ptos;
   }
 
 /*Identificar las columnas , segun el tipo de Evaluacion */

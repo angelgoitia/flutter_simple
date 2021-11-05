@@ -63,7 +63,7 @@ class DataTableWidget extends StatelessWidget {
                               ),
                               Column(
                                 children: [
-                                  tableRow("Carrera 2,400 mts ó \n Carrera 4,800 mts", "Exercise"),
+                                  tableRow("Carrera 2,400 mts", "Exercise"),
                                   tableRow("COEF1", "Code"),
                                   Row(
                                     children: [
