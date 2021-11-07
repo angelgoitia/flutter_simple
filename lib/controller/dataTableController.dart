@@ -252,8 +252,12 @@ class DataTableController extends GetxController {
         calculateController.career(indexList, indexColumn);
         break;
       case 16:
+        datas[indexList].listEvaluate![showIndex(indexColumn)].repTiemp = text == null? null : text;
+        calculateController.combatTrack(indexList, indexColumn);
+        break;
       case 19:
         datas[indexList].listEvaluate![showIndex(indexColumn)].repTiemp = text == null? null : text;
+        calculateController.swim(indexList, indexColumn);
         break;
       case 22:
         datas[indexList].total = text == null? null : double.parse(text.replaceAll(",", "."));

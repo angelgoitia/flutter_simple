@@ -25,7 +25,7 @@ class _ShowListState extends State<ShowList> {
   TextEditingController controllerModalSec = TextEditingController();
   GlobalController globalController = Get.put(GlobalController());
   DataTableController dataTableController = Get.put(DataTableController());
-  var min = 0, sec =0, gender = 0;
+  var min = 0, sec = 0, gender;
   late stt.SpeechToText _speech;
 
   @override
@@ -149,6 +149,7 @@ class _ShowListState extends State<ShowList> {
   }
 
   showModal(text, indexList, indexColumn, title) async{
+    gender = null;
     controllerModal.text = text== null? '' : text;
     Orientation orientation = MediaQuery.of(context).orientation;
     var statusOrientation = false;
@@ -161,7 +162,7 @@ class _ShowListState extends State<ShowList> {
     ]);
     
 // Verficacion del Tiempo en las filas 7, 13, 16 y 19 , del Tipo Evaluacion(Pista de compate, Carrea y Natacion)
-    if((indexColumn == 4 && dataTableController.datas[indexList].gender == 1) || indexColumn == 13 || indexColumn == 16 || indexColumn == 19){
+    if((indexColumn == 7 && dataTableController.datas[indexList].gender == 1) || indexColumn == 13 || indexColumn == 16 || indexColumn == 19){
       if(text == null){
         controllerModalMin.clear();
         controllerModalSec.clear();
@@ -171,22 +172,24 @@ class _ShowListState extends State<ShowList> {
         controllerModalSec.text = arr[1];
       }
     }
+
+    if (indexColumn <7 || (indexColumn >= 7 && dataTableController.datas[indexList].specialty != null && dataTableController.datas[indexList].name != null && dataTableController.datas[indexList].age != null && dataTableController.datas[indexList].gender != null))
     
     return Get.defaultDialog(
       title: title,
       titlePadding: EdgeInsets.all(20),
       barrierDismissible: true,
       backgroundColor: Colors.white,
-      content: new Row(
-        children: <Widget>[
-          new Expanded(
-            child: indexColumn == 4?
+      content: SingleChildScrollView(
+        child: Expanded(
+          child: indexColumn == 4?
             Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 GenderPickerWithImage(
                   showOtherGender: false,
                   verticalAlignedText: false,
-                  selectedGender: Gender.Male,
+                  selectedGender: dataTableController.datas[indexList].gender == null? Gender.Others : dataTableController.datas[indexList].gender == 0? Gender.Male : Gender.Female,
                   maleText: "Masculino ",
                   femaleText: "Femenino",
                   selectedGenderTextStyle: TextStyle(
@@ -194,7 +197,6 @@ class _ShowListState extends State<ShowList> {
                   unSelectedGenderTextStyle: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.normal),
                   onChanged: (Gender? result) {
-                    print(result);
                     if(result == Gender.Male )
                       gender = 0;
                     else 
@@ -210,7 +212,7 @@ class _ShowListState extends State<ShowList> {
                 )
               ],
             )
-            : (indexColumn == 4 && dataTableController.datas[indexList].gender == 1) || indexColumn == 13 || indexColumn == 16 || indexColumn == 19? 
+            : (indexColumn == 7 && dataTableController.datas[indexList].gender == 1) || indexColumn == 13 || indexColumn == 16 || indexColumn == 19? 
             Column(
               children: [
                 Container(
@@ -324,8 +326,7 @@ class _ShowListState extends State<ShowList> {
                 ),
               ],
             )
-          )
-        ],
+        ),
       ),
       actions: <Widget>[
         TextButton(
@@ -352,11 +353,17 @@ class _ShowListState extends State<ShowList> {
         ),
       ],
     );
+
+    else{
+      globalController.showMessage("Por Favor ingrese los datos personales, obligatiorio: Grado Especialidad, nombre, edad y género.", false);
+      await Future.delayed(Duration(seconds: 2));
+      Get.back();
+    }
   }
 
   validateForm(indexList, indexColumn, statusOrientation)async{
     int min = 0, sec = 0;
-    if(indexColumn == 13 || indexColumn == 16 || indexColumn == 19 ){
+    if((indexColumn == 7 && dataTableController.datas[indexList].gender == 1) || indexColumn == 13 || indexColumn == 16 || indexColumn == 19 ){
       min = controllerModalMin.text.isEmpty? 0 : int.parse(controllerModalMin.text);
       sec = controllerModalSec.text.isEmpty? 0 : int.parse(controllerModalSec.text);
       await dataTableController.validateModal("$min'$sec''", indexColumn);
@@ -365,7 +372,7 @@ class _ShowListState extends State<ShowList> {
       await dataTableController.validateModal(controllerModal.text, indexColumn);
 
     if(!dataTableController.statusError.value){
-      if(indexColumn == 13 || indexColumn == 16 || indexColumn == 19 ){
+      if((indexColumn == 7 && dataTableController.datas[indexList].gender == 1) || indexColumn == 13 || indexColumn == 16 || indexColumn == 19 ){
         if(min == 0 && sec == 0)
           dataTableController.updateData(indexList, indexColumn, null);
         else

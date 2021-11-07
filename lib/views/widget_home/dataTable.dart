@@ -27,7 +27,7 @@ class DataTableWidget extends StatelessWidget {
                       table("Grado \n Especialidad", false),
                       table("Apellido y Nombre", false),
                       table("EDAD", true),
-                      table("GENERO", true),
+                      table("GÉNERO", true),
                       table("TALLA Mts", true),
                       table("PESO Kg", true),
                       Column(
