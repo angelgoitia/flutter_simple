@@ -180,79 +180,124 @@ class _ShowListState extends State<ShowList> {
       titlePadding: EdgeInsets.all(20),
       barrierDismissible: true,
       backgroundColor: Colors.white,
-      content: SingleChildScrollView(
-        child: Expanded(
-          child: indexColumn == 4?
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                GenderPickerWithImage(
-                  showOtherGender: false,
-                  verticalAlignedText: false,
-                  selectedGender: dataTableController.datas[indexList].gender == null? Gender.Others : dataTableController.datas[indexList].gender == 0? Gender.Male : Gender.Female,
-                  maleText: "Masculino ",
-                  femaleText: "Femenino",
-                  selectedGenderTextStyle: TextStyle(
-                      color: Colors.green, fontWeight: FontWeight.bold),
-                  unSelectedGenderTextStyle: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.normal),
-                  onChanged: (Gender? result) {
-                    if(result == Gender.Male )
-                      gender = 0;
-                    else 
-                      gender = 1;
-                  },
-                  equallyAligned: true,
-                  animationDuration: Duration(milliseconds: 300),
-                  isCircular: true,
-                  // default : true,
-                  opacityOfGradient: 0.4,
-                  padding: const EdgeInsets.all(3),
-                  size: 100, //default : 40
-                )
-              ],
-            )
-            : (indexColumn == 7 && dataTableController.datas[indexList].gender == 1) || indexColumn == 13 || indexColumn == 16 || indexColumn == 19? 
-            Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(5),
-                  child: new TextFormField(
-                    controller: controllerModalMin,
-                    autofocus: false,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [  
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
-                    decoration: InputDecoration(
-                      labelText: "Min",
-                      border: OutlineInputBorder(),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          Icons.delete,
-                          color: Colors.red,
-                          ),
-                        onPressed: () {
-                          stopSpeech();
-                          controllerModal.clear();
-                        },
-                      ),
-                    ),
-                    textInputAction: TextInputAction.next,
-                    onEditingComplete: () => FocusScope.of(context).requestFocus(_secFocus),
+      content: Row(
+        children: [
+          Expanded(
+            child: indexColumn == 4?
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  GenderPickerWithImage(
+                    showOtherGender: false,
+                    verticalAlignedText: false,
+                    selectedGender: dataTableController.datas[indexList].gender == null? Gender.Others : dataTableController.datas[indexList].gender == 0? Gender.Male : Gender.Female,
+                    maleText: "Masculino ",
+                    femaleText: "Femenino",
+                    selectedGenderTextStyle: TextStyle(
+                        color: Colors.green, fontWeight: FontWeight.bold),
+                    unSelectedGenderTextStyle: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.normal),
+                    onChanged: (Gender? result) {
+                      if(result == Gender.Male )
+                        gender = 0;
+                      else 
+                        gender = 1;
+                    },
+                    equallyAligned: true,
+                    animationDuration: Duration(milliseconds: 300),
+                    isCircular: true,
+                    // default : true,
+                    opacityOfGradient: 0.4,
+                    padding: const EdgeInsets.all(3),
+                    size: 100, //default : 40
                   )
-                ),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  child: new TextFormField(
-                    controller: controllerModalSec,
-                    focusNode: _secFocus,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [  
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
+                ],
+              )
+              : (indexColumn == 7 && dataTableController.datas[indexList].gender == 1) || indexColumn == 13 || indexColumn == 16 || indexColumn == 19? 
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(5),
+                    child: new TextFormField(
+                      controller: controllerModalMin,
+                      autofocus: false,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [  
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      decoration: InputDecoration(
+                        labelText: "Min",
+                        border: OutlineInputBorder(),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                            ),
+                          onPressed: () {
+                            stopSpeech();
+                            controllerModal.clear();
+                          },
+                        ),
+                      ),
+                      textInputAction: TextInputAction.next,
+                      onEditingComplete: () => FocusScope.of(context).requestFocus(_secFocus),
+                    )
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(5),
+                    child: new TextFormField(
+                      controller: controllerModalSec,
+                      focusNode: _secFocus,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [  
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      decoration: InputDecoration(
+                        labelText: "Sec",
+                        border: OutlineInputBorder(),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                            ),
+                          onPressed: () {
+                            stopSpeech();
+                            controllerModal.clear();
+                          },
+                        ),
+                      ),
+                      textInputAction: TextInputAction.done,
+                      onFieldSubmitted: (value) => validateForm(indexList, indexColumn, statusOrientation),
+                    )
+                  ),
+                  Obx(
+                    () => AvatarGlow(
+                      animate: dataTableController.isListening.value,
+                      glowColor: Colors.blueAccent,
+                      endRadius: 75.0,
+                      duration: const Duration(milliseconds: 2000),
+                      repeatPauseDuration: const Duration(milliseconds: 100),
+                      repeat: true,
+                      child: FloatingActionButton(
+                        onPressed: () =>_listen(indexList, indexColumn),
+                        child: Icon(dataTableController.isListening.value? Icons.mic : Icons.mic_none),
+                      )
+                    ),
+                  ),
+                ],
+              )
+              : 
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  new TextFormField(
+                    controller: controllerModal,
+                    autofocus: false,
+                    textCapitalization: TextCapitalization.words, 
+                    keyboardType: indexColumn >= 1 && indexColumn <= 2? TextInputType.text : TextInputType.number,
                     decoration: InputDecoration(
-                      labelText: "Sec",
+                      hintText: (indexColumn >= 1 && indexColumn <= 2)? '' : '10.5 ó 10',
                       border: OutlineInputBorder(),
                       suffixIcon: IconButton(
                         icon: Icon(
@@ -267,66 +312,25 @@ class _ShowListState extends State<ShowList> {
                     ),
                     textInputAction: TextInputAction.done,
                     onFieldSubmitted: (value) => validateForm(indexList, indexColumn, statusOrientation),
-                  )
-                ),
-                Obx(
-                  () => AvatarGlow(
-                    animate: dataTableController.isListening.value,
-                    glowColor: Colors.blueAccent,
-                    endRadius: 75.0,
-                    duration: const Duration(milliseconds: 2000),
-                    repeatPauseDuration: const Duration(milliseconds: 100),
-                    repeat: true,
-                    child: FloatingActionButton(
-                      onPressed: () =>_listen(indexList, indexColumn),
-                      child: Icon(dataTableController.isListening.value? Icons.mic : Icons.mic_none),
-                    )
                   ),
-                ),
-              ],
-            )
-            : 
-            Column(
-              children: [
-                new TextFormField(
-                  controller: controllerModal,
-                  autofocus: false,
-                  textCapitalization: TextCapitalization.words, 
-                  keyboardType: indexColumn >= 1 && indexColumn <= 2? TextInputType.text : TextInputType.number,
-                  decoration: InputDecoration(
-                    hintText: (indexColumn >= 1 && indexColumn <= 2)? '' : '10.5 ó 10',
-                    border: OutlineInputBorder(),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        Icons.delete,
-                        color: Colors.red,
-                        ),
-                      onPressed: () {
-                        stopSpeech();
-                        controllerModal.clear();
-                      },
+                  Obx(
+                    () => AvatarGlow(
+                      animate: dataTableController.isListening.value,
+                      glowColor: Colors.blueAccent,
+                      endRadius: 75.0,
+                      duration: const Duration(milliseconds: 2000),
+                      repeatPauseDuration: const Duration(milliseconds: 100),
+                      repeat: true,
+                      child: FloatingActionButton(
+                        onPressed: () =>_listen(indexList, indexColumn),
+                        child: Icon(dataTableController.isListening.value? Icons.mic : Icons.mic_none),
+                      )
                     ),
                   ),
-                  textInputAction: TextInputAction.done,
-                  onFieldSubmitted: (value) => validateForm(indexList, indexColumn, statusOrientation),
-                ),
-                Obx(
-                  () => AvatarGlow(
-                    animate: dataTableController.isListening.value,
-                    glowColor: Colors.blueAccent,
-                    endRadius: 75.0,
-                    duration: const Duration(milliseconds: 2000),
-                    repeatPauseDuration: const Duration(milliseconds: 100),
-                    repeat: true,
-                    child: FloatingActionButton(
-                      onPressed: () =>_listen(indexList, indexColumn,),
-                      child: Icon(dataTableController.isListening.value? Icons.mic : Icons.mic_none),
-                    )
-                  ),
-                ),
-              ],
-            )
-        ),
+                ],
+              )
+          ),
+        ],
       ),
       actions: <Widget>[
         TextButton(
