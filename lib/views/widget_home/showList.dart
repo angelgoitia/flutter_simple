@@ -85,10 +85,7 @@ class _ShowListState extends State<ShowList> {
 
   Widget row(indexColumn, indexList, text, index){
     return GestureDetector(
-      onTap: () {
-        if(indexColumn > 0 && indexColumn != 24 && indexColumn != 25) /* No se puede moficar las columnas 0, ni 24 ni 25  */
-          passVariable(indexColumn, indexList, text);
-      },
+      onTap: () => passVariable(indexColumn, indexList, text),
 
       /*Tamaño y separacion de recuadros*/
       child: Container(
@@ -172,7 +169,6 @@ class _ShowListState extends State<ShowList> {
         controllerModalSec.text = arr[1];
       }
     }
-
     if (indexColumn <7 || (indexColumn >= 7 && dataTableController.datas[indexList].specialty != null && dataTableController.datas[indexList].name != null && dataTableController.datas[indexList].age != null && dataTableController.datas[indexList].gender != null))
     
     return Get.defaultDialog(

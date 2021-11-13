@@ -91,8 +91,8 @@ class CalculateController extends GetxController {
     }
 
     ptos = note *2;
-    dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].note = note;
-    dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].pts = ptos;
+    dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].note = double.parse(note.toStringAsFixed(2));
+    dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].pts = double.parse(ptos.toStringAsFixed(2));
   }
 
   abs(indexList, indexColumn){
@@ -224,8 +224,8 @@ class CalculateController extends GetxController {
     }
 
     ptos = note *1;
-    dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].note = note;
-    dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].pts = ptos;
+    dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].note = double.parse(note.toStringAsFixed(2));
+    dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].pts = double.parse(ptos.toStringAsFixed(2));
   }
 
 
@@ -401,8 +401,8 @@ class CalculateController extends GetxController {
     }
 
     ptos = note *1;
-    dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].note = note;
-    dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].pts = ptos;
+    dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].note = double.parse(note.toStringAsFixed(2));
+    dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].pts = double.parse(ptos.toStringAsFixed(2));
   }
 
 
@@ -577,8 +577,8 @@ class CalculateController extends GetxController {
     }
 
     ptos = note *3;
-    dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].note = note;
-    dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].pts = ptos;
+    dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].note = double.parse(note.toStringAsFixed(2));
+    dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].pts = double.parse(ptos.toStringAsFixed(2));
 
   }
 
@@ -753,8 +753,8 @@ class CalculateController extends GetxController {
     }
 
     ptos = note *2;
-    dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].note = note;
-    dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].pts = ptos;
+    dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].note = double.parse(note.toStringAsFixed(2));
+    dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].pts = double.parse(ptos.toStringAsFixed(2));
 
   }
 }
