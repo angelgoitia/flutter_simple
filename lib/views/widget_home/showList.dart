@@ -169,6 +169,9 @@ class _ShowListState extends State<ShowList> {
         controllerModalSec.text = arr[1];
       }
     }
+
+    print(indexColumn);
+
     if (indexColumn <7 || (indexColumn >= 7 && dataTableController.datas[indexList].specialty != null && dataTableController.datas[indexList].name != null && dataTableController.datas[indexList].age != null && dataTableController.datas[indexList].gender != null))
     
     return Get.defaultDialog(
@@ -209,7 +212,7 @@ class _ShowListState extends State<ShowList> {
                   )
                 ],
               )
-              : (indexColumn == 7 && dataTableController.datas[indexList].gender == 1) || indexColumn == 13 || indexColumn == 16 || indexColumn == 19? 
+              : ((indexColumn == 7 && dataTableController.datas[indexList].gender == 1) || indexColumn == 13 || indexColumn == 16 || indexColumn == 19)? 
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -291,9 +294,9 @@ class _ShowListState extends State<ShowList> {
                     controller: controllerModal,
                     autofocus: false,
                     textCapitalization: TextCapitalization.words, 
-                    keyboardType: indexColumn >= 1 && indexColumn <= 2? TextInputType.text : TextInputType.number,
+                    keyboardType: (indexColumn >= 1 && indexColumn <= 2 || indexColumn == 24)? TextInputType.text : TextInputType.number,
                     decoration: InputDecoration(
-                      hintText: (indexColumn >= 1 && indexColumn <= 2)? '' : '10.5 ó 10',
+                      hintText: (indexColumn >= 1 && indexColumn <= 2 || indexColumn == 24)? '' : '10.5 ó 10',
                       border: OutlineInputBorder(),
                       suffixIcon: IconButton(
                         icon: Icon(
