@@ -170,8 +170,6 @@ class _ShowListState extends State<ShowList> {
       }
     }
 
-    print(indexColumn);
-
     if (indexColumn <7 || (indexColumn >= 7 && dataTableController.datas[indexList].specialty != null && dataTableController.datas[indexList].name != null && dataTableController.datas[indexList].age != null && dataTableController.datas[indexList].gender != null))
     
     return Get.defaultDialog(
@@ -420,23 +418,24 @@ class _ShowListState extends State<ShowList> {
         _speech.listen(
           onResult: (val) async {
             
-            if(indexColumn >= 1 && indexColumn <= 2 || indexColumn == 26) //text nombre y especialidad
+            if(indexColumn >= 1 && indexColumn <= 2) //text nombre y especialidad
               controllerModal.text = val.recognizedWords.capitalizeFirstofEach;
-            else if(indexColumn == 26)
+            else if(indexColumn == 24) // resultado
               controllerModal.text = val.recognizedWords.inCaps;
-            else if(indexColumn >= 3 && indexColumn <= 14 || indexColumn >= 16 && indexColumn <= 17 || indexColumn >= 19 && indexColumn <= 20 || indexColumn >= 22 && indexColumn <= 25 ){ //numero
+            else if(indexColumn >= 3 && indexColumn <= 11){ //numero
               if(isNumeric(val.recognizedWords.toLowerCase()))
                 controllerModal.text = val.recognizedWords;
               else
                 controllerModal.text = globalController.getValueList(val.recognizedWords.toLowerCase());
             }
-            else if(indexColumn == 15 || indexColumn == 18 || indexColumn == 21){// tiempo
+            else if(indexColumn == 13 || indexColumn == 16 || indexColumn == 19){// tiempo
               var textVoice = val.recognizedWords.toLowerCase();
               if(textVoice.contains('minutos') || textVoice.contains('minuto') || textVoice.contains('segundos') || textVoice.contains('segundo')){
-                
+                print("print  $textVoice");
                 var arr = textVoice.split(' ');
                 var dataTime = await globalController.getNumberTime(arr);
-
+                print("print 1 ${dataTime.min}");
+                //print(globalController.getValueList(dataTime.min));
                 if(isNumeric(dataTime.min))
                   controllerModalMin.text = dataTime.min;
                 else

@@ -50,6 +50,7 @@ class GlobalController extends GetxController {
 
   Map<String, String> numbers = {
     'uno': "1",
+    'un': "1",
     'dos': "2",
     'tres': "3",
     'cuatro': "4",
