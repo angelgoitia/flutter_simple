@@ -294,7 +294,7 @@ class DataTableController extends GetxController {
       }
     }
 
-    datas[indexList].total = totalPts; /* Sumatoria de Pts */
+    datas[indexList].total = double.parse(totalPts!.toStringAsFixed(2)); /* Sumatoria de Pts */
     datas[indexList].average = statusNts! || count == 0? 0 : double.parse((totalNts! / count).toStringAsExponential(2)); /*Sumatoria de Notas y saca el Promedio */
   }
 
