@@ -173,7 +173,7 @@ class _ShowListState extends State<ShowList> {
     if (indexColumn <7 || (indexColumn >= 7 && dataTableController.datas[indexList].specialty != null && dataTableController.datas[indexList].name != null && dataTableController.datas[indexList].age != null && dataTableController.datas[indexList].gender != null))
     
     return Get.defaultDialog(
-      title: title,
+      title: indexColumn == 7 && dataTableController.datas[indexList].gender == 1? "Tiemp" : title,
       titlePadding: EdgeInsets.all(20),
       barrierDismissible: true,
       backgroundColor: Colors.white,
@@ -422,13 +422,13 @@ class _ShowListState extends State<ShowList> {
               controllerModal.text = val.recognizedWords.capitalizeFirstofEach;
             else if(indexColumn == 24) // resultado
               controllerModal.text = val.recognizedWords.inCaps;
-            else if(indexColumn >= 3 && indexColumn <= 11){ //numero
+            else if((indexColumn >= 3 && indexColumn <= 6) && (indexColumn >= 8 && indexColumn <= 11) || (indexColumn == 7 && dataTableController.datas[indexList].gender == 0) ){ //numero
               if(isNumeric(val.recognizedWords.toLowerCase()))
                 controllerModal.text = val.recognizedWords;
               else
                 controllerModal.text = globalController.getValueList(val.recognizedWords.toLowerCase());
             }
-            else if(indexColumn == 13 || indexColumn == 16 || indexColumn == 19){// tiempo
+            else if((indexColumn == 7 && dataTableController.datas[indexList].gender == 1) || indexColumn == 13 || indexColumn == 16 || indexColumn == 19){// tiempo
               var textVoice = val.recognizedWords.toLowerCase();
               if(textVoice.contains('minutos') || textVoice.contains('minuto') || textVoice.contains('segundos') || textVoice.contains('segundo')){
                 
