@@ -246,7 +246,7 @@ class CalculateController extends GetxController {
 
     if (gender == 0){
 
-      if((age! < 25 && min <= 8 || sec <= 30) || (age >= 25 && age < 30 && min <= 9 || sec <= 0) || (age >= 30 && age < 35 && min <= 9 || sec <= 30) || (age >= 35 && age < 40 && min <= 10 || sec <= 0)){
+      if((age! < 25 && (min <= 8 && sec <= 30 || min <= 7 && sec <= 60)) || (age >= 25 && age < 30 && (min <= 9 && sec <= 0 || min <= 8 && sec <= 60)) || (age >= 30 && age < 35 && (min <= 9 && sec <= 30 || min <= 8 && sec <= 60)) || (age >= 35 && age < 40 && (min <= 10 && sec <= 0 || min <= 9 && sec <= 60))){
         note = 20;
       }else if((age < 25 && min >= 8 && sec >= 31 && min <= 8 && sec <= 36 ) || (age >= 25 && age <= 30 && min >= 9 && sec >= 1 && min <= 9 && sec <= 6) || (age >= 30 && age < 35 && min >= 9 && sec >= 31 && min <= 9 && sec <= 36) || (age >= 35 && age < 40 && min >= 10 && sec >= 1 && min <= 10 && sec <= 6)){
         note = 19.80;
@@ -324,7 +324,7 @@ class CalculateController extends GetxController {
       
     }else{
 
-      if((age! < 25 && min <= 10 || sec <= 30) || (age >= 25 && age < 30 && min <= 10 || sec <= 30) || (age >= 30 && age < 35 && min <= 11 || sec <= 30) || (age >= 35 && age < 40 && min <= 12 || sec <= 30)){
+      if((age! < 25 && (min <= 10 && sec <= 30 || min <= 9 && sec <= 60)) || (age >= 25 && age < 30 && (min <= 10 && sec <= 30 || min <= 9 && sec <= 60)) || (age >= 30 && age < 35 && (min <= 11 && sec <= 30 || min <= 10 && sec <= 60)) || (age >= 35 && age < 40 && (min <= 12 && sec <= 30 || min <= 11 && sec <= 60))){
         note = 20;
       }else if((age < 25 && min >= 10 && sec >= 1 && min <= 10 && sec <= 6 ) || (age >= 25 && age <= 30 && min >= 10 && sec >= 31 && min <= 10 && sec <= 36) || (age >= 30 && age < 35 && min >= 11 && sec >= 1 && min <= 11 && sec <= 6) || (age >= 35 && age < 40 && min >= 11 && sec >= 31 && min <= 11 && sec <= 36)){
         note = 19.80;
@@ -422,7 +422,7 @@ class CalculateController extends GetxController {
 
     if (gender == 0){
 
-      if((age! < 25 && min <= 3 || sec <= 45) || (age >= 25 && age < 30 && min <= 4 || sec <= 0) || (age >= 30 && age < 35 && min <= 4 || sec <= 15) || (age >= 35 && age < 40 && min <= 4 || sec <= 30)){
+      if((age! < 25 && (min <= 3 && sec <= 45 || min <= 2 && sec <= 60)) || (age >= 25 && age < 30 && (min <= 4 && sec <= 0 || min <= 3 && sec <= 60)) || (age >= 30 && age < 35 && (min <= 4 && sec <= 15 || min <= 3 && sec <= 60)) || (age >= 35 && age < 40 && (min <= 4 && sec <= 30 || min <= 3 && sec <= 60))){
         note = 20;
       }else if((age < 25 && min >= 3 && sec >= 46 && min <= 3 && sec <= 49 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 1 && min <= 4 && sec <= 4) || (age >= 30 && age < 35 && min >= 4 && sec >= 16 && min <= 4 && sec <= 19) || (age >= 35 && age < 40 && min >= 4 && sec >= 31 && min <= 4 && sec <= 37)){
         note = 19.8;
@@ -500,7 +500,7 @@ class CalculateController extends GetxController {
       
     }else{
 
-      if((age! < 25 && min <= 4 || sec <= 0) || (age >= 25 && age < 30 && min <= 4 || sec <= 20) || (age >= 30 && age < 35 && min <= 4 || sec <= 40)){
+      if((age! < 25 && (min <= 4 && sec <= 0 || min <= 3 && sec <= 60)) || (age >= 25 && age < 30 && (min <= 4 && sec <= 20 || min <= 3 && sec <= 60)) || (age >= 30 && age < 35 && (min <= 4 && sec <= 40 || min <= 3 && sec <= 60))){
         note = 20;
       }else if((age < 25 && min >= 4 && sec >= 1 && min <= 4 && sec <= 3 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 21 && min <= 4 && sec <= 23) || (age >= 30 && age < 35 && min >= 4 && sec >= 41 && min <= 4 && sec <= 43)){
         note = 19.8;

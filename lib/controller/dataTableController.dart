@@ -147,6 +147,7 @@ class DataTableController extends GetxController {
   }
 /*Para guardar El Api en el Servidor */
   saveData()async{
+    
     AuthController authController = Get.put(AuthController()); 
     DateFormat formatter = DateFormat('yyyy-MM-dd');
     var result, response, jsonResponse;
@@ -210,7 +211,7 @@ class DataTableController extends GetxController {
   verifyArray(){
     bool statusArray = true;
     for (var data in datas) {
-      if(data.specialty == null || data.name == null || data.age == null){
+      if(data.specialty == null || data.name == null || data.age == null || data.gender == null){
         statusArray = false;
         break;
       }

@@ -431,11 +431,10 @@ class _ShowListState extends State<ShowList> {
             else if(indexColumn == 13 || indexColumn == 16 || indexColumn == 19){// tiempo
               var textVoice = val.recognizedWords.toLowerCase();
               if(textVoice.contains('minutos') || textVoice.contains('minuto') || textVoice.contains('segundos') || textVoice.contains('segundo')){
-                print("print  $textVoice");
+                
                 var arr = textVoice.split(' ');
                 var dataTime = await globalController.getNumberTime(arr);
-                print("print 1 ${dataTime.min}");
-                //print(globalController.getValueList(dataTime.min));
+
                 if(isNumeric(dataTime.min))
                   controllerModalMin.text = dataTime.min;
                 else
