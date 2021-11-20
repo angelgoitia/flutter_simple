@@ -6,12 +6,16 @@ class CalculateController extends GetxController {
 
   DataTableController dataTableController = Get.put(DataTableController()); 
 
+  int converteTimeToSec(min, sec){
+    return (sec + (min * 60));
+  }
+
   /* Barras y Suspensión */
   barsSuspension(indexList, indexColumn){
     var gender = dataTableController.datas[indexList].gender;
     var age = dataTableController.datas[indexList].age;
     var varRepTiemp;
-    int sec = 0;
+    int sec = 0, min = 0;
     double note = 0, ptos = 0;
 
     if(gender == 0)
@@ -19,7 +23,10 @@ class CalculateController extends GetxController {
     else{
       varRepTiemp = dataTableController.datas[indexList].listEvaluate![dataTableController.showIndex(indexColumn)].repTiemp;
       var arr = varRepTiemp.split("'");
+      min = int.parse(arr[0]);
       sec = int.parse(arr[1]);
+
+      sec = sec + (min * 60);
     }
 
     if (gender == 0){
@@ -242,81 +249,82 @@ class CalculateController extends GetxController {
     var arr = varRepTiemp!.split("'");
     min = int.parse(arr[0]);
     sec = int.parse(arr[1]);
-  
+
+    sec = sec + (min * 60);
 
     if (gender == 0){
 
-      if((age! < 25 && (min <= 8 && sec <= 30 || min <= 7 && sec <= 60)) || (age >= 25 && age < 30 && (min <= 9 && sec <= 0 || min <= 8 && sec <= 60)) || (age >= 30 && age < 35 && (min <= 9 && sec <= 30 || min <= 8 && sec <= 60)) || (age >= 35 && age < 40 && (min <= 10 && sec <= 0 || min <= 9 && sec <= 60))){
+      if((age! < 25 && sec <= converteTimeToSec(8,30)) || (age >= 25 && age < 30 && sec <= converteTimeToSec(9,0)) || (age >= 30 && age < 35 && sec <= converteTimeToSec(9,30)) || (age >= 35 && age < 40 && sec <= converteTimeToSec(10,0))){
         note = 20;
-      }else if((age < 25 && min >= 8 && sec >= 31 && min <= 8 && sec <= 36 ) || (age >= 25 && age <= 30 && min >= 9 && sec >= 1 && min <= 9 && sec <= 6) || (age >= 30 && age < 35 && min >= 9 && sec >= 31 && min <= 9 && sec <= 36) || (age >= 35 && age < 40 && min >= 10 && sec >= 1 && min <= 10 && sec <= 6)){
+      }else if((age < 25 && sec >= converteTimeToSec(8,31) && sec <= converteTimeToSec(8,36)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(9,1) && sec <= converteTimeToSec(9,6)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(9,31) && sec <= converteTimeToSec(9,36)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(10,1) && sec <= converteTimeToSec(10,6))){
         note = 19.80;
-      }else if((age < 25 && min >= 8 && sec >= 37 && min <= 8 && sec <= 42 ) || (age >= 25 && age <= 30 && min >= 9 && sec >= 7 && min <= 9 && sec <= 12) || (age >= 30 && age < 35 && min >= 9 && sec >= 37 && min <= 9 && sec <= 42) || (age >= 35 && age < 40 && min >= 10 && sec >= 7 && min <= 10 && sec <= 12)){
+      }else if((age < 25 && sec >= converteTimeToSec(8,37) && sec <= converteTimeToSec(8,42)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(9,7) && sec <= converteTimeToSec(9,12)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(9,37) && sec <= converteTimeToSec(9,42)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(10,7) && sec <= converteTimeToSec(10,12))){
         note = 19.60;
-      }else if((age < 25 && min >= 8 && sec >= 43 && min <= 8 && sec <= 48 ) || (age >= 25 && age <= 30 && min >= 9 && sec >= 13 && min <= 9 && sec <= 18) || (age >= 30 && age < 35 && min >= 9 && sec >= 43 && min <= 9 && sec <= 48) || (age >= 35 && age < 40 && min >= 10 && sec >= 13 && min <= 10 && sec <= 18)){
+      }else if((age < 25 && sec >= converteTimeToSec(8,43) && sec <= converteTimeToSec(8,48)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(9,13) && sec <= converteTimeToSec(9,18)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(9,43) && sec <= converteTimeToSec(9,48)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(10,13) && sec <= converteTimeToSec(10,18))){
         note = 19.40;
-      }else if((age < 25 && min >= 8 && sec >= 49 && min <= 8 && sec <= 54 ) || (age >= 25 && age <= 30 && min >= 9 && sec >= 19 && min <= 9 && sec <= 24) || (age >= 30 && age < 35 && min >= 9 && sec >= 49 && min <= 9 && sec <= 54) || (age >= 35 && age < 40 && min >= 10 && sec >= 19 && min <= 10 && sec <= 24)){
+      }else if((age < 25 && sec >= converteTimeToSec(8,49) && sec <= converteTimeToSec(8,54)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(9,19) && sec <= converteTimeToSec(9,24)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(9,49) && sec <= converteTimeToSec(9,54)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(10,19) && sec <= converteTimeToSec(10,24))){
         note = 19.20;
-      }else if((age < 25 && min >= 8 && sec >= 55 && min <= 9 && sec <= 5 ) || (age >= 25 && age <= 30 && min >= 9 && sec >= 25 && min <= 9 && sec <= 35) || (age >= 30 && age < 35 && min >= 9 && sec >= 55 && min <= 10 && sec <= 5) || (age >= 35 && age < 40 && min >= 10 && sec >= 25 && min <= 10 && sec <= 35)){
+      }else if((age < 25 && sec >= converteTimeToSec(8,55) && sec <= converteTimeToSec(9,5)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(9,25) && sec <= converteTimeToSec(9,35)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(9,55) && sec <= converteTimeToSec(10,5)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(10,25) && sec <= converteTimeToSec(10,35))){
         note = 19;
-      }else if((age < 25 && min >= 9 && sec >= 6 && min <= 9 && sec <= 16 ) || (age >= 25 && age <= 30 && min >= 9 && sec >= 36 && min <= 9 && sec <= 46) || (age >= 30 && age < 35 && min >= 10 && sec >= 6 && min <= 10 && sec <= 16) || (age >= 35 && age < 40 && min >= 10 && sec >= 36 && min <= 10 && sec <= 46)){
+      }else if((age < 25 && sec >= converteTimeToSec(9,6) && sec <= converteTimeToSec(9,16)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(9,36) && sec <= converteTimeToSec(9,46)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(10,6) && sec <= converteTimeToSec(10,16)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(10,36) && sec <= converteTimeToSec(10,46))){
         note = 18.80;
-      }else if((age < 25 && min >= 9 && sec >= 17 && min <= 9 && sec <= 27 ) || (age >= 25 && age <= 30 && min >= 9 && sec >= 47 && min <= 9 && sec <= 57) || (age >= 30 && age < 35 && min >= 10 && sec >= 17 && min <= 11 && sec <= 27) || (age >= 35 && age < 40 && min >= 10 && sec >= 47 && min <= 10 && sec <= 57)){
+      }else if((age < 25 && sec >= converteTimeToSec(9,17) && sec <= converteTimeToSec(9,27)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(9,47) && sec <= converteTimeToSec(9,57)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(10,117) && sec <= converteTimeToSec(11,27)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(10,47) && sec <= converteTimeToSec(10,57))){
         note = 18.60;
-      }else if((age < 25 && min >= 9 && sec >= 28 && min <= 9 && sec <= 38 ) || (age >= 25 && age <= 30 && min >= 9 && sec >= 58 && min <= 10 && sec <= 8) || (age >= 30 && age < 35 && min >= 10 && sec >= 28 && min <= 10 && sec <= 38) || (age >= 35 && age < 40 && min >= 10 && sec >= 58 && min <= 11 && sec <= 8)){
+      }else if((age < 25 && sec >= converteTimeToSec(9,28) && sec <= converteTimeToSec(9,38)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(9,58) && sec <= converteTimeToSec(10,8)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(10,28) && sec <= converteTimeToSec(10,38)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(10,58) && sec <= converteTimeToSec(11,8))){
         note = 18.40;
-      }else if((age < 25 && min >= 9 && sec >= 39 && min <= 9 && sec <= 49 ) || (age >= 25 && age <= 30 && min >= 10 && sec >= 9 && min <= 10 && sec <= 19) || (age >= 30 && age < 35 && min >= 10 && sec >= 39 && min <= 10 && sec <= 49) || (age >= 35 && age < 40 && min >= 11 && sec >= 9 && min <= 11 && sec <= 19)){
+      }else if((age < 25 && sec >= converteTimeToSec(9,39) && sec <= converteTimeToSec(9,49)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(10,9) && sec <= converteTimeToSec(10,19)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(10,39) && sec <= converteTimeToSec(10,49)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(11,9) && sec <= converteTimeToSec(11,19))){
         note = 18.20;
-      }else if((age < 25 && min >= 9 && sec >= 50 && min <= 10 && sec <= 0 ) || (age >= 25 && age <= 30 && min >= 10 && sec >= 20 && min <= 10 && sec <= 30) || (age >= 30 && age < 35 && min >= 10 && sec >= 50 && min <= 11 && sec <= 0) || (age >= 35 && age < 40 && min >= 11 && sec >= 20 && min <= 11 && sec <= 30)){
+      }else if((age < 25 && sec >= converteTimeToSec(9,50) && sec <= converteTimeToSec(10,0)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(10,20) && sec <= converteTimeToSec(10,30)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(10,50) && sec <= converteTimeToSec(11,0))  || (age >= 35 && age < 40 && sec >= converteTimeToSec(11,20) && sec <= converteTimeToSec(11,30))){
         note = 18;
-      }else if((age < 25 && min >= 10 && sec >= 1 && min <= 10 && sec <= 6 ) || (age >= 25 && age <= 30 && min >= 10 && sec >= 31 && min <= 10 && sec <= 36) || (age >= 30 && age < 35 && min >= 11 && sec >= 1 && min <= 11 && sec <= 6) || (age >= 35 && age < 40 && min >= 11 && sec >= 31 && min <= 11 && sec <= 36)){
+      }else if((age < 25 && sec >= converteTimeToSec(10,1) && sec <= converteTimeToSec(10,6)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(10,31) && sec <= converteTimeToSec(10,36)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(11,1) && sec <= converteTimeToSec(11,6)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(11,31) && sec <= converteTimeToSec(11,36))){
         note = 17.80;
-      }else if((age < 25 && min >= 10 && sec >= 7 && min <= 9 && sec <= 12 ) || (age >= 25 && age <= 30 && min >= 10 && sec >= 37 && min <= 10 && sec <= 42) || (age >= 30 && age < 35 && min >= 11 && sec >= 7 && min <= 11 && sec <= 12) || (age >= 35 && age < 40 && min >= 11 && sec >= 37 && min <= 11 && sec <= 42)){
+      }else if((age < 25 && sec >= converteTimeToSec(10,7) && sec <= converteTimeToSec(10,12)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(10,37) && sec <= converteTimeToSec(10,42)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(11,7) && sec <= converteTimeToSec(11,12)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(11,37) && sec <= converteTimeToSec(11,42))){
         note = 17.60;
-      }else if((age < 25 && min >= 10 && sec >= 13 && min <= 10 && sec <= 18 ) || (age >= 25 && age <= 30 && min >= 10 && sec >= 43 && min <= 10 && sec <= 48) || (age >= 30 && age < 35 && min >= 11 && sec >= 13 && min <= 11 && sec <= 18) || (age >= 35 && age < 40 && min >= 11 && sec >= 43 && min <= 11 && sec <= 48)){
+      }else if((age < 25 && sec >= converteTimeToSec(10,13) && sec <= converteTimeToSec(10,18)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(10,43) && sec <= converteTimeToSec(10,48)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(11,13) && sec <= converteTimeToSec(11,18)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(11,43) && sec <= converteTimeToSec(11,48))){
         note = 17.40;
-      }else if((age < 25 && min >= 10 && sec >= 19 && min <= 10 && sec <= 24 ) || (age >= 25 && age <= 30 && min >= 10 && sec >= 49 && min <= 10 && sec <= 54) || (age >= 30 && age < 35 && min >= 11 && sec >= 19 && min <= 11 && sec <= 24) || (age >= 35 && age < 40 && min >= 11 && sec >= 49 && min <= 11 && sec <= 54)){
+      }else if((age < 25 && sec >= converteTimeToSec(10,19) && sec <= converteTimeToSec(10,24)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(10,49) && sec <= converteTimeToSec(10,54)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(11,19) && sec <= converteTimeToSec(11,24)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(11,49) && sec <= converteTimeToSec(11,54))){
         note = 17.20;
-      }else if((age < 25 && min >= 10 && sec >= 25 && min <= 10 && sec <= 30 ) || (age >= 25 && age <= 30 && min >= 10 && sec >= 55 && min <= 11 && sec <= 0) || (age >= 30 && age < 35 && min >= 11 && sec >= 25 && min <= 11 && sec <= 30) || (age >= 35 && age < 40 && min >= 11 && sec >= 55 && min <= 12 && sec <= 0)){
+      }else if((age < 25 && sec >= converteTimeToSec(10,25) && sec <= converteTimeToSec(10,30)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(10,55) && sec <= converteTimeToSec(11,0)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(11,25) && sec <= converteTimeToSec(11,30)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(11,55) && sec <= converteTimeToSec(12,0))){
         note = 17;
-      }else if((age < 25 && min >= 10 && sec >= 31 && min <= 10 && sec <= 36 ) || (age >= 25 && age <= 30 && min >= 11 && sec >= 1 && min <= 11 && sec <= 6) || (age >= 30 && age < 35 && min >= 11 && sec >= 31 && min <= 11 && sec <= 36) || (age >= 35 && age < 40 && min >= 12 && sec >= 1 && min <= 11 && sec <= 6)){
+      }else if((age < 25 && sec >= converteTimeToSec(10,31) && sec <= converteTimeToSec(10,36)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(11,1) && sec <= converteTimeToSec(10,6)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(11,31) && sec <= converteTimeToSec(11,36)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(12,1) && sec <= converteTimeToSec(12,6))){
         note = 16.80;
-      }else if((age < 25 && min >= 10 && sec >= 37 && min <= 10 && sec <= 42 ) || (age >= 25 && age <= 30 && min >= 11 && sec >= 7 && min <= 11 && sec <= 12) || (age >= 30 && age < 35 && min >= 11 && sec >= 37 && min <= 11 && sec <= 42) || (age >= 35 && age < 40 && min >= 12 && sec >= 7 && min <= 11 && sec <= 12)){
+      }else if((age < 25 && sec >= converteTimeToSec(10,37) && sec <= converteTimeToSec(10,42)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(11,7) && sec <= converteTimeToSec(11,12)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(11,37) && sec <= converteTimeToSec(11,42)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(12,7) && sec <= converteTimeToSec(12,12))){
         note = 16.60;
-      }else if((age < 25 && min >= 10 && sec >= 43 && min <= 10 && sec <= 48 ) || (age >= 25 && age <= 30 && min >= 11 && sec >= 13 && min <= 11 && sec <= 18) || (age >= 30 && age < 35 && min >= 11 && sec >= 43 && min <= 11 && sec <= 48) || (age >= 35 && age < 40 && min >= 12 && sec >= 13 && min <= 11 && sec <= 18)){
+      }else if((age < 25 && sec >= converteTimeToSec(10,43) && sec <= converteTimeToSec(10,48)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(11,3) && sec <= converteTimeToSec(11,18)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(11,43) && sec <= converteTimeToSec(11,48)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(12,13) && sec <= converteTimeToSec(12,18))){
         note = 16.40;
-      }else if((age < 25 && min >= 10 && sec >= 49 && min <= 10 && sec <= 54 ) || (age >= 25 && age <= 30 && min >= 11 && sec >= 19 && min <= 11 && sec <= 24) || (age >= 30 && age < 35 && min >= 11 && sec >= 49 && min <= 11 && sec <= 54) || (age >= 35 && age < 40 && min >= 12 && sec >= 19 && min <= 11 && sec <= 24)){
+      }else if((age < 25 && sec >= converteTimeToSec(10,49) && sec <= converteTimeToSec(10,54)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(11,19) && sec <= converteTimeToSec(11,24)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(11,49) && sec <= converteTimeToSec(11,54)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(12,19) && sec <= converteTimeToSec(12,24))){
         note = 16.20;
-      }else if((age < 25 && min >= 10 && sec >= 55 && min <= 10 && sec <= 0 ) || (age >= 25 && age <= 30 && min >= 11 && sec >= 25 && min <= 11 && sec <= 30) || (age >= 30 && age < 35 && min >= 11 && sec >= 55 && min <= 12 && sec <= 0) || (age >= 35 && age < 40 && min >= 12 && sec >= 25 && min <= 12 && sec <= 30)){
+      }else if((age < 25 && sec >= converteTimeToSec(10,55) && sec <= converteTimeToSec(11,0)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(11,25) && sec <= converteTimeToSec(11,30)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(11,55) && sec <= converteTimeToSec(12,0))  || (age >= 35 && age < 40 && sec >= converteTimeToSec(12,25) && sec <= converteTimeToSec(12,30))){
         note = 16;
-      }else if((age < 25 && min >= 11 && sec >= 1 && min <= 11 && sec <= 6 ) || (age >= 25 && age <= 30 && min >= 11 && sec >= 31 && min <= 11 && sec <= 36) || (age >= 30 && age < 35 && min >= 12 && sec >= 1 && min <= 12 && sec <= 6) || (age >= 35 && age < 40 && min >= 12 && sec >= 31 && min <= 12 && sec <= 36)){
+      }else if((age < 25 && sec >= converteTimeToSec(11,1) && sec <= converteTimeToSec(11,6)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(11,31) && sec <= converteTimeToSec(11,36)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(12,1) && sec <= converteTimeToSec(12,6)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(12,31) && sec <= converteTimeToSec(12,36))){
         note = 15.80;
-      }else if((age < 25 && min >= 11 && sec >= 7 && min <= 11 && sec <= 12 ) || (age >= 25 && age <= 30 && min >= 11 && sec >= 37 && min <= 11 && sec <= 42) || (age >= 30 && age < 35 && min >= 12 && sec >= 7 && min <= 12 && sec <= 12) || (age >= 35 && age < 40 && min >= 12 && sec >= 37 && min <= 12 && sec <= 42)){
+      }else if((age < 25 && sec >= converteTimeToSec(11,7) && sec <= converteTimeToSec(11,12)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(11,37) && sec <= converteTimeToSec(11,42)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(12,7) && sec <= converteTimeToSec(12,12)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(12,37) && sec <= converteTimeToSec(12,42))){
         note = 15.60;
-      }else if((age < 25 && min >= 11 && sec >= 13 && min <= 11 && sec <= 18 ) || (age >= 25 && age <= 30 && min >= 11 && sec >= 43 && min <= 11 && sec <= 48) || (age >= 30 && age < 35 && min >= 12 && sec >= 13 && min <= 12 && sec <= 18) || (age >= 35 && age < 40 && min >= 12 && sec >= 43 && min <= 12 && sec <= 48)){
+      }else if((age < 25 && sec >= converteTimeToSec(11,13) && sec <= converteTimeToSec(11,18)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(11,43) && sec <= converteTimeToSec(11,48)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(12,13) && sec <= converteTimeToSec(12,18)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(12,43) && sec <= converteTimeToSec(12,48))){
         note = 15.40;
-      }else if((age < 25 && min >= 11 && sec >= 19 && min <= 11 && sec <= 24 ) || (age >= 25 && age <= 30 && min >= 11 && sec >= 49 && min <= 11 && sec <= 54) || (age >= 30 && age < 35 && min >= 12 && sec >= 19 && min <= 12 && sec <= 24) || (age >= 35 && age < 40 && min >= 12 && sec >= 49 && min <= 12 && sec <= 54)){
+      }else if((age < 25 && sec >= converteTimeToSec(11,19) && sec <= converteTimeToSec(11,24)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(11,49) && sec <= converteTimeToSec(11,54)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(12,19) && sec <= converteTimeToSec(12,24)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(12,49) && sec <= converteTimeToSec(12,54))){
         note = 15.20;
-      }else if((age < 25 && min >= 11 && sec >= 25 && min <= 11 && sec <= 30 ) || (age >= 25 && age <= 30 && min >= 11 && sec >= 55 && min <= 12 && sec <= 0) || (age >= 30 && age < 35 && min >= 12 && sec >= 25 && min <= 12 && sec <= 30) || (age >= 35 && age < 40 && min >= 12 && sec >= 55 && min <= 13 && sec <= 0)){
+      }else if((age < 25 && sec >= converteTimeToSec(11,25) && sec <= converteTimeToSec(11,30)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(11,55) && sec <= converteTimeToSec(12,0)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(12,25) && sec <= converteTimeToSec(12,30)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(12,55) && sec <= converteTimeToSec(13,0))){
         note = 15;
-      }else if((age < 25 && min >= 11 && sec >= 31 && min <= 11 && sec <= 36 ) || (age >= 25 && age <= 30 && min >= 12 && sec >= 1 && min <= 12 && sec <= 6) || (age >= 30 && age < 35 && min >= 12 && sec >= 31 && min <= 12 && sec <= 36) || (age >= 35 && age < 40 && min >= 13 && sec >= 1 && min <= 13 && sec <= 6)){
+      }else if((age < 25 && sec >= converteTimeToSec(11,31) && sec <= converteTimeToSec(11,36)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(12,1) && sec <= converteTimeToSec(12,6)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(12,31) && sec <= converteTimeToSec(12,36)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(13,1) && sec <= converteTimeToSec(13,6))){
         note = 14.80;
-      }else if((age < 25 && min >= 11 && sec >= 37 && min <= 11 && sec <= 42 ) || (age >= 25 && age <= 30 && min >= 12 && sec >= 7 && min <= 12 && sec <= 12) || (age >= 30 && age < 35 && min >= 12 && sec >= 37 && min <= 12 && sec <= 42) || (age >= 35 && age < 40 && min >= 13 && sec >= 7 && min <= 13 && sec <= 12)){
+      }else if((age < 25 && sec >= converteTimeToSec(11,37) && sec <= converteTimeToSec(11,42)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(12,7) && sec <= converteTimeToSec(12,12)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(12,37) && sec <= converteTimeToSec(12,42)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(13,7) && sec <= converteTimeToSec(13,12))){
         note = 14.60;
-      }else if((age < 25 && min >= 11 && sec >= 43 && min <= 11 && sec <= 48 ) || (age >= 25 && age <= 30 && min >= 12 && sec >= 13 && min <= 12 && sec <= 18) || (age >= 30 && age < 35 && min >= 12 && sec >= 43 && min <= 12 && sec <= 48) || (age >= 35 && age < 40 && min >= 13 && sec >= 13 && min <= 13 && sec <= 18)){
+      }else if((age < 25 && sec >= converteTimeToSec(11,43) && sec <= converteTimeToSec(11,48)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(12,13) && sec <= converteTimeToSec(12,18)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(12,43) && sec <= converteTimeToSec(12,48))  || (age >= 35 && age < 40 && sec >= converteTimeToSec(13,13) && sec <= converteTimeToSec(13,18))){
         note = 14.40;
-      }else if((age < 25 && min >= 11 && sec >= 49 && min <= 11 && sec <= 54 ) || (age >= 25 && age <= 30 && min >= 12 && sec >= 19 && min <= 12 && sec <= 24) || (age >= 30 && age < 35 && min >= 12 && sec >= 49 && min <= 12 && sec <= 54) || (age >= 35 && age < 40 && min >= 13 && sec >= 19 && min <= 13 && sec <= 24)){
+      }else if((age < 25 && sec >= converteTimeToSec(11,49) && sec <= converteTimeToSec(11,54)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(12,19) && sec <= converteTimeToSec(12,24)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(12,49) && sec <= converteTimeToSec(12,54)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(13,19) && sec <= converteTimeToSec(13,24))){
         note = 14.20;
-      }else if((age < 25 && min >= 11 && sec >= 55 && min <= 12 && sec <= 0 ) || (age >= 25 && age <= 30 && min >= 12 && sec >= 25 && min <= 12 && sec <= 30) || (age >= 30 && age < 35 && min >= 12 && sec >= 55 && min <= 13 && sec <= 0) || (age >= 35 && age < 40 && min >= 13 && sec >= 25 && min <= 13 && sec <= 30)){
+      }else if((age < 25 && sec >= converteTimeToSec(11,55) && sec <= converteTimeToSec(12,0)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(12,25) && sec <= converteTimeToSec(12,30)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(12,55) && sec <= converteTimeToSec(13,0)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(13,25) && sec <= converteTimeToSec(13,30))){
         note = 14;
-      }else if((age < 25 && min >= 12 && sec >= 1 && min <= 12 && sec <= 6 ) || (age >= 25 && age <= 30 && min >= 12 && sec >= 31 && min <= 12 && sec <= 36) || (age >= 30 && age < 35 && min >= 13 && sec >= 1 && min <= 13 && sec <= 6) || (age >= 35 && age < 40 && min >= 13 && sec >= 31 && min <= 13 && sec <= 36)){
+      }else if((age < 25 && sec >= converteTimeToSec(12,1) && sec <= converteTimeToSec(12,6)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(12,31) && sec <= converteTimeToSec(12,36)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(13,1) && sec <= converteTimeToSec(13,6)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(13,31) && sec <= converteTimeToSec(13,36))){
         note = 13.80;
-      }else if((age < 25 && min >= 12 && sec >= 7 && min <= 12 && sec <= 12 ) || (age >= 25 && age <= 30 && min >= 12 && sec >= 37 && min <= 12 && sec <= 42) || (age >= 30 && age < 35 && min >= 13 && sec >= 7 && min <= 13 && sec <= 12) || (age >= 35 && age < 40 && min >= 13 && sec >= 37 && min <= 13 && sec <= 42)){
+      }else if((age < 25 && sec >= converteTimeToSec(12,7) && sec <= converteTimeToSec(12,12)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(12,37) && sec <= converteTimeToSec(12,42)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(13,7) && sec <= converteTimeToSec(13,12)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(13,37) && sec <= converteTimeToSec(13,42))){
         note = 13.60;
-      }else if((age < 25 && min >= 12 && sec >= 13 && min <= 12 && sec <= 18 ) || (age >= 25 && age <= 30 && min >= 12 && sec >= 43 && min <= 12 && sec <= 48) || (age >= 30 && age < 35 && min >= 13 && sec >= 13 && min <= 13 && sec <= 18) || (age >= 35 && age < 40 && min >= 13 && sec >= 43 && min <= 13 && sec <= 48)){
+      }else if((age < 25 && sec >= converteTimeToSec(12,13) && sec <= converteTimeToSec(12,18)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(12,43) && sec <= converteTimeToSec(12,48)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(13,13) && sec <= converteTimeToSec(13,18)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(13,43) && sec <= converteTimeToSec(13,48))){
         note = 13.40;
-      }else if((age < 25 && min >= 12 && sec >= 19 && min <= 12 && sec <= 24 ) || (age >= 25 && age <= 30 && min >= 12 && sec >= 49 && min <= 12 && sec <= 54) || (age >= 30 && age < 35 && min >= 13 && sec >= 19 && min <= 13 && sec <= 24) || (age >= 35 && age < 40 && min >= 13 && sec >= 49 && min <= 13 && sec <= 54)){
+      }else if((age < 25 && sec >= converteTimeToSec(12,19) && sec <= converteTimeToSec(12,24)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(12,49) && sec <= converteTimeToSec(12,54)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(13,19) && sec <= converteTimeToSec(13,24)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(13,49) && sec <= converteTimeToSec(13,54))){
         note = 13.20;
-      }else if((age < 25 && min >= 12 && sec >= 25 && min <= 12 && sec <= 30 ) || (age >= 25 && age <= 30 && min >= 12 && sec >= 55 && min <= 13 && sec <= 0) || (age >= 30 && age < 35 && min >= 13 && sec >= 25 && min <= 13 && sec <= 30) || (age >= 35 && age < 40 && min >= 13 && sec >= 55 && min <= 14 && sec <= 0)){
+      }else if((age < 25 && sec >= converteTimeToSec(12,25) && sec <= converteTimeToSec(12,30)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(12,55) && sec <= converteTimeToSec(13,0)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(13,25) && sec <= converteTimeToSec(13,30)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(13,55) && sec <= converteTimeToSec(14,0))){
         note = 13;
       }else{
         note = 0;
@@ -324,77 +332,77 @@ class CalculateController extends GetxController {
       
     }else{
 
-      if((age! < 25 && (min <= 10 && sec <= 30 || min <= 9 && sec <= 60)) || (age >= 25 && age < 30 && (min <= 10 && sec <= 30 || min <= 9 && sec <= 60)) || (age >= 30 && age < 35 && (min <= 11 && sec <= 30 || min <= 10 && sec <= 60)) || (age >= 35 && age < 40 && (min <= 12 && sec <= 30 || min <= 11 && sec <= 60))){
+      if((age! < 25 && sec <= converteTimeToSec(10,0)) || (age >= 25 && age < 30 && sec <= converteTimeToSec(10,30)) || (age >= 30 && age < 35 && sec <= converteTimeToSec(11,0)) || (age >= 35 && age < 40 && sec <= converteTimeToSec(11,30))){
         note = 20;
-      }else if((age < 25 && min >= 10 && sec >= 1 && min <= 10 && sec <= 6 ) || (age >= 25 && age <= 30 && min >= 10 && sec >= 31 && min <= 10 && sec <= 36) || (age >= 30 && age < 35 && min >= 11 && sec >= 1 && min <= 11 && sec <= 6) || (age >= 35 && age < 40 && min >= 11 && sec >= 31 && min <= 11 && sec <= 36)){
+      }else if((age < 25 && sec >= converteTimeToSec(10,1) && sec <= converteTimeToSec(10,6)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(10,31) && sec <= converteTimeToSec(10,36)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(11,1) && sec <= converteTimeToSec(11,6)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(11,31) && sec <= converteTimeToSec(11,36))){
         note = 19.80;
-      }else if((age < 25 && min >= 10 && sec >= 7 && min <= 10 && sec <= 12 ) || (age >= 25 && age <= 30 && min >= 10 && sec >= 37 && min <= 10 && sec <= 42) || (age >= 30 && age < 35 && min >= 11 && sec >= 7 && min <= 11 && sec <= 12) || (age >= 35 && age < 40 && min >= 11 && sec >= 37 && min <= 11 && sec <= 42)){
+      }else if((age < 25 && sec >= converteTimeToSec(10,7) && sec <= converteTimeToSec(10,12)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(10,37) && sec <= converteTimeToSec(10,42)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(11,7) && sec <= converteTimeToSec(11,12)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(11,37) && sec <= converteTimeToSec(11,42))){
         note = 19.60;
-      }else if((age < 25 && min >= 10 && sec >= 13 && min <= 10 && sec <= 18 ) || (age >= 25 && age <= 30 && min >= 10 && sec >= 43 && min <= 10 && sec <= 48) || (age >= 30 && age < 35 && min >= 11 && sec >= 13 && min <= 11 && sec <= 18) || (age >= 35 && age < 40 && min >= 11 && sec >= 43 && min <= 11 && sec <= 48)){
+      }else if((age < 25 && sec >= converteTimeToSec(10,13) && sec <= converteTimeToSec(10,18)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(10,43) && sec <= converteTimeToSec(10,48)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(11,13) && sec <= converteTimeToSec(11,18)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(11,43) && sec <= converteTimeToSec(11,48))){
         note = 19.40;
-      }else if((age < 25 && min >= 10 && sec >= 19 && min <= 10 && sec <= 24 ) || (age >= 25 && age <= 30 && min >= 10 && sec >= 49 && min <= 10 && sec <= 54) || (age >= 30 && age < 35 && min >= 11 && sec >= 19 && min <= 11 && sec <= 24) || (age >= 35 && age < 40 && min >= 11 && sec >= 49 && min <= 11 && sec <= 54)){
+      }else if((age < 25 && sec >= converteTimeToSec(10,19) && sec <= converteTimeToSec(10,24)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(10,49) && sec <= converteTimeToSec(10,54)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(11,19) && sec <= converteTimeToSec(11,24)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(11,49) && sec <= converteTimeToSec(11,54))){
         note = 19.20;
-      }else if((age < 25 && min >= 10 && sec >= 25 && min <= 10 && sec <= 35 ) || (age >= 25 && age <= 30 && min >= 10 && sec >= 55 && min <= 11 && sec <= 5) || (age >= 30 && age < 35 && min >= 11 && sec >= 25 && min <= 11 && sec <= 35) || (age >= 35 && age < 40 && min >= 11 && sec >= 55 && min <= 12 && sec <= 5)){
+      }else if((age < 25 && sec >= converteTimeToSec(10,25) && sec <= converteTimeToSec(10,35)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(10,55) && sec <= converteTimeToSec(11,5)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(11,25) && sec <= converteTimeToSec(11,35)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(11,55) && sec <= converteTimeToSec(12,5))){
         note = 19;
-      }else if((age < 25 && min >= 10 && sec >= 36 && min <= 10 && sec <= 46 ) || (age >= 25 && age <= 30 && min >= 11 && sec >= 6 && min <= 11 && sec <= 16) || (age >= 30 && age < 35 && min >= 11 && sec >= 36 && min <= 11 && sec <= 46) || (age >= 35 && age < 40 && min >= 12 && sec >= 6 && min <= 12 && sec <= 16)){
+      }else if((age < 25 && sec >= converteTimeToSec(10,36) && sec <= converteTimeToSec(10,46)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(11,6) && sec <= converteTimeToSec(11,16)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(11,36) && sec <= converteTimeToSec(11,46)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(12,6) && sec <= converteTimeToSec(12,16))){
         note = 18.80;
-      }else if((age < 25 && min >= 10 && sec >= 47 && min <= 10 && sec <= 57 ) || (age >= 25 && age <= 30 && min >= 11 && sec >= 17 && min <= 11 && sec <= 27) || (age >= 30 && age < 35 && min >= 11 && sec >= 47 && min <= 11 && sec <= 57) || (age >= 35 && age < 40 && min >= 12 && sec >= 17 && min <= 12 && sec <= 27)){
+      }else if((age < 25 && sec >= converteTimeToSec(10,47) && sec <= converteTimeToSec(10,57)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(11,17) && sec <= converteTimeToSec(11,27)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(11,47) && sec <= converteTimeToSec(11,57)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(12,17) && sec <= converteTimeToSec(12,27))){
         note = 18.60;
-      }else if((age < 25 && min >= 10 && sec >= 58 && min <= 11 && sec <= 8 ) || (age >= 25 && age <= 30 && min >= 11 && sec >= 28 && min <= 11 && sec <= 38) || (age >= 30 && age < 35 && min >= 11 && sec >= 58 && min <= 12 && sec <= 8) || (age >= 35 && age < 40 && min >= 12 && sec >= 28 && min <= 12 && sec <= 38)){
+      }else if((age < 25 && sec >= converteTimeToSec(10,58) && sec <= converteTimeToSec(11,8)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(11,28) && sec <= converteTimeToSec(11,38)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(11,58) && sec <= converteTimeToSec(12,8)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(12,28) && sec <= converteTimeToSec(12,38))){
         note = 18.40;
-      }else if((age < 25 && min >= 11 && sec >= 9 && min <= 11 && sec <= 19 ) || (age >= 25 && age <= 30 && min >= 11 && sec >= 39 && min <= 11 && sec <= 49) || (age >= 30 && age < 35 && min >= 12 && sec >= 9 && min <= 12 && sec <= 19) || (age >= 35 && age < 40 && min >= 12 && sec >= 39 && min <= 12 && sec <= 49)){
+      }else if((age < 25 && sec >= converteTimeToSec(11,9) && sec <= converteTimeToSec(11,19)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(11,39) && sec <= converteTimeToSec(11,49)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(12,9) && sec <= converteTimeToSec(12,19)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(12,39) && sec <= converteTimeToSec(12,49))){
         note = 18.20;
-      }else if((age < 25 && min >= 11 && sec >= 20 && min <= 11 && sec <= 30 ) || (age >= 25 && age <= 30 && min >= 11 && sec >= 50 && min <= 12 && sec <= 0) || (age >= 30 && age < 35 && min >= 12 && sec >= 20 && min <= 12 && sec <= 30) || (age >= 35 && age < 40 && min >= 12 && sec >= 50 && min <= 13 && sec <= 0)){
+      }else if((age < 25 && sec >= converteTimeToSec(11,20) && sec <= converteTimeToSec(11,30)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(11,50) && sec <= converteTimeToSec(12,0)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(12,20) && sec <= converteTimeToSec(12,30)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(12,50) && sec <= converteTimeToSec(13,0))){
         note = 18;
-      }else if((age < 25 && min >= 11 && sec >= 31 && min <= 11 && sec <= 36 ) || (age >= 25 && age <= 30 && min >= 12 && sec >= 1 && min <= 12 && sec <= 6) || (age >= 30 && age < 35 && min >= 12 && sec >= 31 && min <= 12 && sec <= 36) || (age >= 35 && age < 40 && min >= 13 && sec >= 1 && min <= 13 && sec <= 6)){
+      }else if((age < 25 && sec >= converteTimeToSec(11,31) && sec <= converteTimeToSec(11,36)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(12,1) && sec <= converteTimeToSec(12,6)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(12,31) && sec <= converteTimeToSec(12,36)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(13,1) && sec <= converteTimeToSec(13,6))){
         note = 17.80;
-      }else if((age < 25 && min >= 11 && sec >= 37 && min <= 11 && sec <= 42 ) || (age >= 25 && age <= 30 && min >= 12 && sec >= 7 && min <= 12 && sec <= 12) || (age >= 30 && age < 35 && min >= 12 && sec >= 37 && min <= 12 && sec <= 42) || (age >= 35 && age < 40 && min >= 13 && sec >= 7 && min <= 13 && sec <= 12)){
+      }else if((age < 25 && sec >= converteTimeToSec(11,37) && sec <= converteTimeToSec(11,42)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(12,7) && sec <= converteTimeToSec(12,12)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(12,37) && sec <= converteTimeToSec(12,42)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(13,7) && sec <= converteTimeToSec(13,12))){
         note = 17.60;
-      }else if((age < 25 && min >= 11 && sec >= 43 && min <= 11 && sec <= 48 ) || (age >= 25 && age <= 30 && min >= 12 && sec >= 13 && min <= 12 && sec <= 18) || (age >= 30 && age < 35 && min >= 12 && sec >= 43 && min <= 12 && sec <= 48) || (age >= 35 && age < 40 && min >= 13 && sec >= 13 && min <= 13 && sec <= 18)){
+      }else if((age < 25 && sec >= converteTimeToSec(11,43) && sec <= converteTimeToSec(11,48)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(12,13) && sec <= converteTimeToSec(12,18)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(12,43) && sec <= converteTimeToSec(12,48)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(13,13) && sec <= converteTimeToSec(13,18))){
         note = 17.40;
-      }else if((age < 25 && min >= 11 && sec >= 49 && min <= 11 && sec <= 54 ) || (age >= 25 && age <= 30 && min >= 12 && sec >= 19 && min <= 12 && sec <= 24) || (age >= 30 && age < 35 && min >= 12 && sec >= 49 && min <= 12 && sec <= 54) || (age >= 35 && age < 40 && min >= 13 && sec >= 19 && min <= 13 && sec <= 24)){
+      }else if((age < 25 && sec >= converteTimeToSec(11,49) && sec <= converteTimeToSec(11,54)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(12,19) && sec <= converteTimeToSec(12,24)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(12,49) && sec <= converteTimeToSec(12,54)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(13,19) && sec <= converteTimeToSec(13,24))){
         note = 17.20;
-      }else if((age < 25 && min >= 11 && sec >= 55 && min <= 12 && sec <= 0 ) || (age >= 25 && age <= 30 && min >= 12 && sec >= 25 && min <= 12 && sec <= 30) || (age >= 30 && age < 35 && min >= 12 && sec >= 55 && min <= 13 && sec <= 0) || (age >= 35 && age < 40 && min >= 13 && sec >= 25 && min <= 13 && sec <= 30)){
+      }else if((age < 25 && sec >= converteTimeToSec(11,55) && sec <= converteTimeToSec(12,0)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(12,25) && sec <= converteTimeToSec(12,30)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(12,55) && sec <= converteTimeToSec(13,0)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(13,25) && sec <= converteTimeToSec(13,30))){
         note = 17;
-      }else if((age < 25 && min >= 12 && sec >= 1 && min <= 12 && sec <= 6 ) || (age >= 25 && age <= 30 && min >= 12 && sec >= 31 && min <= 12 && sec <= 36) || (age >= 30 && age < 35 && min >= 13 && sec >= 1 && min <= 13 && sec <= 6) || (age >= 35 && age < 40 && min >= 13 && sec >= 31 && min <= 13 && sec <= 36)){
+      }else if((age < 25 && sec >= converteTimeToSec(12,1) && sec <= converteTimeToSec(12,6)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(12,31) && sec <= converteTimeToSec(12,36)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(13,1) && sec <= converteTimeToSec(13,6)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(13,31) && sec <= converteTimeToSec(13,36))){
         note = 16.80;
-      }else if((age < 25 && min >= 12 && sec >= 7 && min <= 12 && sec <= 12 ) || (age >= 25 && age <= 30 && min >= 12 && sec >= 37 && min <= 12 && sec <= 42) || (age >= 30 && age < 35 && min >= 13 && sec >= 7 && min <= 13 && sec <= 12) || (age >= 35 && age < 40 && min >= 13 && sec >= 37 && min <= 13 && sec <= 42)){
+      }else if((age < 25 && sec >= converteTimeToSec(12,7) && sec <= converteTimeToSec(12,12)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(12,37) && sec <= converteTimeToSec(12,42)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(13,7) && sec <= converteTimeToSec(13,12)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(13,37) && sec <= converteTimeToSec(13,42))){
         note = 16.60;
-      }else if((age < 25 && min >= 12 && sec >= 13 && min <= 12 && sec <= 18 ) || (age >= 25 && age <= 30 && min >= 12 && sec >= 43 && min <= 12 && sec <= 48) || (age >= 30 && age < 35 && min >= 13 && sec >= 13 && min <= 13 && sec <= 18) || (age >= 35 && age < 40 && min >= 13 && sec >= 43 && min <= 13 && sec <= 48)){
+      }else if((age < 25 && sec >= converteTimeToSec(12,13) && sec <= converteTimeToSec(12,18)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(12,43) && sec <= converteTimeToSec(12,48)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(13,13) && sec <= converteTimeToSec(13,18)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(13,43) && sec <= converteTimeToSec(13,48))){
         note = 16.40;
-      }else if((age < 25 && min >= 12 && sec >= 19 && min <= 12 && sec <= 24 ) || (age >= 25 && age <= 30 && min >= 12 && sec >= 49 && min <= 12 && sec <= 54) || (age >= 30 && age < 35 && min >= 13 && sec >= 19 && min <= 13 && sec <= 24) || (age >= 35 && age < 40 && min >= 13 && sec >= 49 && min <= 13 && sec <= 54)){
+      }else if((age < 25 && sec >= converteTimeToSec(12,19) && sec <= converteTimeToSec(12,24)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(12,49) && sec <= converteTimeToSec(12,54)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(13,19) && sec <= converteTimeToSec(13,24)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(13,49) && sec <= converteTimeToSec(13,54))){
         note = 16.20;
-      }else if((age < 25 && min >= 12 && sec >= 25 && min <= 12 && sec <= 30 ) || (age >= 25 && age <= 30 && min >= 12 && sec >= 55 && min <= 13 && sec <= 00) || (age >= 30 && age < 35 && min >= 13 && sec >= 25 && min <= 13 && sec <= 30) || (age >= 35 && age < 40 && min >= 13 && sec >= 55 && min <= 14 && sec <= 0)){
+      }else if((age < 25 && sec >= converteTimeToSec(12,25) && sec <= converteTimeToSec(12,30)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(12,55) && sec <= converteTimeToSec(13,0)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(13,25) && sec <= converteTimeToSec(13,30)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(13,55) && sec <= converteTimeToSec(14,0))){
         note = 16;
-      }else if((age < 25 && min >= 12 && sec >= 31 && min <= 12 && sec <= 36 ) || (age >= 25 && age <= 30 && min >= 13 && sec >= 1 && min <= 13 && sec <= 6) || (age >= 30 && age < 35 && min >= 13 && sec >= 31 && min <= 13 && sec <= 36) || (age >= 35 && age < 40 && min >= 14 && sec >= 1 && min <= 14 && sec <= 6)){
+      }else if((age < 25 && sec >= converteTimeToSec(12,31) && sec <= converteTimeToSec(12,36)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(13,1) && sec <= converteTimeToSec(13,6)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(13,31) && sec <= converteTimeToSec(13,36)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(14,1) && sec <= converteTimeToSec(14,6))){
         note = 15.80;
-      }else if((age < 25 && min >= 12 && sec >= 37 && min <= 12 && sec <= 42 ) || (age >= 25 && age <= 30 && min >= 13 && sec >= 7 && min <= 13 && sec <= 12) || (age >= 30 && age < 35 && min >= 13 && sec >= 37 && min <= 13 && sec <= 42) || (age >= 35 && age < 40 && min >= 14 && sec >= 7 && min <= 14 && sec <= 12)){
+      }else if((age < 25 && sec >= converteTimeToSec(12,37) && sec <= converteTimeToSec(12,42)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(13,7) && sec <= converteTimeToSec(13,12)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(13,37) && sec <= converteTimeToSec(13,42)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(14,7) && sec <= converteTimeToSec(14,12))){
         note = 15.60;
-      }else if((age < 25 && min >= 12 && sec >= 43 && min <= 12 && sec <= 48 ) || (age >= 25 && age <= 30 && min >= 13 && sec >= 13 && min <= 13 && sec <= 18) || (age >= 30 && age < 35 && min >= 13 && sec >= 43 && min <= 13 && sec <= 48) || (age >= 35 && age < 40 && min >= 14 && sec >= 13 && min <= 14 && sec <= 18)){
+      }else if((age < 25 && sec >= converteTimeToSec(12,43) && sec <= converteTimeToSec(12,48)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(13,13) && sec <= converteTimeToSec(13,18)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(13,43) && sec <= converteTimeToSec(13,48)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(14,13) && sec <= converteTimeToSec(14,18))){
         note = 15.40;
-      }else if((age < 25 && min >= 12 && sec >= 49 && min <= 12 && sec <= 54 ) || (age >= 25 && age <= 30 && min >= 13 && sec >= 19 && min <= 13 && sec <= 24) || (age >= 30 && age < 35 && min >= 13 && sec >= 49 && min <= 13 && sec <= 54) || (age >= 35 && age < 40 && min >= 14 && sec >= 19 && min <= 14 && sec <= 24)){
+      }else if((age < 25 && sec >= converteTimeToSec(12,49) && sec <= converteTimeToSec(12,54)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(13,19) && sec <= converteTimeToSec(13,24)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(13,49) && sec <= converteTimeToSec(13,54)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(14,19) && sec <= converteTimeToSec(14,24))){
         note = 15.20;
-      }else if((age < 25 && min >= 12 && sec >= 55 && min <= 13 && sec <= 0 ) || (age >= 25 && age <= 30 && min >= 13 && sec >= 25 && min <= 13 && sec <= 30) || (age >= 30 && age < 35 && min >= 13 && sec >= 55 && min <= 14 && sec <= 0) || (age >= 35 && age < 40 && min >= 14 && sec >= 25 && min <= 14 && sec <= 30)){
+      }else if((age < 25 && sec >= converteTimeToSec(12,55) && sec <= converteTimeToSec(13,0)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(13,25) && sec <= converteTimeToSec(13,30)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(13,55) && sec <= converteTimeToSec(14,0)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(14,25) && sec <= converteTimeToSec(14,30))){
         note = 15;
-      }else if((age < 25 && min >= 13 && sec >= 1 && min <= 13 && sec <= 6 ) || (age >= 25 && age <= 30 && min >= 13 && sec >= 31 && min <= 13 && sec <= 36) || (age >= 30 && age < 35 && min >= 14 && sec >= 1 && min <= 14 && sec <= 6) || (age >= 35 && age < 40 && min >= 14 && sec >= 31 && min <= 14 && sec <= 36)){
+      }else if((age < 25 && sec >= converteTimeToSec(13,1) && sec <= converteTimeToSec(13,6)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(13,31) && sec <= converteTimeToSec(13,36)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(14,1) && sec <= converteTimeToSec(14,6)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(14,31) && sec <= converteTimeToSec(12,36))){
         note = 14.80;
-      }else if((age < 25 && min >= 13 && sec >= 7 && min <= 13 && sec <= 12 ) || (age >= 25 && age <= 30 && min >= 13 && sec >= 37 && min <= 13 && sec <= 42) || (age >= 30 && age < 35 && min >= 14 && sec >= 7 && min <= 14 && sec <= 12) || (age >= 35 && age < 40 && min >= 14 && sec >= 37 && min <= 14 && sec <= 42)){
+      }else if((age < 25 && sec >= converteTimeToSec(13,7) && sec <= converteTimeToSec(13,12)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(13,37) && sec <= converteTimeToSec(13,42)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(14,7) && sec <= converteTimeToSec(14,12)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(14,37) && sec <= converteTimeToSec(12,42))){
         note = 14.60;
-      }else if((age < 25 && min >= 13 && sec >= 13 && min <= 13 && sec <= 18 ) || (age >= 25 && age <= 30 && min >= 13 && sec >= 43 && min <= 13 && sec <= 48) || (age >= 30 && age < 35 && min >= 14 && sec >= 13 && min <= 14 && sec <= 18) || (age >= 35 && age < 40 && min >= 14 && sec >= 43 && min <= 14 && sec <= 48)){
+      }else if((age < 25 && sec >= converteTimeToSec(13,13) && sec <= converteTimeToSec(13,18)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(13,43) && sec <= converteTimeToSec(13,48)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(14,13) && sec <= converteTimeToSec(14,18)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(14,43) && sec <= converteTimeToSec(12,48))){
         note = 14.40;
-      }else if((age < 25 && min >= 13 && sec >= 19 && min <= 13 && sec <= 24 ) || (age >= 25 && age <= 30 && min >= 13 && sec >= 49 && min <= 13 && sec <= 54) || (age >= 30 && age < 35 && min >= 14 && sec >= 19 && min <= 14 && sec <= 24) || (age >= 35 && age < 40 && min >= 14 && sec >= 49 && min <= 14 && sec <= 54)){
+      }else if((age < 25 && sec >= converteTimeToSec(13,19) && sec <= converteTimeToSec(13,24)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(13,49) && sec <= converteTimeToSec(13,54)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(14,19) && sec <= converteTimeToSec(14,24)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(14,49) && sec <= converteTimeToSec(12,54))){
         note = 14.20;
-      }else if((age < 25 && min >= 13 && sec >= 25 && min <= 13 && sec <= 30 ) || (age >= 25 && age <= 30 && min >= 13 && sec >= 55 && min <= 14 && sec <= 0) || (age >= 30 && age < 35 && min >= 14 && sec >= 25 && min <= 14 && sec <= 30) || (age >= 35 && age < 40 && min >= 14 && sec >= 55 && min <= 15 && sec <= 0)){
+      }else if((age < 25 && sec >= converteTimeToSec(13,25) && sec <= converteTimeToSec(13,30)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(13,55) && sec <= converteTimeToSec(14,0)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(14,25) && sec <= converteTimeToSec(14,30)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(14,55) && sec <= converteTimeToSec(15,0))){
         note = 14;
-      }else if((age < 25 && min >= 13 && sec >= 31 && min <= 13 && sec <= 36 ) || (age >= 25 && age <= 30 && min >= 14 && sec >= 1 && min <= 14 && sec <= 6) || (age >= 30 && age < 35 && min >= 14 && sec >= 31 && min <= 14 && sec <= 36) || (age >= 35 && age < 40 && min >= 15 && sec >= 1 && min <= 15 && sec <= 6)){
+      }else if((age < 25 && sec >= converteTimeToSec(13,31) && sec <= converteTimeToSec(13,36)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(14,1) && sec <= converteTimeToSec(14,6)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(14,31) && sec <= converteTimeToSec(12,36)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(15,1) && sec <= converteTimeToSec(15,6))){
         note = 13.80;
-      }else if((age < 25 && min >= 13 && sec >= 37 && min <= 13 && sec <= 42 ) || (age >= 25 && age <= 30 && min >= 14 && sec >= 7 && min <= 14 && sec <= 12) || (age >= 30 && age < 35 && min >= 14 && sec >= 37 && min <= 14 && sec <= 32) || (age >= 35 && age < 40 && min >= 15 && sec >= 7 && min <= 15 && sec <= 12)){
+      }else if((age < 25 && sec >= converteTimeToSec(13,37) && sec <= converteTimeToSec(13,42)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(14,7) && sec <= converteTimeToSec(14,12)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(14,37) && sec <= converteTimeToSec(12,42)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(15,7) && sec <= converteTimeToSec(15,12))){
         note = 13.60;
-      }else if((age < 25 && min >= 13 && sec >= 43 && min <= 13 && sec <= 48 ) || (age >= 25 && age <= 30 && min >= 14 && sec >= 13 && min <= 14 && sec <= 18) || (age >= 30 && age < 35 && min >= 14 && sec >= 43 && min <= 14 && sec <= 48) || (age >= 35 && age < 40 && min >= 15 && sec >= 13 && min <= 15 && sec <= 18)){
+      }else if((age < 25 && sec >= converteTimeToSec(13,43) && sec <= converteTimeToSec(13,48)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(14,13) && sec <= converteTimeToSec(14,18)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(14,43) && sec <= converteTimeToSec(12,48)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(15,13) && sec <= converteTimeToSec(15,18))){
         note = 13.40;
-      }else if((age < 25 && min >= 13 && sec >= 49 && min <= 13 && sec <= 54 ) || (age >= 25 && age <= 30 && min >= 14 && sec >= 19 && min <= 14 && sec <= 24) || (age >= 30 && age < 35 && min >= 14 && sec >= 49 && min <= 14 && sec <= 54) || (age >= 35 && age < 40 && min >= 15 && sec >= 19 && min <= 15 && sec <= 24)){
+      }else if((age < 25 && sec >= converteTimeToSec(13,49) && sec <= converteTimeToSec(13,54)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(14,19) && sec <= converteTimeToSec(14,24)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(14,49) && sec <= converteTimeToSec(12,54)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(15,19) && sec <= converteTimeToSec(15,24))){
         note = 13.20;
-      }else if((age < 25 && min >= 13 && sec >= 55 && min <= 14 && sec <= 0 ) || (age >= 25 && age <= 30 && min >= 14 && sec >= 25 && min <= 14 && sec <= 30) || (age >= 30 && age < 35 && min >= 14 && sec >= 55 && min <= 15 && sec <= 0) || (age >= 35 && age < 40 && min >= 15 && sec >= 25 && min <= 15 && sec <= 30)){
+      }else if((age < 25 && sec >= converteTimeToSec(13,55) && sec <= converteTimeToSec(14,0)) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(14,25) && sec <= converteTimeToSec(14,30)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(14,55) && sec <= converteTimeToSec(15,0)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(15,25) && sec <= converteTimeToSec(15,30))){
         note = 13;
       }else{
         note = 0;
@@ -420,79 +428,81 @@ class CalculateController extends GetxController {
     min = int.parse(arr[0]);
     sec = int.parse(arr[1]);
 
+    sec = sec + (min * 60);
+    
     if (gender == 0){
 
-      if((age! < 25 && (min <= 3 && sec <= 45 || min <= 2 && sec <= 60)) || (age >= 25 && age < 30 && (min <= 4 && sec <= 0 || min <= 3 && sec <= 60)) || (age >= 30 && age < 35 && (min <= 4 && sec <= 15 || min <= 3 && sec <= 60)) || (age >= 35 && age < 40 && (min <= 4 && sec <= 30 || min <= 3 && sec <= 60))){
+      if((age! < 25 && sec <= converteTimeToSec(3,45)) || (age >= 25 && age < 30 && sec <= converteTimeToSec(4,0)) || (age >= 30 && age < 35 && sec <= converteTimeToSec(4,15)) || (age >= 35 && age < 40 && sec <= converteTimeToSec(4,30))){
         note = 20;
-      }else if((age < 25 && min >= 3 && sec >= 46 && min <= 3 && sec <= 49 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 1 && min <= 4 && sec <= 4) || (age >= 30 && age < 35 && min >= 4 && sec >= 16 && min <= 4 && sec <= 19) || (age >= 35 && age < 40 && min >= 4 && sec >= 31 && min <= 4 && sec <= 37)){
+      }else if((age < 25 && sec >= converteTimeToSec(3,46) && sec <= converteTimeToSec(3,49) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,1) && sec <= converteTimeToSec(4,4)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(4,16) && sec <= converteTimeToSec(4,19)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(4,31) && sec <= converteTimeToSec(4,37))){
         note = 19.8;
-      }else if((age < 25 && min >= 3 && sec >= 50 && min <= 3 && sec <= 52 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 5 && min <= 4 && sec <= 9) || (age >= 30 && age < 35 && min >= 4 && sec >= 20 && min <= 4 && sec <= 22) || (age >= 35 && age < 40 && min >= 4 && sec >= 38 && min <= 4 && sec <= 40)){
+      }else if((age < 25 && sec >= converteTimeToSec(3,50) && sec <= converteTimeToSec(3,52) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,5) && sec <= converteTimeToSec(5,7)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(4,20) && sec <= converteTimeToSec(4,22)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(4,38) && sec <= converteTimeToSec(4,40))){
         note = 19.6;
-      }else if((age < 25 && min >= 3 && sec >= 53 && min <= 3 && sec <= 55 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 8 && min <= 4 && sec <= 12) || (age >= 30 && age < 35 && min >= 4 && sec >= 23 && min <= 4 && sec <= 25) || (age >= 35 && age < 40 && min >= 4 && sec >= 41 && min <= 4 && sec <= 43)){
+      }else if((age < 25 && sec >= converteTimeToSec(3,53) && sec <= converteTimeToSec(3,55) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,8) && sec <= converteTimeToSec(5,10)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(4,23) && sec <= converteTimeToSec(4,25)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(4,41) && sec <= converteTimeToSec(4,43))){
         note = 19.4;
-      }else if((age < 25 && min >= 3 && sec >= 56 && min <= 3 && sec <= 58 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 11 && min <= 4 && sec <= 15) || (age >= 30 && age < 35 && min >= 4 && sec >= 26 && min <= 4 && sec <= 29) || (age >= 35 && age < 40 && min >= 4 && sec >= 44 && min <= 4 && sec <= 46)){
+      }else if((age < 25 && sec >= converteTimeToSec(3,56) && sec <= converteTimeToSec(3,58) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,11) && sec <= converteTimeToSec(5,13)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,26) && sec <= converteTimeToSec(5,28)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(4,44) && sec <= converteTimeToSec(4,46))){
         note = 19.2;
-      }else if((age < 25 && min >= 3 && sec >= 59 && min <= 4 && sec <= 1 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 14 && min <= 4 && sec <= 16) || (age >= 30 && age < 35 && min >= 4 && sec >= 29 && min <= 4 && sec <= 31) || (age >= 35 && age < 40 && min >= 4 && sec >= 47 && min <= 4 && sec <= 49)){
+      }else if((age < 25 && sec >= converteTimeToSec(3,59) && sec <= converteTimeToSec(4,1) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,14) && sec <= converteTimeToSec(4,16)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(4,29) && sec <= converteTimeToSec(4,31)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(4,47) && sec <= converteTimeToSec(4,49))){
         note = 19;
-      }else if((age < 25 && min >= 4 && sec >= 2 && min <= 4 && sec <= 4 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 17 && min <= 4 && sec <= 19) || (age >= 30 && age < 35 && min >= 4 && sec >= 32 && min <= 4 && sec <= 34) || (age >= 35 && age < 40 && min >= 4 && sec >= 50 && min <= 4 && sec <= 52)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,2) && sec <= converteTimeToSec(4,4) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,17) && sec <= converteTimeToSec(4,19)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(4,32) && sec <= converteTimeToSec(4,34)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(4,50) && sec <= converteTimeToSec(4,52))){
         note = 18.8;
-      }else if((age < 25 && min >= 4 && sec >= 5 && min <= 4 && sec <= 7 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 20 && min <= 4 && sec <= 22) || (age >= 30 && age < 35 && min >= 4 && sec >= 35 && min <= 4 && sec <= 37) || (age >= 35 && age < 40 && min >= 4 && sec >= 53 && min <= 4 && sec <= 55)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,5) && sec <= converteTimeToSec(4,7) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,20) && sec <= converteTimeToSec(4,22)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(4,35) && sec <= converteTimeToSec(4,37)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(4,53) && sec <= converteTimeToSec(4,55))){
         note = 18.6;
-      }else if((age < 25 && min >= 4 && sec >= 8 && min <= 4 && sec <= 10 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 23 && min <= 4 && sec <= 25) || (age >= 30 && age < 35 && min >= 4 && sec >= 38 && min <= 4 && sec <= 40) || (age >= 35 && age < 40 && min >= 4 && sec >= 56 && min <= 4 && sec <= 58)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,8) && sec <= converteTimeToSec(4,10) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,23) && sec <= converteTimeToSec(4,25)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(4,38) && sec <= converteTimeToSec(4,40)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(4,56) && sec <= converteTimeToSec(4,58))){
         note = 18.4;
-      }else if((age < 25 && min >= 4 && sec >= 11 && min <= 4 && sec <= 13 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 26 && min <= 4 && sec <= 28) || (age >= 30 && age < 35 && min >= 4 && sec >= 41 && min <= 4 && sec <= 43) || (age >= 35 && age < 40 && min >= 4 && sec >= 59 && min <= 5 && sec <= 1)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,11) && sec <= converteTimeToSec(4,13) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,26) && sec <= converteTimeToSec(4,28)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(4,41) && sec <= converteTimeToSec(4,43)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(4,59) && sec <= converteTimeToSec(5,1))){
         note = 18.2;
-      }else if((age < 25 && min >= 4 && sec >= 14 && min <= 4 && sec <= 16 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 29 && min <= 4 && sec <= 31) || (age >= 30 && age < 35 && min >= 4 && sec >= 44 && min <= 4 && sec <= 46) || (age >= 35 && age < 40 && min >= 5 && sec >= 2 && min <= 5 && sec <= 4)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,14) && sec <= converteTimeToSec(4,16) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,29) && sec <= converteTimeToSec(4,31)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(4,44) && sec <= converteTimeToSec(4,46)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(5,2) && sec <= converteTimeToSec(5,4))){
         note = 18;
-      }else if((age < 25 && min >= 4 && sec >= 17 && min <= 4 && sec <= 19 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 32 && min <= 4 && sec <= 34) || (age >= 30 && age < 35 && min >= 4 && sec >= 47 && min <= 4 && sec <= 49) || (age >= 35 && age < 40 && min >= 5 && sec >= 5 && min <= 5 && sec <= 7)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,17) && sec <= converteTimeToSec(4,19) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,32) && sec <= converteTimeToSec(4,34)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(4,47) && sec <= converteTimeToSec(4,49)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(5,5) && sec <= converteTimeToSec(5,7))){
         note = 17.8;
-      }else if((age < 25 && min >= 4 && sec >= 20 && min <= 4 && sec <= 22 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 35 && min <= 4 && sec <= 37) || (age >= 30 && age < 35 && min >= 4 && sec >= 50 && min <= 4 && sec <= 52) || (age >= 35 && age < 40 && min >= 5 && sec >= 8 && min <= 5 && sec <= 10)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,20) && sec <= converteTimeToSec(4,22) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,35) && sec <= converteTimeToSec(4,37)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(4,50) && sec <= converteTimeToSec(4,52)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(5,8) && sec <= converteTimeToSec(5,10))){
         note = 17.6;
-      }else if((age < 25 && min >= 4 && sec >= 23 && min <= 4 && sec <= 25 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 38 && min <= 4 && sec <= 40) || (age >= 30 && age < 35 && min >= 4 && sec >= 53 && min <= 4 && sec <= 55) || (age >= 35 && age < 40 && min >= 5 && sec >= 11 && min <= 5 && sec <= 13)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,23) && sec <= converteTimeToSec(4,25) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,38) && sec <= converteTimeToSec(4,40)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(4,53) && sec <= converteTimeToSec(4,55)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(5,11) && sec <= converteTimeToSec(5,13))){
         note = 17.4;
-      }else if((age < 25 && min >= 4 && sec >= 26 && min <= 4 && sec <= 28 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 41 && min <= 4 && sec <= 43) || (age >= 30 && age < 35 && min >= 4 && sec >= 56 && min <= 4 && sec <= 58) || (age >= 35 && age < 40 && min >= 5 && sec >= 14 && min <= 5 && sec <= 16)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,26) && sec <= converteTimeToSec(4,28) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,41) && sec <= converteTimeToSec(4,43)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(4,56) && sec <= converteTimeToSec(4,58)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(5,14) && sec <= converteTimeToSec(5,16))){
         note = 17.2;
-      }else if((age < 25 && min >= 4 && sec >= 29 && min <= 4 && sec <= 31 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 44 && min <= 4 && sec <= 46) || (age >= 30 && age < 35 && min >= 4 && sec >= 59 && min <= 5 && sec <= 1) || (age >= 35 && age < 40 && min >= 5 && sec >= 17 && min <= 5 && sec <= 19)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,29) && sec <= converteTimeToSec(4,31) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,44) && sec <= converteTimeToSec(4,46)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(4,59) && sec <= converteTimeToSec(5,1)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(5,17) && sec <= converteTimeToSec(5,19))){
         note = 17;
-      }else if((age < 25 && min >= 4 && sec >= 32 && min <= 4 && sec <= 34 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 47 && min <= 4 && sec <= 49) || (age >= 30 && age < 35 && min >= 5 && sec >= 2 && min <= 4 && sec <= 4) || (age >= 35 && age < 40 && min >= 5 && sec >= 20 && min <= 5 && sec <= 22)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,32) && sec <= converteTimeToSec(4,34) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,47) && sec <= converteTimeToSec(4,49)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,2) && sec <= converteTimeToSec(5,4)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(5,20) && sec <= converteTimeToSec(5,22))){
         note = 16.8;
-      }else if((age < 25 && min >= 4 && sec >= 35 && min <= 4 && sec <= 37 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 50 && min <= 4 && sec <= 52) || (age >= 30 && age < 35 && min >= 5 && sec >= 5 && min <= 4 && sec <= 7) || (age >= 35 && age < 40 && min >= 5 && sec >= 23 && min <= 5 && sec <= 25)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,35) && sec <= converteTimeToSec(4,37) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,50) && sec <= converteTimeToSec(4,52)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,5) && sec <= converteTimeToSec(5,7)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(5,23) && sec <= converteTimeToSec(5,25))){
         note = 16.6;
-      }else if((age < 25 && min >= 4 && sec >= 38 && min <= 4 && sec <= 40 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 53 && min <= 4 && sec <= 55) || (age >= 30 && age < 35 && min >= 5 && sec >= 8 && min <= 4 && sec <= 10) || (age >= 35 && age < 40 && min >= 5 && sec >= 26 && min <= 5 && sec <= 28)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,38) && sec <= converteTimeToSec(4,40) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,53) && sec <= converteTimeToSec(4,55)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,8) && sec <= converteTimeToSec(5,10)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(5,26) && sec <= converteTimeToSec(5,28))){
         note = 16.4;
-      }else if((age < 25 && min >= 4 && sec >= 41 && min <= 4 && sec <= 43 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 56 && min <= 4 && sec <= 58) || (age >= 30 && age < 35 && min >= 5 && sec >= 11 && min <= 4 && sec <= 13) || (age >= 35 && age < 40 && min >= 5 && sec >= 29 && min <= 5 && sec <= 31)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,41) && sec <= converteTimeToSec(4,43) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,56) && sec <= converteTimeToSec(4,58)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,11) && sec <= converteTimeToSec(5,13)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(5,29) && sec <= converteTimeToSec(5,31))){
         note = 16.2;
-      }else if((age < 25 && min >= 4 && sec >= 44 && min <= 4 && sec <= 46 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 59 && min <= 5 && sec <= 1) || (age >= 30 && age < 35 && min >= 5 && sec >= 14 && min <= 5 && sec <= 16) || (age >= 35 && age < 40 && min >= 5 && sec >= 32 && min <= 5 && sec <= 34)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,44) && sec <= converteTimeToSec(4,46) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,59) && sec <= converteTimeToSec(5,1)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,14) && sec <= converteTimeToSec(5,16)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(5,32) && sec <= converteTimeToSec(5,34))){
         note = 16;
-      }else if((age < 25 && min >= 4 && sec >= 47 && min <= 4 && sec <= 49 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 2 && min <= 5 && sec <= 4) || (age >= 30 && age < 35 && min >= 5 && sec >= 17 && min <= 5 && sec <= 19) || (age >= 35 && age < 40 && min >= 5 && sec >= 35 && min <= 5 && sec <= 37)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,47) && sec <= converteTimeToSec(4,49) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,2) && sec <= converteTimeToSec(5,4)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,17) && sec <= converteTimeToSec(5,19)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(5,35) && sec <= converteTimeToSec(5,37))){
         note = 15.8;
-      }else if((age < 25 && min >= 4 && sec >= 50 && min <= 4 && sec <= 52 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 5 && min <= 5 && sec <= 7) || (age >= 30 && age < 35 && min >= 5 && sec >= 20 && min <= 5 && sec <= 22) || (age >= 35 && age < 40 && min >= 5 && sec >= 38 && min <= 5 && sec <= 40)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,50) && sec <= converteTimeToSec(4,52) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,5) && sec <= converteTimeToSec(5,7)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,20) && sec <= converteTimeToSec(5,22)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(5,38) && sec <= converteTimeToSec(5,40))){
         note = 15.6;
-      }else if((age < 25 && min >= 4 && sec >= 53 && min <= 4 && sec <= 55 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 8 && min <= 5 && sec <= 10) || (age >= 30 && age < 35 && min >= 5 && sec >= 23 && min <= 5 && sec <= 25) || (age >= 35 && age < 40 && min >= 5 && sec >= 41 && min <= 5 && sec <= 43)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,53) && sec <= converteTimeToSec(4,55) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,8) && sec <= converteTimeToSec(5,10)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,23) && sec <= converteTimeToSec(5,25)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(5,41) && sec <= converteTimeToSec(5,43))){
         note = 15.4;
-      }else if((age < 25 && min >= 4 && sec >= 56 && min <= 4 && sec <= 58 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 11 && min <= 5 && sec <= 13) || (age >= 30 && age < 35 && min >= 5 && sec >= 26 && min <= 5 && sec <= 28) || (age >= 35 && age < 40 && min >= 5 && sec >= 44 && min <= 5 && sec <= 46)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,56) && sec <= converteTimeToSec(4,58) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,11) && sec <= converteTimeToSec(5,13)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,26) && sec <= converteTimeToSec(5,28)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(5,44) && sec <= converteTimeToSec(5,46))){
         note = 15.2;
-      }else if((age < 25 && min >= 4 && sec >= 59 && min <= 5 && sec <= 1 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 14 && min <= 5 && sec <= 16) || (age >= 30 && age < 35 && min >= 5 && sec >= 29 && min <= 5 && sec <= 31) || (age >= 35 && age < 40 && min >= 5 && sec >= 47 && min <= 5 && sec <= 49)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,59) && sec <= converteTimeToSec(5,1) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,14) && sec <= converteTimeToSec(5,16)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,29) && sec <= converteTimeToSec(5,31)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(5,47) && sec <= converteTimeToSec(5,49))){
         note = 15;
-      }else if((age < 25 && min >= 5 && sec >= 2 && min <= 5 && sec <= 4 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 17 && min <= 5 && sec <= 19) || (age >= 30 && age < 35 && min >= 5 && sec >= 32 && min <= 5 && sec <= 34) || (age >= 35 && age < 40 && min >= 5 && sec >= 50 && min <= 5 && sec <= 52)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,2) && sec <= converteTimeToSec(5,4) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,17) && sec <= converteTimeToSec(5,19)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,32) && sec <= converteTimeToSec(5,34)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(5,50) && sec <= converteTimeToSec(5,52))){
         note = 14.8;
-      }else if((age < 25 && min >= 5 && sec >= 5 && min <= 5 && sec <= 7 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 20 && min <= 5 && sec <= 22) || (age >= 30 && age < 35 && min >= 5 && sec >= 35 && min <= 5 && sec <= 37) || (age >= 35 && age < 40 && min >= 5 && sec >= 53 && min <= 5 && sec <= 55)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,5) && sec <= converteTimeToSec(5,7) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,20) && sec <= converteTimeToSec(5,22)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,35) && sec <= converteTimeToSec(5,37)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(5,53) && sec <= converteTimeToSec(5,55))){
         note = 14.6;
-      }else if((age < 25 && min >= 5 && sec >= 8 && min <= 5 && sec <= 10 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 23 && min <= 5 && sec <= 25) || (age >= 30 && age < 35 && min >= 5 && sec >= 38 && min <= 5 && sec <= 40) || (age >= 35 && age < 40 && min >= 5 && sec >= 56 && min <= 5 && sec <= 58)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,8) && sec <= converteTimeToSec(5,10) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,23) && sec <= converteTimeToSec(5,25)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,38) && sec <= converteTimeToSec(5,40)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(5,56) && sec <= converteTimeToSec(5,58))){
         note = 14.4;
-      }else if((age < 25 && min >= 5 && sec >= 11 && min <= 5 && sec <= 13 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 26 && min <= 5 && sec <= 28) || (age >= 30 && age < 35 && min >= 5 && sec >= 41 && min <= 5 && sec <= 43) || (age >= 35 && age < 40 && min >= 5 && sec >= 59 && min <= 6 && sec <= 1)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,11) && sec <= converteTimeToSec(5,13) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,26) && sec <= converteTimeToSec(5,28)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,41) && sec <= converteTimeToSec(5,43)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(5,59) && sec <= converteTimeToSec(6,1))){
         note = 14.2;
-      }else if((age < 25 && min >= 5 && sec >= 14 && min <= 5 && sec <= 16 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 29 && min <= 5 && sec <= 31) || (age >= 30 && age < 35 && min >= 5 && sec >= 44 && min <= 5 && sec <= 46) || (age >= 35 && age < 40 && min >= 6 && sec >= 2 && min <= 6 && sec <= 4)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,14) && sec <= converteTimeToSec(5,16) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,29) && sec <= converteTimeToSec(5,31)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,44) && sec <= converteTimeToSec(5,46)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(6,2) && sec <= converteTimeToSec(6,4))){
         note = 14;
-      }else if((age < 25 && min >= 5 && sec >= 17 && min <= 5 && sec <= 19 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 32 && min <= 5 && sec <= 34) || (age >= 30 && age < 35 && min >= 5 && sec >= 47 && min <= 5 && sec <= 49) || (age >= 35 && age < 40 && min >= 6 && sec >= 5 && min <= 6 && sec <= 7)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,17) && sec <= converteTimeToSec(5,19) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,32) && sec <= converteTimeToSec(5,34)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,47) && sec <= converteTimeToSec(5,49)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(6,5) && sec <= converteTimeToSec(6,7))){
         note = 13.8;
-      }else if((age < 25 && min >= 5 && sec >= 20 && min <= 5 && sec <= 22 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 35 && min <= 5 && sec <= 37) || (age >= 30 && age < 35 && min >= 5 && sec >= 50 && min <= 5 && sec <= 52) || (age >= 35 && age < 40 && min >= 6 && sec >= 8 && min <= 6 && sec <= 9)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,20) && sec <= converteTimeToSec(5,22) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,35) && sec <= converteTimeToSec(5,37)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,50) && sec <= converteTimeToSec(5,52)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(6,8) && sec <= converteTimeToSec(6,9))){
         note = 13.6;
-      }else if((age < 25 && min >= 5 && sec >= 23 && min <= 5 && sec <= 25 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 38 && min <= 5 && sec <= 40) || (age >= 30 && age < 35 && min >= 5 && sec >= 53 && min <= 5 && sec <= 55) || (age >= 35 && age < 40 && min >= 6 && sec >= 10 && min <= 6 && sec <= 11)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,23) && sec <= converteTimeToSec(5,25) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,38) && sec <= converteTimeToSec(5,40)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,53) && sec <= converteTimeToSec(5,55)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(6,10) && sec <= converteTimeToSec(6,11))){
         note = 13.4;
-      }else if((age < 25 && min >= 5 && sec >= 26 && min <= 5 && sec <= 28 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 41 && min <= 5 && sec <= 43) || (age >= 30 && age < 35 && min >= 5 && sec >= 56 && min <= 5 && sec <= 58) || (age >= 35 && age < 40 && min >= 6 && sec >= 12 && min <= 6 && sec <= 13)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,26) && sec <= converteTimeToSec(5,28) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,41) && sec <= converteTimeToSec(5,43)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,56) && sec <= converteTimeToSec(5,58)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(6,12) && sec <= converteTimeToSec(6,13))){
         note = 13.2;
-      }else if((age < 25 && min >= 5 && sec >= 29 && min <= 5 && sec <= 30 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 44 && min <= 5 && sec <= 45) || (age >= 30 && age < 35 && min >= 5 && sec >= 59 && min <= 5 && sec <= 60) || (age >= 35 && age < 40 && min >= 6 && sec >= 14 && min <= 6 && sec <= 15)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,29) && sec <= converteTimeToSec(5,30) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,44) && sec <= converteTimeToSec(5,45)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,59) && sec <= converteTimeToSec(6,0)) || (age >= 35 && age < 40 && sec >= converteTimeToSec(6,14) && sec <= converteTimeToSec(6,15))){
         note = 13;
       }else{
         note = 0;
@@ -500,77 +510,77 @@ class CalculateController extends GetxController {
       
     }else{
 
-      if((age! < 25 && (min <= 4 && sec <= 0 || min <= 3 && sec <= 60)) || (age >= 25 && age < 30 && (min <= 4 && sec <= 20 || min <= 3 && sec <= 60)) || (age >= 30 && age < 35 && (min <= 4 && sec <= 40 || min <= 3 && sec <= 60))){
+      if((age! < 25 && sec <= converteTimeToSec(4,0)) || (age >= 25 && age < 30 && sec <= converteTimeToSec(4,20)) || (age >= 30 && age < 35 && sec <= converteTimeToSec(4,40))){
         note = 20;
-      }else if((age < 25 && min >= 4 && sec >= 1 && min <= 4 && sec <= 3 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 21 && min <= 4 && sec <= 23) || (age >= 30 && age < 35 && min >= 4 && sec >= 41 && min <= 4 && sec <= 43)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,1) && sec <= converteTimeToSec(4,3) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,21) && sec <= converteTimeToSec(4,23)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(4,41) && sec <= converteTimeToSec(4,43))){
         note = 19.8;
-      }else if((age < 25 && min >= 4 && sec >= 4 && min <= 4 && sec <= 7 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 24 && min <= 4 && sec <= 28) || (age >= 30 && age < 35 && min >= 4 && sec >= 44 && min <= 4 && sec <= 48)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,4) && sec <= converteTimeToSec(4,7) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,24) && sec <= converteTimeToSec(4,28)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(4,44) && sec <= converteTimeToSec(4,48))){
         note = 19.6;
-      }else if((age < 25 && min >= 4 && sec >= 8 && min <= 4 && sec <= 10 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 29 && min <= 4 && sec <= 31) || (age >= 30 && age < 35 && min >= 4 && sec >= 49 && min <= 4 && sec <= 51)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,8) && sec <= converteTimeToSec(4,10) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,29) && sec <= converteTimeToSec(4,31)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(4,49) && sec <= converteTimeToSec(4,51))){
         note = 19.4;
-      }else if((age < 25 && min >= 4 && sec >= 11 && min <= 4 && sec <= 13 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 32 && min <= 4 && sec <= 34) || (age >= 30 && age < 35 && min >= 4 && sec >= 52 && min <= 4 && sec <= 54)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,11) && sec <= converteTimeToSec(4,13) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,32) && sec <= converteTimeToSec(4,34)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(4,52) && sec <= converteTimeToSec(4,54))){
         note = 19.2;
-      }else if((age < 25 && min >= 4 && sec >= 14 && min <= 4 && sec <= 16 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 35 && min <= 4 && sec <= 37) || (age >= 30 && age < 35 && min >= 4 && sec >= 55 && min <= 4 && sec <= 58)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,14) && sec <= converteTimeToSec(4,16) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,35) && sec <= converteTimeToSec(4,37)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(4,55) && sec <= converteTimeToSec(4,58))){
         note = 19;
-      }else if((age < 25 && min >= 4 && sec >= 17 && min <= 4 && sec <= 19 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 38 && min <= 4 && sec <= 40) || (age >= 30 && age < 35 && min >= 4 && sec >= 59 && min <= 5 && sec <= 1)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,17) && sec <= converteTimeToSec(4,19) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,38) && sec <= converteTimeToSec(4,40)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(4,59) && sec <= converteTimeToSec(5,1))){
         note = 18.8;
-      }else if((age < 25 && min >= 4 && sec >= 20 && min <= 4 && sec <= 22 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 41 && min <= 4 && sec <= 43) || (age >= 30 && age < 35 && min >= 5 && sec >= 2 && min <= 5 && sec <= 4)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,20) && sec <= converteTimeToSec(4,22) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,41) && sec <= converteTimeToSec(4,43)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,2) && sec <= converteTimeToSec(5,4))){
         note = 18.6;
-      }else if((age < 25 && min >= 4 && sec >= 23 && min <= 4 && sec <= 25 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 44 && min <= 4 && sec <= 46) || (age >= 30 && age < 35 && min >= 5 && sec >= 5 && min <= 5 && sec <= 7)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,23) && sec <= converteTimeToSec(4,25) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,44) && sec <= converteTimeToSec(4,46)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,5) && sec <= converteTimeToSec(5,7))){
         note = 18.4;
-      }else if((age < 25 && min >= 4 && sec >= 26 && min <= 4 && sec <= 28 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 47 && min <= 4 && sec <= 49) || (age >= 30 && age < 35 && min >= 5 && sec >= 8 && min <= 5 && sec <= 10)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,26) && sec <= converteTimeToSec(4,28) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,47) && sec <= converteTimeToSec(4,49)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,8) && sec <= converteTimeToSec(5,10))){
         note = 18.2;
-      }else if((age < 25 && min >= 4 && sec >= 29 && min <= 4 && sec <= 31 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 50 && min <= 4 && sec <= 52) || (age >= 30 && age < 35 && min >= 5 && sec >= 11 && min <= 5 && sec <= 13)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,29) && sec <= converteTimeToSec(4,31) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,50) && sec <= converteTimeToSec(4,52)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,11) && sec <= converteTimeToSec(5,13))){
         note = 18;
-      }else if((age < 25 && min >= 4 && sec >= 32 && min <= 4 && sec <= 34 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 53 && min <= 4 && sec <= 55) || (age >= 30 && age < 35 && min >= 5 && sec >= 14 && min <= 5 && sec <= 16)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,32) && sec <= converteTimeToSec(4,34) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,53) && sec <= converteTimeToSec(4,55)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,14) && sec <= converteTimeToSec(5,16))){
         note = 17.8;
-      }else if((age < 25 && min >= 4 && sec >= 35 && min <= 4 && sec <= 37 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 56 && min <= 4 && sec <= 58) || (age >= 30 && age < 35 && min >= 5 && sec >= 17 && min <= 5 && sec <= 19)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,35) && sec <= converteTimeToSec(4,37) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,56) && sec <= converteTimeToSec(4,58)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,17) && sec <= converteTimeToSec(5,19))){
         note = 17.6;
-      }else if((age < 25 && min >= 4 && sec >= 38 && min <= 4 && sec <= 40 ) || (age >= 25 && age <= 30 && min >= 4 && sec >= 59 && min <= 5 && sec <= 1) || (age >= 30 && age < 35 && min >= 5 && sec >= 20 && min <= 5 && sec <= 22)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,38) && sec <= converteTimeToSec(4,40) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(4,59) && sec <= converteTimeToSec(5,1)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,20) && sec <= converteTimeToSec(5,22))){
         note = 17.4;
-      }else if((age < 25 && min >= 4 && sec >= 41 && min <= 4 && sec <= 43 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 2 && min <= 5 && sec <= 4) || (age >= 30 && age < 35 && min >= 5 && sec >= 23 && min <= 5 && sec <= 25)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,41) && sec <= converteTimeToSec(4,43) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,2) && sec <= converteTimeToSec(5,4)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,23) && sec <= converteTimeToSec(5,25))){
         note = 17.2;
-      }else if((age < 25 && min >= 4 && sec >= 44 && min <= 4 && sec <= 46 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 5 && min <= 5 && sec <= 7) || (age >= 30 && age < 35 && min >= 5 && sec >= 26 && min <= 5 && sec <= 28)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,44) && sec <= converteTimeToSec(4,46) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,5) && sec <= converteTimeToSec(5,7)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,26) && sec <= converteTimeToSec(5,28))){
         note = 17;
-      }else if((age < 25 && min >= 4 && sec >= 47 && min <= 4 && sec <= 49 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 8 && min <= 5 && sec <= 10) || (age >= 30 && age < 35 && min >= 5 && sec >= 29 && min <= 5 && sec <= 31)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,47) && sec <= converteTimeToSec(4,49) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,8) && sec <= converteTimeToSec(5,10)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,29) && sec <= converteTimeToSec(5,31))){
         note = 16.8;
-      }else if((age < 25 && min >= 4 && sec >= 50 && min <= 4 && sec <= 52 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 11 && min <= 5 && sec <= 13) || (age >= 30 && age < 35 && min >= 5 && sec >= 32 && min <= 5 && sec <= 34)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,50) && sec <= converteTimeToSec(4,52) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,11) && sec <= converteTimeToSec(5,13)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,32) && sec <= converteTimeToSec(5,34))){
         note = 16.6;
-      }else if((age < 25 && min >= 4 && sec >= 53 && min <= 4 && sec <= 55 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 14 && min <= 5 && sec <= 16) || (age >= 30 && age < 35 && min >= 5 && sec >= 35 && min <= 5 && sec <= 37)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,53) && sec <= converteTimeToSec(4,55) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,14) && sec <= converteTimeToSec(5,16)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,35) && sec <= converteTimeToSec(5,37))){
         note = 16.4;
-      }else if((age < 25 && min >= 4 && sec >= 56 && min <= 4 && sec <= 58 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 17 && min <= 5 && sec <= 19) || (age >= 30 && age < 35 && min >= 5 && sec >= 38 && min <= 5 && sec <= 40)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,56) && sec <= converteTimeToSec(4,58) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,17) && sec <= converteTimeToSec(5,19)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,38) && sec <= converteTimeToSec(5,40))){
         note = 16.2;
-      }else if((age < 25 && min >= 4 && sec >= 59 && min <= 5 && sec <= 1 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 20 && min <= 5 && sec <= 22) || (age >= 30 && age < 35 && min >= 5 && sec >= 41 && min <= 5 && sec <= 43)){
+      }else if((age < 25 && sec >= converteTimeToSec(4,59) && sec <= converteTimeToSec(5,1) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,20) && sec <= converteTimeToSec(5,22)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,41) && sec <= converteTimeToSec(5,43))){
         note = 16;
-      }else if((age < 25 && min >= 5 && sec >= 2 && min <= 5 && sec <= 4 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 23 && min <= 5 && sec <= 25) || (age >= 30 && age < 35 && min >= 5 && sec >= 44 && min <= 5 && sec <= 46)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,2) && sec <= converteTimeToSec(5,4) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,23) && sec <= converteTimeToSec(5,25)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,44) && sec <= converteTimeToSec(5,46))){
         note = 15.8;
-      }else if((age < 25 && min >= 5 && sec >= 5 && min <= 5 && sec <= 7 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 26 && min <= 5 && sec <= 28) || (age >= 30 && age < 35 && min >= 5 && sec >= 47 && min <= 5 && sec <= 49)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,5) && sec <= converteTimeToSec(5,7) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,26) && sec <= converteTimeToSec(5,28)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,47) && sec <= converteTimeToSec(5,49))){
         note = 15.6;
-      }else if((age < 25 && min >= 5 && sec >= 8 && min <= 5 && sec <= 10 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 29 && min <= 5 && sec <= 31) || (age >= 30 && age < 35 && min >= 5 && sec >= 50 && min <= 5 && sec <= 52)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,8) && sec <= converteTimeToSec(5,10) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,29) && sec <= converteTimeToSec(5,31)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,50) && sec <= converteTimeToSec(5,52))){
         note = 15.4;
-      }else if((age < 25 && min >= 5 && sec >= 11 && min <= 5 && sec <= 13 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 32 && min <= 5 && sec <= 34) || (age >= 30 && age < 35 && min >= 5 && sec >= 53 && min <= 5 && sec <= 55)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,11) && sec <= converteTimeToSec(5,13) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,32) && sec <= converteTimeToSec(5,34)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,53) && sec <= converteTimeToSec(5,55))){
         note = 15.2;
-      }else if((age < 25 && min >= 5 && sec >= 14 && min <= 5 && sec <= 16 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 35 && min <= 5 && sec <= 37) || (age >= 30 && age < 35 && min >= 5 && sec >= 56 && min <= 5 && sec <= 58)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,14) && sec <= converteTimeToSec(5,16) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,35) && sec <= converteTimeToSec(5,37)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,56) && sec <= converteTimeToSec(5,58))){
         note = 15;
-      }else if((age < 25 && min >= 5 && sec >= 17 && min <= 5 && sec <= 19 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 38 && min <= 5 && sec <= 40) || (age >= 30 && age < 35 && min >= 5 && sec >= 59 && min <= 6 && sec <= 1)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,17) && sec <= converteTimeToSec(5,19) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,38) && sec <= converteTimeToSec(5,40)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(5,59) && sec <= converteTimeToSec(6,1))){
         note = 14.8;
-      }else if((age < 25 && min >= 5 && sec >= 20 && min <= 5 && sec <= 22 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 41 && min <= 5 && sec <= 43) || (age >= 30 && age < 35 && min >= 6 && sec >= 2 && min <= 6 && sec <= 4)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,20) && sec <= converteTimeToSec(5,22) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,41) && sec <= converteTimeToSec(5,43)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(6,2) && sec <= converteTimeToSec(6,4))){
         note = 14.6;
-      }else if((age < 25 && min >= 5 && sec >= 23 && min <= 5 && sec <= 25 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 44 && min <= 5 && sec <= 46) || (age >= 30 && age < 35 && min >= 6 && sec >= 5 && min <= 6 && sec <= 7)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,23) && sec <= converteTimeToSec(5,25) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,44) && sec <= converteTimeToSec(5,46)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(6,5) && sec <= converteTimeToSec(6,7))){
         note = 14.4;
-      }else if((age < 25 && min >= 5 && sec >= 26 && min <= 5 && sec <= 28 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 47 && min <= 5 && sec <= 49) || (age >= 30 && age < 35 && min >= 6 && sec >= 8 && min <= 6 && sec <= 10)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,26) && sec <= converteTimeToSec(5,28) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,47) && sec <= converteTimeToSec(5,49)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(6,8) && sec <= converteTimeToSec(6,10))){
         note = 14.2;
-      }else if((age < 25 && min >= 5 && sec >= 29 && min <= 5 && sec <= 31 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 50 && min <= 5 && sec <= 52) || (age >= 30 && age < 35 && min >= 6 && sec >= 11 && min <= 6 && sec <= 13)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,29) && sec <= converteTimeToSec(5,31) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,50) && sec <= converteTimeToSec(5,52)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(6,11) && sec <= converteTimeToSec(6,13))){
         note = 14;
-      }else if((age < 25 && min >= 5 && sec >= 32 && min <= 5 && sec <= 34 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 53 && min <= 5 && sec <= 55) || (age >= 30 && age < 35 && min >= 6 && sec >= 14 && min <= 6 && sec <= 16)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,32) && sec <= converteTimeToSec(5,34) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,53) && sec <= converteTimeToSec(5,55)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(6,14) && sec <= converteTimeToSec(6,16))){
         note = 13.8;
-      }else if((age < 25 && min >= 5 && sec >= 35 && min <= 5 && sec <= 37 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 56 && min <= 5 && sec <= 58) || (age >= 30 && age < 35 && min >= 6 && sec >= 17 && min <= 6 && sec <= 18)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,35) && sec <= converteTimeToSec(5,37) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,56) && sec <= converteTimeToSec(5,58)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(6,17) && sec <= converteTimeToSec(6,18))){
         note = 13.6;
-      }else if((age < 25 && min >= 5 && sec >= 38 && min <= 5 && sec <= 40 ) || (age >= 25 && age <= 30 && min >= 5 && sec >= 59 && min <= 6 && sec <= 0) || (age >= 30 && age < 35 && min >= 6 && sec >= 19 && min <= 6 && sec <= 20)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,38) && sec <= converteTimeToSec(5,40) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(5,59) && sec <= converteTimeToSec(6,0)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(6,19) && sec <= converteTimeToSec(6,20))){
         note = 13.4;
-      }else if((age < 25 && min >= 5 && sec >= 41 && min <= 5 && sec <= 43 ) || (age >= 25 && age <= 30 && min >= 6 && sec >= 1 && min <= 6 && sec <= 3) || (age >= 30 && age < 35 && min >= 6 && sec >= 21 && min <= 6 && sec <= 23)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,41) && sec <= converteTimeToSec(5,43) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(6,1) && sec <= converteTimeToSec(6,3)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(6,21) && sec <= converteTimeToSec(6,23))){
         note = 13.2;
-      }else if((age < 25 && min >= 5 && sec >= 44 && min <= 5 && sec <= 45 ) || (age >= 25 && age <= 30 && min >= 6 && sec >= 4 && min <= 6 && sec <= 5) || (age >= 30 && age < 35 && min >= 6 && sec >= 24 && min <= 6 && sec <= 25)){
+      }else if((age < 25 && sec >= converteTimeToSec(5,44) && sec <= converteTimeToSec(5,45) ) || (age >= 25 && age <= 30 && sec >= converteTimeToSec(6,4) && sec <= converteTimeToSec(6,5)) || (age >= 30 && age < 35 && sec >= converteTimeToSec(6,24) && sec <= converteTimeToSec(6,25))){
         note = 13;
       }else{
         note = 0;

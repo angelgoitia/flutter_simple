@@ -417,12 +417,11 @@ class _ShowListState extends State<ShowList> {
         dataTableController.isListening.value = true;
         _speech.listen(
           onResult: (val) async {
-            
             if(indexColumn >= 1 && indexColumn <= 2) //text nombre y especialidad
               controllerModal.text = val.recognizedWords.capitalizeFirstofEach;
             else if(indexColumn == 24) // resultado
               controllerModal.text = val.recognizedWords.inCaps;
-            else if((indexColumn >= 3 && indexColumn <= 6) && (indexColumn >= 8 && indexColumn <= 11) || (indexColumn == 7 && dataTableController.datas[indexList].gender == 0) ){ //numero
+            else if((indexColumn >= 3 && indexColumn <= 6) || (indexColumn >= 8 && indexColumn <= 11) || (indexColumn == 7 && dataTableController.datas[indexList].gender == 0) ){ //numero
               if(isNumeric(val.recognizedWords.toLowerCase()))
                 controllerModal.text = val.recognizedWords;
               else
